@@ -7,11 +7,15 @@
     <body>
         <div id="top">
             <h1>PROJ-402</h1>
+            {% if user.is_authenticated %}
+                <a href="{% url user_logout %}">Logout</a>
+            {% else %}
+                <a href="{% url user_show %}">Login</a>
+            {% endif %}
         </div>
         
         <div id="content">
         {% block content %}
-            <a href="/user/">Login</a>
             <p>Project-402 est une tentative d'implémenter la plateforme étudiant
             next-gen de la faculté des sciences. </p>
         {% endblock %}

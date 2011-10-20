@@ -14,10 +14,18 @@ body {
 }
 
 #top h1 {
-    padding: 20px;
+    padding-top: 20px;
+    padding-left: 30px;
     margin: 0px;
     font-size: 24px;
 }
+
+#top a {
+    color: white;
+    margin-left: 30px;
+    text-decoration: underline;
+}
+
 #content {
     margin: 20px;
 }
