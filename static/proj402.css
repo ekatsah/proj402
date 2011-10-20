@@ -1,0 +1,32 @@
+body {
+    font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+    padding: 0px;
+    margin: 0px;
+    font-size: 14px;
+}
+
+#top {
+    height: 75px;
+    width: 100%;
+    margin: 0px;
+    background-color: #004090;
+    color: white;
+}
+
+#top h1 {
+    padding: 20px;
+    margin: 0px;
+    font-size: 24px;
+}
+#content {
+    margin: 20px;
+}
+
+a {
+    color: blue;
+    text-decoration: none;
+}
+
+table {
+    font-size: 14px;
+}
