@@ -88,7 +88,6 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'users',
     'admin',
-    'splitter',
     'upload',
     'viewers',
     'courses',
