@@ -9,20 +9,20 @@ body {
     height: 75px;
     width: 100%;
     margin: 0px;
+    padding-left: 30px;
     background-color: #004090;
     color: white;
 }
 
 #top h1 {
     padding-top: 20px;
-    padding-left: 30px;
     margin: 0px;
     font-size: 24px;
 }
 
 #top a {
     color: white;
-    margin-left: 30px;
+    margin-left: 5px;
     text-decoration: underline;
 }
 
