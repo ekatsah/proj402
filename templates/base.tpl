@@ -11,6 +11,7 @@
         <div id="top">
             <h1>PROJ-402</h1>
             {% if user.is_authenticated %}
+                <a href="{% url user_show %}">Home</a>
                 <a href="{% url user_logout %}">Logout</a>
             {% else %}
                 <a href="{% url user_show %}">Login</a>
