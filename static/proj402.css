@@ -70,3 +70,15 @@ table {
     top: 8px;
     right: 8px;
 }
+
+li {
+    padding: 0px;
+    margin: 0px;
+}
+
+ul {
+    padding: 0px;
+    margin: 0px;
+    padding-left; 0px;
+    list-style-type: none;
+}
