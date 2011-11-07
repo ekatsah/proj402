@@ -2,6 +2,9 @@
     <head>
         <title>PROJ-402</title>
         <link href="/static/proj402.css" rel="stylesheet" type="text/css">
+        <script src="/static/jquery-1.7.min.js"></script>
+        <script src="/static/rendering.js"></script>
+        <script type="text/javascript">{% block scripts %}{% endblock %}</script>
     </head>
     
     <body>
