@@ -14,3 +14,9 @@ def upload_file(request, slug):
             
     # FIXME add an error management
     return HttpResponseRedirect(reverse('course_show', args=[slug]))
+
+def download_file(request, id):
+    document = get_object_or_404(Document, pk=id)
+    response = HttpResponse(document.get_content(), mimetype="application/pdf")
+    response['Content-Disposition'] = 'attachment; filename=' + document.name
+    return response
