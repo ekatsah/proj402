@@ -22,4 +22,10 @@ function upload_file() {
 <p>Welcome to <strong>{{ object.name }}</strong>.</p>
 <p><input type="button" onclick="upload_file();" value="upload file"/></p>
 
+<h1>Availible ressources</h1>
+<ol>
+{% for d in object.documents.all %}
+<li><a href="{% url download_file d.id %}">{{ d.name }}</a></li>
+{% endfor %}
+</ol>
 {% endblock %}
