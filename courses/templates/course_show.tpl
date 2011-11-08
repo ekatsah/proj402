@@ -11,6 +11,7 @@ function upload_file() {
     
     $.get('/upload/get', function(data) {
         $('#upload_box').html(data);
+        $('#upload_form').attr('action', '{% url upload_file object.slug %}');
     });
 }
 

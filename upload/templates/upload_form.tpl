@@ -1,4 +1,4 @@
-<form enctype="multipart/form-data" method="post" action="/upload/put">
+<form enctype="multipart/form-data" method="post" action="" id="upload_form">
     {% csrf_token %}   
     <table>
         {{ form.as_table }}

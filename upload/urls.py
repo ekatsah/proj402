@@ -9,4 +9,5 @@ urlpatterns = patterns('users.views',
         {'template': 'upload_form.tpl', 
          'extra_context': {'form': UploadFileForm()}}, 
         name="upload_form"),
+    url(r'^put/(?P<slug>[^/]+)$', login_required(upload_file), name="upload_file"),
 )
