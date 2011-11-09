@@ -24,6 +24,7 @@ DATABASES = {
     }
 }
 
+UPLOAD_DIR =  '%s/upload/r' % PROJECT_PATH
 AUTH_PROFILE_MODULE = 'users.UserProfile'
 LOGIN_URL = '/user/login/'
 TIME_ZONE = 'Europe/Paris'
