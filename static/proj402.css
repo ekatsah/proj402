@@ -81,3 +81,8 @@ ul {
     padding-left: 0px;
     list-style-type: none;
 }
+
+.page {
+    border: 2px #6ed8ff solid;
+    margin: 15px;
+}

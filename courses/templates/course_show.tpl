@@ -25,7 +25,7 @@ function upload_file() {
 <h1>Availible ressources</h1>
 <ol>
 {% for d in object.documents.all %}
-<li><a href="{% url download_file d.id %}">{{ d.name }}</a></li>
+<li><a href="{% url download_file d.id %}">{{ d.name }}</a> - <a href="{% url view_file d.id %}">view</a></li>
 {% endfor %}
 </ol>
 {% endblock %}

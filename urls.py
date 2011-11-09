@@ -10,6 +10,7 @@ urlpatterns = patterns('',
     url(r'^user/', include('users.urls'), name='users'),
     url(r'^course/', include('courses.urls'), name='courses'),
     url(r'^upload/', include('upload.urls'), name='upload'),
+    url(r'^view/', include('viewers.urls'), name='viewer'),
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
     # url(r'^admin/', include(admin.site.urls)),
 )
