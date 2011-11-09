@@ -4,6 +4,12 @@ Wat?
 This django project is a website providing mean for students to exchange courses and tips.
 
 
+Dependency
+==========
+
+You'll need pyPdf and ImageMagick (ie, the binary 'convert')
+
+
 License
 =======
 
