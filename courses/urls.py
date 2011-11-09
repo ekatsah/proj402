@@ -9,5 +9,5 @@ urlpatterns = patterns('courses.views',
         name='course_all'),
     url(r'^s/(?P<slug>[^/]+)', login_required(object_detail), {'queryset': Course.objects.all(), 
                                                               'template_name': 'course_show.tpl'},
-                       name='course_show'),
+        name='course_show'),
 )
