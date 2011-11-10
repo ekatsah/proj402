@@ -92,3 +92,9 @@ ul {
     border: 2px #6ed8ff solid;
     margin: 15px;
 }
+
+#pages {
+    overflow: auto;
+    border: 1px #ddd solid;
+    background: #f5f5f5";
+}
