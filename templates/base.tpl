@@ -10,12 +10,14 @@
     <body>
         <div id="top">
             <h1>PROJ-402</h1>
+            <div id="links">
             {% if user.is_authenticated %}
                 <a href="{% url user_show %}">Home</a>
                 <a href="{% url user_logout %}">Logout</a>
             {% else %}
                 <a href="{% url user_show %}">Login</a>
             {% endif %}
+            </div>
         </div>
         
         <div id="content">
