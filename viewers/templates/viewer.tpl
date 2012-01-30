@@ -20,6 +20,19 @@ function construct_sizes() {
 	});
 }
 
+function pzoom() {
+	$('.bigimg').each(function(idx) {
+		$(this).width(sizes[idx].width * zoom /100);
+		$(this).height(sizes[idx].height * zoom /100);
+	});
+	$('.bigpage').each(function(idx) {
+		if (idx)
+			$(this).width($('#bimg' + idx).width() + 40);
+	});
+	construct_b2m();
+	$('#zv').val(Math.floor(zoom) + '%');
+}
+
 $(document).ready(function() {
   $('#pages').height($(window).height() - 150);
   construct_sizes();
@@ -37,16 +50,7 @@ $(document).ready(function() {
   		zoom += 25;
 	else
 	  	zoom = zoom * 1.1;
-  	$('.bigimg').each(function(idx) {
-  		$(this).width(sizes[idx].width * zoom /100);
-  		$(this).height(sizes[idx].height * zoom /100);
-  	});
-  	$('.bigpage').each(function(idx) {
-  		if (idx)
-	  		$(this).width($('#bimg' + idx).width() + 40);
-  	});
-  	construct_b2m();
-  	$('#zv').text(Math.floor(zoom) + '%');
+  	pzoom();
   });
 
   $('#zm').click(function() {
@@ -56,16 +60,20 @@ $(document).ready(function() {
 	  	zoom = zoom * 0.9;
   	if (zoom < 10)
   		zoom = 10; 
-  	$('.bigimg').each(function(idx) {
-  		$(this).width(sizes[idx].width * zoom /100);
-  		$(this).height(sizes[idx].height * zoom /100);
-  	});
-  	$('.bigpage').each(function(idx) {
-  		if (idx)
-	  		$(this).width($('#bimg' + idx).width() + 40);
-  	});
-  	construct_b2m();
-  	$('#zv').text(Math.floor(zoom) + '%');
+  	pzoom();
+  });
+  
+  $('#zf').submit(function() {
+  	zoom = $('#zv').val();
+  	var i = zoom.indexOf("%");
+  	if (i != -1)
+  		zoom = zoom.substring(0, i);
+  	zoom = Number(zoom)
+  	if (zoom == NaN)
+  		zoom = 100;
+  	if (zoom < 10)
+  		zoom = 10;
+  	pzoom();
   });
 });
 
@@ -74,15 +82,20 @@ $(document).ready(function() {
 {% block content %}
 
 <div id="pmenu">
-<span id="zp">Zoom+</span> <span id="zm">Zoom-</span> <span id="zv">100%</span>
+  <form action="#" id="zf">
+    <span id="zp">Zoom+</span> <span id="zm">Zoom-</span>
+    <input class="shadow" style="width: 50px" id="zv" value="100%"/>
+    <input type="submit" style="display: none"/>
+  </form>
 </div>
+
 <div id="pages">
-    <div id="pleft">
+    <div id="pleft"><center>
         {% for p in object.pages.all %}
-            <center>page {{ forloop.counter }}</center>
+            page {{ forloop.counter }}
             <img class="page minimg" src="{% url download_page object.id p.num %}" 
                 width="118" height="{% widthratio p.height p.width 118 %}"><br>
-        {% endfor %}
+        {% endfor %}</center>
     </div>
     <div id="pmiddle"></div>
     <div id="pright"><center>

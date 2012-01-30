@@ -126,3 +126,11 @@ ul {
 	padding: 3px;
 	border: 1px green solid;
 }
+
+.shadow {
+	border: 1px #ccc solid;
+	background-color: #eee;
+	border-radius: 2px;
+	padding: 2px;
+	text-align: center;
+}
