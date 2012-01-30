@@ -12,6 +12,16 @@ function construct_b2m() {
 	});
 }
 
+function construct_m2p() {
+	m2p = Array();
+	boff = 0; // value of the first margin + pseudo page height
+	
+	$('.minimg').each(function(idx) {
+		m2p[idx] = boff + 5;
+		boff = boff + 47 + $('#mimg' + (1 + idx)).height();
+	});
+}
+
 function construct_sizes() {
 	sizes = Array();
 	$('.bigimg').each(function(idx) {
@@ -33,11 +43,24 @@ function pzoom() {
 	$('#zv').val(Math.floor(zoom) + '%');
 }
 
+function refresh_mpage() {
+	$('#mimg' + current_page).css('border', '1px #6ed8ff solid');
+	for (current_page = b2m.length; current_page > 0; --current_page)
+		if (b2m[current_page] < $('#pright').scrollTop())
+			break;
+	++current_page;
+	$('#mimg' + current_page).css('border', '3px red solid');
+	$('#pleft').scrollTop(m2p[current_page - 1]);
+}
+
 $(document).ready(function() {
   $('#pages').height($(window).height() - 150);
+  zoom = 100;
+  current_page = 0;
   construct_sizes();
   construct_b2m();
-  zoom = 100
+  construct_m2p();
+  refresh_mpage();
 
   $('.minimg').each(function(idx) {
   	$(this).click(function() {
@@ -75,6 +98,8 @@ $(document).ready(function() {
   		zoom = 10;
   	pzoom();
   });
+  
+  $('#pright').scroll(refresh_mpage);
 });
 
 {% endblock %}
@@ -92,8 +117,9 @@ $(document).ready(function() {
 <div id="pages">
     <div id="pleft"><center>
         {% for p in object.pages.all %}
-            page {{ forloop.counter }}
-            <img class="page minimg" src="{% url download_page object.id p.num %}" 
+            <p>page {{ forloop.counter }}</p>
+            <img id="mimg{{ forloop.counter }}" class="page minimg"
+                src="{% url download_page object.id p.num %}" 
                 width="118" height="{% widthratio p.height p.width 118 %}"><br>
         {% endfor %}</center>
     </div>
