@@ -4,6 +4,9 @@ function Box (x, y) {
     o._content = document.createElement("p");
     o._close = document.createElement("img");
     o._close.src = "/static/close.png";
+    o._close.addEventListener("click", function() {
+    	document.body.removeChild(o);
+    });
     o._close.className = "box_close";
     o.style.left = x + 'px';
     o.style.top = y + 'px';
