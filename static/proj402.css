@@ -89,12 +89,40 @@ ul {
 }
 
 .page {
-    border: 2px #6ed8ff solid;
-    margin: 15px;
+    border: 1px #6ed8ff solid;
 }
 
 #pages {
     overflow: auto;
     border: 1px #ddd solid;
-    background: #f5f5f5";
+    background: #f5f5f5;
+}
+
+#pleft {
+    width: 167px;
+    height: 100%;
+    float: left;
+    overflow: auto;
+}
+
+#pmiddle {
+    height: 100%;
+    width: 2px;
+    float: left;
+    background: #ddd;
+}
+
+#pright {
+    height: 100%;
+    overflow: auto;
+}
+
+.bigpage {
+	    margin: 15px;
+}
+.pbutton {
+	float: left;
+	width: 24px;
+	padding: 3px;
+	border: 1px green solid;
 }
