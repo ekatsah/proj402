@@ -26,5 +26,6 @@
             next-gen de la faculté des sciences. </p>
         {% endblock %}
         </div>
+        <div id="grey"></div>
     </body>
 </html>

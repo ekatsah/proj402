@@ -10,11 +10,11 @@ function join_course(slug) {
 }
 
 function add_course_box() {
-    course_box = Box(100, 100);
+    course_box = Box();
     course_box._title.innerHTML = "Add course";
     course_box._content.innerHTML = "loading..";
     course_box._content.id = "course_box";
-    document.body.appendChild(course_box);
+    course_box.show();
     
     $.getJSON('/course/all', function(data) {
         var items = [];
@@ -30,6 +30,8 @@ function add_course_box() {
             'class': 'course_list',
             html: items.join('')
         }));
+        
+        course_box.refresh();
     });
 }
 {% endblock %}
