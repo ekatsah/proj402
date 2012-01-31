@@ -2,10 +2,7 @@ Wat?
 ====
 
 This django project is a website providing mean for students to exchange courses and tips.
-To use : 
-  1) ./manage.py syncdb && ./manage.py runserver
-  2) Login
-  3) Go to http://localhost:8000/help
+To use : First, ./manage.py syncdb && ./manage.py runserver, then login, then go to http://localhost:8000/help
 
 Dependency
 ==========
