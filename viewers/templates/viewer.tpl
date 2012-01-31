@@ -1,7 +1,5 @@
-{% extends "base.tpl" %}
-
-{% block scripts %}
-
+<script src="/static/notes.js"></script>
+<script type="text/javascript">
 function construct_b2m() {
 	b2m = Array();
 	boff = 315; // value of the first margin + pseudo page height
@@ -44,17 +42,21 @@ function pzoom() {
 }
 
 function refresh_mpage() {
-	$('#mimg' + current_page).css('border', '1px #6ed8ff solid');
+	$('#mimg' + current_page).css('border', '1px #555 solid');
 	for (current_page = b2m.length; current_page > 0; --current_page)
 		if (b2m[current_page] < $('#pright').scrollTop())
 			break;
 	++current_page;
-	$('#mimg' + current_page).css('border', '3px red solid');
+	$('#mimg' + current_page).css('border', '3px #5080ff solid');
 	$('#pleft').scrollTop(m2p[current_page - 1]);
 }
 
 $(document).ready(function() {
-  $('#pages').height($(window).height() - 150);
+  $(window).resize(function() {
+  	$('#pages').height($(window).height() - 155);
+  });
+  $(window).resize();
+
   zoom = 100;
   current_page = 0;
   construct_sizes();
@@ -64,7 +66,7 @@ $(document).ready(function() {
 
   $('.minimg').each(function(idx) {
   	$(this).click(function() {
-  		$('#pright').scrollTop(b2m[idx]);
+  		$('#pright').scrollTop(b2m[idx] + 2);
   	});
   });
 
@@ -100,17 +102,21 @@ $(document).ready(function() {
   });
   
   $('#pright').scroll(refresh_mpage);
+  
+  $('.add_comment').each(function(idx) {
+  	$(this).click(function() {
+		new_thread_box({{ object.id }}, idx + 1);
+	});
+  });
 });
-
-{% endblock %}
-
-{% block content %}
+</script>
 
 <div id="pmenu">
   <form action="#" id="zf">
-    <span id="zp">Zoom+</span> <span id="zm">Zoom-</span>
-    <input class="shadow" style="width: 50px" id="zv" value="100%"/>
-    <input type="submit" style="display: none"/>
+    <span id="zp">Zoom+</span>&nbsp;&nbsp;&nbsp;<span id="zm">Zoom-</span>&nbsp;
+    &nbsp;&nbsp;<input class="shadow" style="width: 50px" id="zv" value="100%"/>
+    <input type="submit" style="display: none"/>&nbsp;&nbsp;&nbsp;
+    <a href="{% url download_file object.id %}">Download</a>
   </form>
 </div>
 
@@ -125,12 +131,13 @@ $(document).ready(function() {
     </div>
     <div id="pmiddle"></div>
     <div id="pright"><center>
-		<div class="bigpage" style="height: 300px; border: 1px red solid">
-		<h1>{{ object.name }}<br>PSEUDO PAGE</h1>
+		<div class="bigpage pseudopage">
+		  <h1>{{ object.name }}<br>PSEUDO PAGE</h1>
+		  <p>Here will stand a lot of information about this particular document.</p>
 		</div>
             {% for p in object.pages.all %}
                 <div class="bigpage" style="width: {{ p.width|add:37 }}">
-                    <div class="pbutton">C<br>A</div>
+                    <div class="pbutton">C<br><span class="add_comment">A</span></div>
                     
                     <img id="bimg{{ forloop.counter }}"
                         class="page bigimg" src="{% url download_page object.id p.num %}" 
@@ -139,4 +146,3 @@ $(document).ready(function() {
             {% endfor %}
     </center></div>
 </div>
-{% endblock %}
