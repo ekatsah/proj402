@@ -26,6 +26,7 @@ DATABASES = {
 
 UPLOAD_DIR =  '%s/upload/r' % PROJECT_PATH
 AUTH_PROFILE_MODULE = 'users.UserProfile'
+LOGIN_REDIRECT_URL = '/user/'
 LOGIN_URL = '/user/login/'
 TIME_ZONE = 'Europe/Paris'
 LANGUAGE_CODE = 'en-us'
@@ -72,6 +73,7 @@ ROOT_URLCONF = 'proj402.urls'
 TEMPLATE_DIRS = (
     '%s/templates' % PROJECT_PATH,
     '%s/users/templates' % PROJECT_PATH,
+    '%s/notes/templates' % PROJECT_PATH,
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
@@ -92,6 +94,7 @@ INSTALLED_APPS = (
     'upload',
     'viewers',
     'courses',
+    'notes',
     # Uncomment the next line to enable the admin:
     # 'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
