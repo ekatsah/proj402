@@ -1,31 +1,29 @@
-{% extends "base.tpl" %}
-
-{% block scripts %}
+<script type="text/javascript">
 
 function upload_file() {
-    course_box = Box(100, 100);
-    course_box._title.innerHTML = "Upload File";
-    course_box._content.innerHTML = 'loading...';
-    course_box._content.id = "upload_box";
-    document.body.appendChild(course_box);
-    
-    $.get('/upload/get', function(data) {
-        $('#upload_box').html(data);
-        $('#upload_form').attr('action', '{% url upload_file object.slug %}');
-    });
+	overlay_reset();
+	overlay_title("Upload File");
+	overlay_show();
+	$.get('{% url upload_form %}', function(data) {
+		$('#overlay_content').html(data);
+		$('#upload_form').attr('action', '{% url upload_file object.slug %}');
+		overlay_refresh();
+    	});
 }
 
-{% endblock %}
-
-{% block content %}
+</script>
 
 <p>Welcome to <strong>{{ object.name }}</strong>.</p>
 <p><input type="button" onclick="upload_file();" value="upload file"/></p>
 
+{% if object.documents.all %}
 <h1>Availible ressources</h1>
 <ol>
 {% for d in object.documents.all %}
-<li><a href="{% url download_file d.id %}">{{ d.name }}</a> - <a href="{% url view_file d.id %}">view</a></li>
+<li><a href="{% url download_file d.id %}">{{ d.name }}</a> - 
+    <a href="#{% url view_file d.id %}" onclick="return Iload('{% url view_file d.id %}');">view</a></li>
 {% endfor %}
 </ol>
-{% endblock %}
+{% else %}
+<h1>No ressources availible</h1>
+{% endif %}
