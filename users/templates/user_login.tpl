@@ -1,4 +1,4 @@
-{% extends "base.tpl" %}
+{% extends "layout.tpl" %}
 {% load url from future %}
 
 {% block content %}

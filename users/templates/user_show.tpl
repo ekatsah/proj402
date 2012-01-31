@@ -1,6 +1,4 @@
-{% extends "base.tpl" %}
-
-{% block scripts %}
+<script type="text/javascript">
 
 function join_course(slug) {
     $.get('/user/join/' + slug, function(data) {
@@ -10,13 +8,11 @@ function join_course(slug) {
 }
 
 function add_course_box() {
-    course_box = Box();
-    course_box._title.innerHTML = "Add course";
-    course_box._content.innerHTML = "loading..";
-    course_box._content.id = "course_box";
-    course_box.show();
+    overlay_reset();
+    overlay_title("Add course");
+    overlay_show();
     
-    $.getJSON('/course/all', function(data) {
+    $.getJSON('{% url courses_all %}', function(data) {
         var items = [];
 
         $.each(data, function(key, val) {
@@ -26,19 +22,16 @@ function add_course_box() {
                 '\');">join</a></li>');
         });
 
-        $('#course_box').html($('<ul/>', {
+        $('#overlay_content').html($('<ul/>', {
             'class': 'course_list',
             html: items.join('')
         }));
         
-        course_box.refresh();
+        overlay_refresh();
     });
 }
-{% endblock %}
-
-{% block content %}
+</script>
 
 <p>welcome {{ user.username }}.</p>
 <p><input type="button" onclick="add_course_box();" value="add course"/></p>
 
-{% endblock %}
