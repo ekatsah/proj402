@@ -1,16 +1,21 @@
 from django.conf.urls.defaults import patterns, include, url
 from django.views.generic.simple import direct_to_template
-
-# Uncomment the next two lines to enable the admin:
-# from django.contrib import admin
-# admin.autodiscover()
+from django.contrib.auth.decorators import login_required
+from utils.decorators import AR
 
 urlpatterns = patterns('',
-    url('^$', direct_to_template, {'template': 'base.tpl'}, name='index'),
     url(r'^user/', include('users.urls'), name='users'),
     url(r'^course/', include('courses.urls'), name='courses'),
     url(r'^upload/', include('upload.urls'), name='upload'),
     url(r'^view/', include('viewers.urls'), name='viewer'),
-    # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
-    # url(r'^admin/', include(admin.site.urls)),
+    url(r'^note/', include('notes.urls'), name='note'),
+    url(r'^admin/', include('admin.urls'), name='admin'),
+    
+    url(r'^$', direct_to_template, {'template': 'layout.tpl'}, name='index'),
+
+    # entry point
+    url(r'^zoidberg$', login_required(direct_to_template), 
+        {'template': 'base.tpl'}, name='index'),
+
+    url('^help$', AR(direct_to_template), {'template': 'help.tpl'}, name='help'),
 )
