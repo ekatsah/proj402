@@ -1,12 +1,18 @@
-<form id="new_thread_form">
-<table>
-<tr><td>Subject:</td><td><input id="thread_title" style="width: 400px"/></td></tr>
-<tr><td valign="top">Message:</td>
-    <td><textarea id="thread_body" style="width: 400px; height: 200px;"></textarea></td></tr>
-<tr><td></td><td align="right"><input type="submit" value="send"/></td></tr>
-</table>
+<form method="post" action="" id="new_thread_form">
+    {% csrf_token %}   
+    <table>
+        {{ form.as_table }}
+    </table><br>
+    <center>
+      <input type="submit" value="send" id="send" 
+          onclick="return Pload('new_thread_form', '{% url post_thread %}');"/>
+    </center>
+    <script type="text/javascript">
+    $("#id_document").val({{ params.doc }});
+    $("#id_page").val({{ params.page }});
+    </script>
+</form>
 
 <p>This thread is about the page : </p>
 <img style="margin-left: 30px; margin-right: 30px; background-color: white"
      src="{% url download_page params.doc params.page %}">
-</form>

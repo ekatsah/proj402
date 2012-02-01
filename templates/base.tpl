@@ -15,6 +15,16 @@
 		return false;
 	}
 
+	function Pload(form, url) {
+		$.post(url, $('#' + form).serialize(), function(data) {
+			if (data == "ok")
+				overlay_close();
+			else
+				alert(data);
+		});
+		return false;
+	}
+
 	$(window).ready(function() {
 		var url = window.location.toString();
 		var p = url.indexOf('#');

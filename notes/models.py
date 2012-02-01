@@ -3,7 +3,10 @@ from django import forms
 from django.contrib.auth.models import User
 
 class NewThreadForm(forms.Form):
-    file  = forms.FileField()
+    subject = forms.CharField();
+    message = forms.CharField(widget=forms.Textarea);
+    document = forms.DecimalField(widget=forms.HiddenInput);
+    page = forms.DecimalField(widget=forms.HiddenInput);
 
 class Thread(models.Model):
     subject = models.TextField();
@@ -14,5 +17,5 @@ class Thread(models.Model):
 
 class Note(models.Model):
     owner = models.ForeignKey(User)
-    thread = models.ManyToManyField(Thread)
+    thread = models.ForeignKey(Thread)
     text = models.TextField();
