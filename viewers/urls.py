@@ -5,7 +5,7 @@ from upload.models import Document
 from utils.decorators import AR
 
 urlpatterns = patterns('users.views',
-    url(r'^v/(?P<object_id>\d+)/$', login_required(object_detail), 
+    url(r'^v/(?P<object_id>\d+)/$', AR(login_required(object_detail)), 
         {'queryset': Document.objects.all(), 'template_name': 'viewer.tpl'},
         name='view_file'),
 )

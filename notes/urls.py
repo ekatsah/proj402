@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.generic.simple import direct_to_template
 from utils.decorators import AR, enforce_post
 from notes.models import NewThreadForm
-from notes.views import post_thread
+from notes.views import post_thread, list_thread
 
 urlpatterns = patterns('notes.views',
     url(r'^new_thread/(?P<doc>\d+)/(?P<page>\d+)$', 
@@ -11,7 +11,11 @@ urlpatterns = patterns('notes.views',
         {'template': 'new_thread.tpl', 
          'extra_context': {'form': NewThreadForm()}}, 
         name="new_thread"),
-                       
+
+    url(r'^list_thread/(?P<course>[^/]+)/(?P<doc>\d+)/(?P<page>\d+)$', 
+        login_required(list_thread), 
+        name="list_thread"),
+
     url(r'^post_thread$', 
         enforce_post(login_required(post_thread)), 
         name="post_thread"),

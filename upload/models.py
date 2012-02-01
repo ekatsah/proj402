@@ -14,6 +14,7 @@ class Page(models.Model):
     filename = models.CharField(max_length=100)
     width = models.IntegerField()
     height = models.IntegerField()
+    threads = models.ManyToManyField('notes.Thread')
 
 class Document(models.Model):
     name = models.TextField()

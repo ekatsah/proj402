@@ -1,5 +1,8 @@
+{% with pages=object.pages.all %}
+
 <script src="/static/notes.js"></script>
 <script type="text/javascript">
+
 function construct_b2m() {
 	b2m = Array();
 	boff = 315; // value of the first margin + pseudo page height
@@ -135,9 +138,13 @@ $(document).ready(function() {
 		  <h1>{{ object.name }}<br>PSEUDO PAGE</h1>
 		  <p>Here will stand a lot of information about this particular document.</p>
 		</div>
-            {% for p in object.pages.all %}
+            {% for p in pages %}
                 <div class="bigpage" style="width: {{ p.width|add:37 }}">
-                    <div class="pbutton">C<br><span class="add_comment">A</span></div>
+                    <div class="pbutton">
+                    {% if p.threads.all %}
+                      <span class="see_threads" onclick="list_thread(null, {{ object.id }}, {{ p.id }});">C</span><br>
+                    {% endif %}
+                      <span class="add_comment">A</span></div>
                     
                     <img id="bimg{{ forloop.counter }}"
                         class="page bigimg" src="{% url download_page object.id p.num %}" 
@@ -146,3 +153,4 @@ $(document).ready(function() {
             {% endfor %}
     </center></div>
 </div>
+{% endwith %}

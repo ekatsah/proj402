@@ -90,6 +90,33 @@ ul {
 	background-color: #ffffff;
 }
 
+.thread_list {
+	border-collapse: collapse;
+}
+
+.thread_list th {
+	border-bottom: 2px #003060 solid;
+}
+
+.thread_list td {
+	min-width: 100px;
+	padding-left: 10px;
+	padding-top: 4px;
+	padding-right: 8px;
+	padding-bottom: 4px;
+	border-bottom: 1px #3070f0 solid;
+	border-right: 1px #3070f0 solid;
+
+}
+
+.thread_list tr:last-child td {
+	border-bottom: none;
+}
+
+.thread_list td:last-child {
+	border-right: none;
+}
+
 /* ADMIN */
 
 #tree input {
@@ -98,3 +125,4 @@ ul {
 	margin: 3px;
 	padding: 3px;
 }
+
