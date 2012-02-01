@@ -2,6 +2,6 @@
     {% csrf_token %}   
     <table>
         {{ form.as_table }}
-    </table>
-    <input type="submit" value="upload" id="upload"/>
+    </table><br>
+    <center><input type="submit" value="upload" id="upload"/></center>
 </form>
