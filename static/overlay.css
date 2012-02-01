@@ -22,34 +22,62 @@
 }
 
 #overlay_box {
-    border: 1px black solid;
-    background-color: white;
+    color: #002070;
+    background-color: #284e7e;
     padding: 0px;
     margin: 0px;
-    font-family: 'Sans';
+    font-family: 'verdana';
     font-size: 12px;
     z-index: 6;
     position: absolute;
-    border-radius: 10px;
+    border-radius: 15px;
 }
 
 #overlay_box h3 {
-    font-size: 13px;
+    font-size: 15px;
+    color: #001f46;
     text-align: center; 
-    border-bottom: 1px black solid;
+    background-color: #7fb8ff;
     padding-bottom: 6px;
     padding-right: 30px;
     padding-left: 10px;
     padding-top: 6px;
-    margin: 0px;
+    margin-top: 12px;
+    margin-left: 13px;
+    margin-right: 13px;
+    margin-bottom: 5px;
 }
 
 #overlay_box p {
+    color: #003372;
     padding: 8px;
+    margin-left: 13px;
+    margin-right: 13px;
+    margin-bottom: 12px;
+    margin-top: 5px;
+    background-color: #e5e5e5;
 }
 
+#overlay_box th {
+	color: #003372;
+	font-family: verdana;
+	font-size: 12px;
+}
+
+#overlay_box td {
+	color: #003372;
+	font-family: verdana;
+	font-size: 12px;
+}
+
+#overlay_box input,textarea {
+	padding-left: 4px;
+	padding-right: 4px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
 #overlay_closeb {
     position: absolute;
-    top: 9px;
-    right: 8px;
+    top: 0px;
+    right: 0px;
 }
