@@ -7,6 +7,6 @@
 </table>
 
 <p>This thread is about the page : </p>
-<img style="margin-left: 30px; margin-right: 30px"
+<img style="margin-left: 30px; margin-right: 30px; background-color: white"
      src="{% url download_page params.doc params.page %}">
 </form>
