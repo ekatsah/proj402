@@ -5,6 +5,7 @@
     <li>Categories, courses selection</li>
     <li>Pdf uploading, parsing, viewing & downloading</li>
     <li>In document view, there is a mini image tracking & clicking and a zoom</li>
+    <li>In document view, an user can add a thread (by clicking on the 'A') and viewing a list (with the 'C') of thread by page</li>
     <li>User profile</li>
     <li>Admin : categories management</li>
     <li>This help \o/</li>
