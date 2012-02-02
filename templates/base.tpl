@@ -80,7 +80,7 @@
 	<div id="grey"></div>
 	<div id="overlay_box">
 		<h3 id="overlay_title"></h3>
-		<img src="/static/close.png" id="overlay_closeb">
+		<img src="/static/close.gif" id="overlay_closeb">
 		<script type="text/javascript">
 		  $('#overlay_closeb').click(overlay_close);
 		</script>
