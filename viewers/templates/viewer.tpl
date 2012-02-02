@@ -142,7 +142,8 @@ $(document).ready(function() {
                 <div class="bigpage" style="width: {{ p.width|add:37 }}">
                     <div class="pbutton" id="pbut{{ forloop.counter }}">
                     {% if p.threads.all %}
-                      <span class="see_threads" onclick="list_thread(null, {{ object.id }}, {{ p.id }});">C</span><br>
+                      <span class="see_threads" id="pseethread{{ forloop.counter }}" 
+                            onclick="list_thread(null, {{ object.id }}, {{ p.id }});">C</span><br>
                     {% endif %}
                       <span class="add_comment">A</span></div>
                     

@@ -117,6 +117,16 @@ ul {
 	border-right: none;
 }
 
+.thread_list .min {
+	border-right: none;
+	min-width: 10px;
+}
+
+.thread_list .min2 {
+	border-right: 2px #3070f0 solid;
+	min-width: 10px;
+}
+
 /* ADMIN */
 
 #tree input {

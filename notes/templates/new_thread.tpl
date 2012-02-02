@@ -1,7 +1,9 @@
 <script type="text/javascript">
 function post_thread() {
 	return Pload('new_thread_form', '{% url post_thread %}', function() {
-		$('#pbut{{ params.page }}').prepend('<span class="see_threads" onclick="list_thread(null, {{ params.doc }}, {{ params.page }});">C</span><br>');
+		if ($('#pseethread{{ params.page }}').length == 0)
+			$('#pbut{{ params.page }}').prepend(
+				'<span class="see_threads" onclick="list_thread(null, {{ params.doc }}, {{ params.page }});">C</span><br>');
 	});
 }
 </script>
