@@ -15,10 +15,12 @@
 		return false;
 	}
 
-	function Pload(form, url) {
+	function Pload(form, url, func) {
 		$.post(url, $('#' + form).serialize(), function(data) {
-			if (data == "ok")
+			if (data == "ok") {
+				func();
 				overlay_close();
+			}
 			else
 				alert(data);
 		});
