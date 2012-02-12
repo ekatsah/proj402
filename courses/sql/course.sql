@@ -12,3 +12,6 @@ INSERT INTO courses_course (slug, name) VALUES ('info-h-414', 'Swarm Intelligenc
 INSERT INTO courses_course (slug, name) VALUES ('info-h-509', 'XML Technologies');
 INSERT INTO courses_course (slug, name) VALUES ('math-h-404', 'Operational research');
 INSERT INTO courses_course (slug, name) VALUES ('proj-h-402', 'Computing project');
+
+INSERT INTO courses_course (slug, name) VALUES ('402-discussions', 'General discussion about project 402');
+INSERT INTO courses_course (slug, name) VALUES ('402-bugs', 'Bug tracking of project 402');

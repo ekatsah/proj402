@@ -7,12 +7,12 @@ from courses.views import subcategory, courses_by_cat
 from utils.decorators import AR
 
 urlpatterns = patterns('courses.views',
-    url(r'^courses/all$', login_required(json_sublist), 
+    url(r'^all$', login_required(json_sublist), 
         {'queryset': Course.objects.all(),
          'fields': ['id', 'slug', 'name', 'description']},
         name='courses_all'),
 
-    url(r'^courses/sub/(?P<catid>[^/]+)$', login_required(courses_by_cat), 
+    url(r'^sub/(?P<catid>[^/]+)$', login_required(courses_by_cat), 
         name='courses_by_cat'),
 
     url(r'^categories/all$', login_required(json_sublist), 

@@ -1,6 +1,5 @@
 {% with pages=object.pages.all %}
 
-<script src="/static/notes.js"></script>
 <script type="text/javascript">
 
 function construct_b2m() {
@@ -128,7 +127,7 @@ $(document).ready(function() {
         {% for p in object.pages.all %}
             <p>page {{ forloop.counter }}</p>
             <img id="mimg{{ forloop.counter }}" class="page minimg"
-                src="{% url download_page object.id p.num %}" 
+                src="{% url download_page p.id %}" 
                 width="118" height="{% widthratio p.height p.width 118 %}"><br>
         {% endfor %}</center>
     </div>
@@ -148,7 +147,7 @@ $(document).ready(function() {
                       <span class="add_comment">A</span></div>
                     
                     <img id="bimg{{ forloop.counter }}"
-                        class="page bigimg" src="{% url download_page object.id p.num %}" 
+                        class="page bigimg" src="{% url download_page p.id %}" 
                         width="{{ p.width }}" height="{{ p.height }}"><br>
                 </div>
             {% endfor %}

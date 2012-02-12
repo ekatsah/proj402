@@ -3,6 +3,7 @@
 {% block header %}
 <script src="/static/overlay.js"></script>
 <script src="/static/menu.js"></script>
+<script src="/static/messages.js"></script>
 
 <script type="text/javascript">
 	URL_CAT_SUB = '{% url category_sub 0 %}';
@@ -12,6 +13,7 @@
 		$('#content').html('loading..');
 		$('#content').load(url);
 		window.location = '/zoidberg#' + url;
+		overlay_close();
 		return false;
 	}
 
@@ -55,14 +57,15 @@
 
 <dl class="menu" >
   <dt onmouseover="mshow('main_menu')" onmouseout="mhide('main_menu')">
-    <a href="{% url profile %}">Home</a>
+    <a href="{% url profile %}" onclick="return Iload('{% url profile %}');">Home</a>
   </dt>
   <dd id="main_menu" onmouseover="mshow2('main_menu')" onmouseout="mhide2('main_menu')">
     <ul>
       <li onclick="mmake(1, 1);"><span>Courses</span></li>
-      <li><span>General Forums</span></li>
+      <li><a href="{% url general_boards %}" 
+             onclick="return Iload('{% url general_boards %}');">General Forums</a></li>
       <li><span>Walls</span></li>
-      <li><a href="#{% url help %}" onclick="return Iload('{% url help %}');">Help</a></li>
+      <li><a href="{% url help %}" onclick="return Iload('{% url help %}');">Help</a></li>
       <li><a href="https://github.com/ekatsah/proj402">Developpement</a></li>
     </ul>
   </dd>

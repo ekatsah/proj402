@@ -49,3 +49,7 @@ insert into courses_category_contains values (11, 13, 6);
 insert into courses_category_contains values (12, 13, 9);
 insert into courses_category_contains values (13, 13, 10);
 insert into courses_category_contains values (14, 13, 11);
+
+insert into courses_category (name, description) values ('Project 402', 'Zoidberg release');
+insert into courses_category_contains values (15, 16, 15);
+insert into courses_category_contains values (16, 16, 16);

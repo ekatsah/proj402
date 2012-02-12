@@ -14,7 +14,13 @@ class Page(models.Model):
     filename = models.CharField(max_length=100)
     width = models.IntegerField()
     height = models.IntegerField()
-    threads = models.ManyToManyField('notes.Thread')
+    threads = models.ManyToManyField('messages.Thread')
+    
+    def get_content(self):
+        f = open(self.filename, 'r')
+        content = f.read()
+        f.close()
+        return content
 
 class Document(models.Model):
     name = models.TextField()
@@ -23,6 +29,7 @@ class Document(models.Model):
     size = models.IntegerField(null=True)
     ready = models.BooleanField(default=False)
     pages = models.ManyToManyField(Page)
+    threads = models.ManyToManyField('messages.Thread')
 
     @classmethod
     def new(cls, owner, course, file):

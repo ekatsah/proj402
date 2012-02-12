@@ -16,9 +16,10 @@ function add_course_box() {
         var items = [];
 
         $.each(data, function(key, val) {
-            S = val.fields.slug;
-            items.push('<li><a href="/course/s/' + S + '">' + S + '</a> : ' + 
-                val.fields.name + ' <a onclick="join_course(\'' + S + 
+            S = val.slug;
+            // HARD_URL
+            items.push('<li><a href="/course/s/' + S + '" onclick="return Iload(\'/course/s/' + S + '\');">' + S + '</a> : ' + 
+                val.name + ' <a onclick="join_course(\'' + S + 
                 '\');">join</a></li>');
         });
 

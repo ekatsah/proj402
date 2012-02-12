@@ -42,7 +42,7 @@ function mmake(i, catid) {
 		$('#links').get(0).removeChild($('#ml' + it).get(0));
 
 	base  = '<dl class="menu" id="ml' + i + '"><dt onmouseover="mshow(\'mv' + i + '\')" ';
-	base += 'onmouseout="mhide(\'mv' + i + '\')"><a href="#" id="mt' + i + '">loading..</a></dt>';
+	base += 'onmouseout="mhide(\'mv' + i + '\')"><span id="mt' + i + '">loading..</span></dt>';
 	base += '<dd id="mv' + i + '" onmouseover="mshow2(\'mv' + i + '\')" ';
 	base += 'onmouseout="mhide2(\'mv' + i + '\')"></dd></dl>';
 	$('#links').append(base);

@@ -1,10 +1,10 @@
 <html>
     <head>
         <title>PROJ-402</title>
+        <script src="/static/jquery-1.7.min.js"></script>
         <link href="/static/header.css" rel="stylesheet" type="text/css">
         <link href="/static/overlay.css" rel="stylesheet" type="text/css">
         <link href="/static/proj402.css" rel="stylesheet" type="text/css">
-        <script src="/static/jquery-1.7.min.js"></script>
         {% block header %}{% endblock %}
     </head>
     
@@ -17,9 +17,9 @@
         
         <div id="content">
         {% block content %}
-            <p>Project-402 est une tentative d'implémenter la plateforme étudiant
-            next-gen de la faculté des sciences. <br>
-            Vous devriez vous <a href="{% url profile %}">logger</a></p>
+            <p>Project-402 is an attempt to make the next-gen student application
+            for the sciences faculty.<br>
+            You should <a href="{% url profile %}">login</a></p>
         {% endblock %}
         </div>
 

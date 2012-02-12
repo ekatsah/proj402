@@ -1,1 +1,0 @@
-View {{ object.id }}
