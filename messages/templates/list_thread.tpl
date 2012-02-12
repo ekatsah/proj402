@@ -2,7 +2,7 @@ Found {{ threads|length }} thread{% if threads|length > 1 %}s{% endif %}.<br><br
 
 {% if threads %}
 <table class="thread_list" >
-<tr><th></th><th>Subject</th><th>Poster</th></tr>
+<tr><th></th><th>Subject</th><th>Poster</th><th>Date</th></tr>
 {% for t in threads %}
 <tr id="thread_row{{ t.id }}">
   <td class="min"><small>
@@ -10,6 +10,9 @@ Found {{ threads|length }} thread{% if threads|length > 1 %}s{% endif %}.<br><br
   </small></td>
   <td style="min-width: 300px;">{{ t.subject }}</td>
   <td>{{ t.poster.username }}</td>
+  {% with post=t.msgs.all|first %}
+  <td>{{ post.date|date:"d/m/y H:i" }}</td>
+  {% endwith %}
 </tr>
 {% endfor %}
 </table>

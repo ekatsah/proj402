@@ -1,6 +1,7 @@
 from django.db import models
 from django import forms
 from django.contrib.auth.models import User
+from datetime import datetime
 
 class NewThreadForm(forms.Form):
     subject = forms.CharField();
@@ -21,3 +22,4 @@ class Message(models.Model):
     owner = models.ForeignKey(User)
     thread = models.ForeignKey(Thread)
     text = models.TextField();
+    date = models.DateTimeField(default=datetime.now);
