@@ -5,10 +5,15 @@ from datetime import datetime
 
 class NewThreadForm(forms.Form):
     subject = forms.CharField();
-    message = forms.CharField(widget=forms.Textarea);
-    course = forms.DecimalField(widget=forms.HiddenInput);
-    document = forms.DecimalField(widget=forms.HiddenInput);
-    page = forms.DecimalField(widget=forms.HiddenInput);
+    message = forms.CharField(widget=forms.Textarea)
+    course = forms.DecimalField(widget=forms.HiddenInput)
+    document = forms.DecimalField(widget=forms.HiddenInput)
+    page = forms.DecimalField(widget=forms.HiddenInput)
+
+class NewPostForm(forms.Form):
+    message = forms.CharField(widget=forms.Textarea)
+    thread = forms.DecimalField(widget=forms.HiddenInput)
+    reference = forms.DecimalField(widget=forms.HiddenInput)
 
 class Thread(models.Model):
     subject = models.TextField();
@@ -21,5 +26,6 @@ class Thread(models.Model):
 class Message(models.Model):
     owner = models.ForeignKey(User)
     thread = models.ForeignKey(Thread)
-    text = models.TextField();
-    date = models.DateTimeField(default=datetime.now);
+    text = models.TextField()
+    date = models.DateTimeField(default=datetime.now)
+    reference = models.ForeignKey("self", null=True)

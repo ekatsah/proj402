@@ -2,7 +2,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import get_object_or_404, render_to_response
 from django.template import RequestContext
 from django.core.urlresolvers import reverse
-from messages.models import NewThreadForm, Thread, Message
+from messages.models import NewThreadForm, NewPostForm, Thread, Message
 from documents.models import Page, Document
 from courses.models import Course
 
@@ -74,3 +74,15 @@ def list_thread(request, courseid, docid, pageid):
     return render_to_response('list_thread.tpl',
                 {'threads': set, 'page': page, 'course': course, 'document': doc},
                 context_instance=RequestContext(request))
+
+def post_msg(request):
+    form = NewPostForm(request.POST)
+    if form.is_valid():
+        data = form.cleaned_data;
+        thread = get_object_or_404(Thread, pk=data['thread'])
+        reference = get_object_or_404(Message, pk=data['reference'])
+        msg = Message.objects.create(owner=request.user, thread=thread, 
+                                     text=data['message'], reference=reference)
+        thread.msgs.add(msg)
+        return HttpResponse("ok")
+    return HttpResponse("Error: Invalid form")
