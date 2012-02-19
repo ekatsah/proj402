@@ -2,6 +2,7 @@ from django.conf.urls.defaults import patterns, include, url
 from django.views.generic.simple import direct_to_template
 from django.contrib.auth.decorators import login_required
 from utils.decorators import AR
+from utils.authentification import intra_auth
 
 urlpatterns = patterns('',
     url(r'^user/', include('users.urls'), name='users'),
@@ -17,4 +18,6 @@ urlpatterns = patterns('',
         {'template': 'base.tpl'}, name='index'),
 
     url('^help$', AR(direct_to_template), {'template': 'help.tpl'}, name='help'),
+
+    url(r'^auth$', intra_auth, name="auth"),
 )
