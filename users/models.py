@@ -11,7 +11,7 @@ class UserProfile(models.Model):
  
 def create_admin(app, created_models, verbosity, **kwargs):
     try:
-        User.objects.get(username='test')
+        User.objects.get(username='admin')
     except User.DoesNotExist:
         assert User.objects.create_superuser('admin', 'x@x.com', 'test')
 
