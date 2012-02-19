@@ -6,7 +6,9 @@ from django.contrib.auth.management import create_superuser
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
-
+    registration = models.IntegerField()
+    courses = models.CharField(max_length=30)
+ 
 def create_admin(app, created_models, verbosity, **kwargs):
     try:
         User.objects.get(username='test')
