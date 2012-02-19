@@ -8,7 +8,9 @@ class UserProfile(models.Model):
     user = models.OneToOneField(User)
     registration = models.IntegerField()
     courses = models.CharField(max_length=30)
- 
+
+User.profile = property(lambda u: UserProfile.objects.get_or_create(user=u)[0])
+
 def create_admin(app, created_models, verbosity, **kwargs):
     try:
         User.objects.get(username='admin')
