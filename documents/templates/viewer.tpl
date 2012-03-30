@@ -104,12 +104,6 @@ $(document).ready(function() {
   });
   
   $('#pright').scroll(refresh_mpage);
-  
-  $('.add_comment').each(function(idx) {
-  	$(this).click(function() {
-		new_thread_box({{ object.id }}, idx + 1);
-	});
-  });
 });
 </script>
 
@@ -142,9 +136,11 @@ $(document).ready(function() {
                     <div class="pbutton" id="pbut{{ forloop.counter }}">
                     {% if p.threads.all %}
                       <span class="see_threads" id="pseethread{{ forloop.counter }}" 
-                            onclick="list_thread(null, {{ object.id }}, {{ p.id }});">C</span><br>
+                            onclick="list_thread({{ object.refer.id }}, {{ object.id }}, {{ p.id }});">C</span><br>
                     {% endif %}
-                      <span class="add_comment">A</span></div>
+                      <span class="add_comment"
+                            onclick="new_thread_box({{ object.refer.id }}, {{ object.id }}, {{ p.id }});">A</span>
+                    </div>
                     
                     <img id="bimg{{ forloop.counter }}"
                         class="page bigimg" src="{% url download_page p.id %}" 

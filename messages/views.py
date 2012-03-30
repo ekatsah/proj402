@@ -24,7 +24,7 @@ def post_thread(request):
             doc = Document.objects.get(pk=data['document'])
             doc.threads.add(thread)
             page = Page.objects.get(pk=data['page'])
-            page.threads(thread)
+            page.threads.add(thread)
         except Exception:
             pass
         
@@ -41,12 +41,12 @@ def new_thread(request, courseid, docid, pageid):
 
     if docid != "0":
         doc = get_object_or_404(Document, pk=docid)
-        if doc not in course.documents:
+        if doc not in course.documents.all():
             raise Exception("Corrupt Query, step doc")
 
     if pageid != "0":
         page = get_object_or_404(Page, pk=pageid)
-        if page not in doc.pages:
+        if page not in doc.pages.all():
             raise Exception("Corrupt Query, step page")
 
     return render_to_response('new_thread.tpl',
@@ -61,13 +61,13 @@ def list_thread(request, courseid, docid, pageid):
 
     if docid != "0":
         doc = get_object_or_404(Document, pk=docid)
-        if doc not in course.documents:
+        if doc not in course.documents.all():
             raise Exception("Corrupt Query, step doc")
         set = doc.threads.all()
 
     if pageid != "0":
         page = get_object_or_404(Page, pk=pageid)
-        if page not in doc.pages:
+        if page not in doc.pages.all():
             raise Exception("Corrupt Query, step page")
         set = page.threads.all()
 
