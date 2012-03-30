@@ -25,13 +25,23 @@ function preview_doc(id, place) {
 {% if object.documents.all %}
 <h2>Available documents</h2>
 <table class="thread_list">
-<tr><th></th><th>Name</th><th>Poster</th></tr>
+<tr><th></th><th>Name</th><th>Poster</th><th>Pages</th></tr>
 {% for d in object.documents.all %}
+{% if d.size != d.done %}
+<tr id="doc_row{{ d.id }}">
+    <td class="min">&nbsp;</td>
+    <td style="min-width: 300px;">{{ d.name }} <small>processing, page {{ d.done }} / {{ d.size }}</small></a></td>
+    <td><center>{{ d.owner.username }}</center></td>
+    <td><center>{{ d.size }}</center></td>
+</tr>
+{% else %}
 <tr id="doc_row{{ d.id }}">
     <td class="min"><small><span onclick="preview_doc({{ d.id }}, 'doc_row{{ d.id }}');">info</span></small></td>
     <td style="min-width: 300px;"><a href="{% url view_file d.id %}" onclick="return Iload('{% url view_file d.id %}');">{{ d.name }}</a></td>
-    <td>{{ d.owner.username }}</td>
+    <td><center>{{ d.owner.username }}</center></td>
+    <td><center>{{ d.size }}</center></td>
 </tr>
+{% endif %}
 {% endfor %}
 </table>
 {% else %}

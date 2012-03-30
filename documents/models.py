@@ -1,8 +1,9 @@
-from django.db import models
+from django.db import models, connection
 from django import forms
 from django.contrib.auth.models import User
 from settings import UPLOAD_DIR
 from utils.splitter import run_process_file
+from multiprocessing import Process
 
 # Create your models here.
 
@@ -30,10 +31,11 @@ class Document(models.Model):
     ready = models.BooleanField(default=False)
     pages = models.ManyToManyField(Page)
     threads = models.ManyToManyField('messages.Thread')
+    done = models.IntegerField(null=False)
 
     @classmethod
     def new(cls, owner, course, file):
-        doc = cls(name=file.name, owner=owner, refer=course)
+        doc = cls(name=file.name, owner=owner, refer=course, done=0, size=1)
         doc.save()
         run_process_file(doc, file)
         return doc
@@ -52,3 +54,8 @@ class Document(models.Model):
         p = Page(num=num, filename=fname, width=w, height=h)
         p.save()
         self.pages.add(p)
+
+        cursor = connection.cursor()
+        cursor.execute('UPDATE documents_document SET done = done + 1 WHERE id = %d' % self.id)
+        connection.commit_unless_managed()
+        cursor.close()

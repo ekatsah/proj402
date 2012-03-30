@@ -1,5 +1,7 @@
 from settings import UPLOAD_DIR
+from django.db import models
 from os import system
+from multiprocessing import Process
 from pyPdf import PdfFileReader, PdfFileWriter
 
 def process_file(doc, upfile):
@@ -32,4 +34,5 @@ def process_file(doc, upfile):
     fd.close()
 
 def run_process_file(doc, file):
-    process_file(doc, file)
+    p = Process(target=process_file, args=(doc, file))
+    p.start()
