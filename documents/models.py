@@ -3,7 +3,6 @@ from django import forms
 from django.contrib.auth.models import User
 from settings import UPLOAD_DIR
 from utils.splitter import run_process_file
-from multiprocessing import Process
 
 # Create your models here.
 
@@ -32,7 +31,7 @@ class Document(models.Model):
     pages = models.ManyToManyField(Page)
     threads = models.ManyToManyField('messages.Thread')
     done = models.IntegerField(null=False)
-
+    
     @classmethod
     def new(cls, owner, course, file):
         doc = cls(name=file.name, owner=owner, refer=course, done=0, size=1)
