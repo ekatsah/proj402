@@ -29,8 +29,11 @@ function preview_doc(id, place) {
 {% for d in object.documents.all %}
 {% if d.size != d.done %}
 <tr id="doc_row{{ d.id }}">
-    <td class="min">&nbsp;</td>
-    <td style="min-width: 300px;">{{ d.name }} <small>processing, page {{ d.done }} / {{ d.size }}</small></a></td>
+    <td class="min"><div>
+      <div style="float: left; margin-top: 0px"><img src="/static/loading.gif"></div>
+      <div style="float: left; margin-left: 7px; font-size: 11px; margin-top: 2px;">{% widthratio d.done d.size 100 %}%</div>
+    </div></td>
+    <td style="min-width: 300px;">{{ d.name }}</td>
     <td><center>{{ d.owner.username }}</center></td>
     <td><center>{{ d.size }}</center></td>
 </tr>
