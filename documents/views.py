@@ -10,7 +10,8 @@ def upload_file(request, slug):
         form = UploadFileForm(request.POST, request.FILES)
         if form.is_valid():
             course = get_object_or_404(Course, slug=slug)
-            d = Document.new(request.user, course, request.FILES['file'])
+            d = Document.new(request.user, course, request.FILES['file'], 
+                             form.cleaned_data['category'])
             course.add_document(d)
             
     # FIXME add an error management

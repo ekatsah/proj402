@@ -3,10 +3,12 @@ from django import forms
 from django.contrib.auth.models import User
 from settings import UPLOAD_DIR
 from utils.splitter import run_process_file
-
+from upvotes.models import VoteDocument, CAT_DOCUMENTS
+ 
 # Create your models here.
 
 class UploadFileForm(forms.Form):
+    category = forms.ChoiceField(choices=CAT_DOCUMENTS)
     file  = forms.FileField()
 
 class Page(models.Model):
@@ -31,10 +33,13 @@ class Document(models.Model):
     pages = models.ManyToManyField(Page)
     threads = models.ManyToManyField('messages.Thread')
     done = models.IntegerField(null=False)
-    
+    points = models.ForeignKey(VoteDocument)
+
     @classmethod
-    def new(cls, owner, course, file):
-        doc = cls(name=file.name, owner=owner, refer=course, done=0, size=1)
+    def new(cls, owner, course, file, category):
+        vd = VoteDocument.objects.create(category=category)
+        doc = cls(name=file.name, owner=owner, refer=course, done=0, size=1,
+                  points=vd)
         doc.save()
         run_process_file(doc, file)
         return doc
