@@ -1,3 +1,5 @@
+{% with docs=object.documents.all %}
+
 <script type="text/javascript">
 
 function upload_file() {
@@ -18,35 +20,27 @@ function preview_doc(id, place) {
 	$('#dprev' + id).load('{% url preview_doc 0 %}' + id, function() {});
 }
 
+$(document).ready(function() {
+	{% for d in docs %}
+	$('#doc_row{{ d.id }}').load('{% url row_info d.id %}');
+	{% endfor %}
+});
+
 </script>
 
 <h1>{{ object.name }}</h1>
 
-{% if object.documents.all %}
+{% if docs %}
 <h2>Available documents</h2>
 <table class="thread_list">
 <tr><th></th><th>Name</th><th>Poster</th><th>Type</th><th>Pages</th></tr>
-{% for d in object.documents.all %}
-{% if d.size != d.done %}
+{% for d in docs %}
 <tr id="doc_row{{ d.id }}">
-    <td class="min"><div>
+    <td colspan="5"><div>
       <div style="float: left; margin-top: 0px"><img src="/static/loading.gif"></div>
-      <div style="float: left; margin-left: 7px; font-size: 11px; margin-top: 2px;">{% widthratio d.done d.size 100 %}%</div>
+      <div style="float: left; margin-left: 7px; font-size: 11px; margin-top: 2px;"> loading..</div>
     </div></td>
-    <td style="min-width: 300px;">{{ d.name }}</td>
-    <td><center>{{ d.owner.username }}</center></td>
-    <td><center>{{ d.points.category }}</center></td>
-    <td><center>{{ d.size }}</center></td>
 </tr>
-{% else %}
-<tr id="doc_row{{ d.id }}">
-    <td class="min"><small><span onclick="preview_doc({{ d.id }}, 'doc_row{{ d.id }}');">info</span></small></td>
-    <td style="min-width: 300px;"><a href="{% url view_file d.id %}" onclick="return Iload('{% url view_file d.id %}');">{{ d.name }}</a></td>
-    <td><center>{{ d.owner.username }}</center></td>
-    <td><center>{{ d.points.category }}</center></td>
-    <td><center>{{ d.size }}</center></td>
-</tr>
-{% endif %}
 {% endfor %}
 </table>
 {% else %}
@@ -61,3 +55,5 @@ function preview_doc(id, place) {
 <script type="text/javascript">
 	$('#course{{ object.id }}').load('{% url list_thread object.id 0 0 %}'); 
 </script>
+
+{% endwith %}

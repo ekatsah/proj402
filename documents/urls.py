@@ -19,6 +19,12 @@ urlpatterns = patterns('documents.views',
          'template_name': 'preview_doc.tpl'},
         name="preview_doc"),
 
+    url(r'^row/(?P<object_id>[^/]+)$',
+        login_required(object_detail),
+        {'queryset': Document.objects.all(),
+         'template_name': 'document_row.tpl'},
+        name="row_info"),
+
     url(r'^put/(?P<slug>[^/]+)$', 
         login_required(upload_file), 
         name="upload_file"),
