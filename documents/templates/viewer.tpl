@@ -129,7 +129,9 @@ $(document).ready(function() {
     <div id="pright"><center>
 		<div class="bigpage pseudopage">
 		  <h1>{{ object.name }}<br>PSEUDO PAGE</h1>
-		  <p>Here will stand a lot of information about this particular document.</p>
+		  <p>Here will stand a lot of information about this particular document.<br><br>
+		  This document is classed in {{ object.points.full_category }}
+		  </p>
 		</div>
             {% for p in pages %}
                 <div class="bigpage" style="width: {{ p.width|add:37 }}">

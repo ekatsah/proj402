@@ -50,6 +50,9 @@ class VoteDocument(models.Model):
     cat_solution = models.IntegerField(null=False, default=0)
     cat_others = models.IntegerField(null=False, default=0)
 
+    def full_category(self):
+        return [ v for k, v in CAT_DOCUMENTS if k == self.category ][0]
+
 class VoteHistory(models.Model):
     voter = models.ForeignKey(User)
     ressource = models.CharField(max_length=1, choices=RESSOURCES)
