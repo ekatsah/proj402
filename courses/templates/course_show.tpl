@@ -26,6 +26,44 @@ $(document).ready(function() {
 	{% endfor %}
 });
 
+function send_vote(s, t) {
+	var c = $('#v_category').val();
+	var id = $('#v_id').val();
+	overlay_reset();
+	overlay_title("Upvote");
+	overlay_refresh();
+	$.get('/vote/' + t + '/' + id + '/' + c + '/' + s, function(data) {
+		if (data == 'ok')
+			overlay_close();
+		else {
+			$('#overlay_content').html(data);
+			overlay_refresh();
+		}
+	});
+}
+
+Dcategories = {'R': 'Reference', 'O': 'Official Support',
+               'S': 'Summary', 'E': 'Old Exam', 'P': 'Old Project',
+               'L': 'Old Solutions', 'D': 'Others'};
+
+function Dupvote(id, cat) {
+	var foo  = '<input type="hidden" id="v_score" value="1">';
+	foo += '<input type="hidden" id="v_id" value="' + id + '">';
+	foo += '<select id="v_category">';
+	for (var k in Dcategories)
+		if (k == cat) 
+			foo += '<option value="' + k + '" selected>' + Dcategories[k] + '</option>';
+		else
+			foo += '<option value="' + k + '">' + Dcategories[k] + '</option>';
+	foo += '</select>';
+	bar = '<center><div><input type="button" value="confirm +1" onclick="send_vote(1, \'doc\');"></div></center>'; 
+	overlay_reset();
+	overlay_title("Upvote");
+	$('#overlay_content').html('This document is really in ' + foo + ' ?<br><br>' + bar);
+	overlay_show();
+	overlay_refresh();
+}
+
 </script>
 
 <h1>{{ object.name }}</h1>
@@ -33,7 +71,7 @@ $(document).ready(function() {
 {% if docs %}
 <h2>Available documents</h2>
 <table class="thread_list">
-<tr><th></th><th>Name</th><th>Poster</th><th>Type</th><th>Pages</th></tr>
+<tr><th></th><th>Name</th><th>Poster</th><th>Type</th><th>Pages</th><th>Score</th></tr>
 {% for d in docs %}
 <tr id="doc_row{{ d.id }}">
     <td colspan="5"><div>

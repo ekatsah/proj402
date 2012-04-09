@@ -8,7 +8,8 @@ CAT_THREADS = (
     ('E', 'Erratum'),
     ('G', 'Garbage'),
 )
-                                   
+
+# This is duplicated in upvotes.url and course_show JS                                   
 CAT_DOCUMENTS = (
     ('R', 'Reference'),
     ('O', 'Official Support'),
