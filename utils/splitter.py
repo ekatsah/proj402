@@ -1,4 +1,4 @@
-from settings import UPLOAD_DIR
+from settings import UPLOAD_DIR, CONVERT_PDF
 from django.db import models
 from os import system
 from multiprocessing import Process
@@ -26,8 +26,9 @@ def process_file(doc, upfile):
         out.close()
         
         pagename = "%s/doc_%03d_%04d.png" % (UPLOAD_DIR, doc.pk, num)
-        system("convert -density 400 /tmp/%d_cur.pdf -resize 25%% %s" % 
-               (doc.pk, pagename))
+        if CONVERT_PDF:
+            system("convert -density 400 /tmp/%d_cur.pdf -resize 25%% %s" % 
+                   (doc.pk, pagename))
         doc.add_page(num, pagename, p.bleedBox.getWidth(), 
                      p.bleedBox.getHeight())
         num += 1

@@ -33,6 +33,7 @@ TIME_ZONE = 'Europe/Paris'
 LANGUAGE_CODE = 'en-us'
 SITE_ID = 1
 USE_I18N = True
+CONVERT_PDF = True
 
 # If you set this to False, Django will not format dates, numbers and
 # calendars according to the current locale
