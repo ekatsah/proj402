@@ -54,6 +54,9 @@ class Document(models.Model):
         self.size = num
         self.save()
 
+    def set_wsize(self, num):
+        pass
+
     def add_page(self, num, fname, w, h):
         p = Page(num=num, filename=fname, width=w, height=h)
         p.save()
