@@ -36,12 +36,12 @@ class Document(models.Model):
     points = models.ForeignKey(VoteDocument)
 
     @classmethod
-    def new(cls, owner, course, file, category):
+    def new(cls, owner, course, file, category, convert=True):
         vd = VoteDocument.objects.create(category=category)
         doc = cls(name=file.name, owner=owner, refer=course, done=0, size=1,
                   points=vd)
         doc.save()
-        run_process_file(doc, file)
+        run_process_file(doc, file, convert)
         return doc
     
     def get_content(self):

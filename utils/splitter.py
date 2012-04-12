@@ -1,11 +1,11 @@
-from settings import UPLOAD_DIR, CONVERT_PDF
+from settings import UPLOAD_DIR
 from django.db import models
 from os import system
 from multiprocessing import Process
 from pyPdf import PdfFileReader, PdfFileWriter
 from search.construct import parse_words
 
-def process_file(doc, upfile):
+def process_file(doc, upfile, convert=True):
     filename = UPLOAD_DIR + '/' + str(doc.pk) + '.pdf'
     # sauvegarde du document original
     fd = open(filename, 'w')
@@ -17,6 +17,7 @@ def process_file(doc, upfile):
     pdf = PdfFileReader(fd)
     doc.set_npages(pdf.numPages)
     
+    # activate the search system
     system("pdftotext " + filename)
     words = file(UPLOAD_DIR + '/' + str(doc.pk) + '.txt', 'r') 
     doc.set_wsize(parse_words(doc, words.read()))
@@ -31,7 +32,7 @@ def process_file(doc, upfile):
         tmp.write(out)
         out.close()
         pagename = "%s/doc_%03d_%04d.png" % (UPLOAD_DIR, doc.pk, num)
-        if CONVERT_PDF:
+        if convert:
             system("convert -density 400 /tmp/%d_cur.pdf -resize 25%% %s" % 
                    (doc.pk, pagename))
         doc.add_page(num, pagename, p.bleedBox.getWidth(), 
@@ -39,6 +40,9 @@ def process_file(doc, upfile):
         num += 1
     fd.close()
 
-def run_process_file(doc, file):
-    p = Process(target=process_file, args=(doc, file))
-    p.start()
+def run_process_file(doc, file, convert=True):
+    if convert:
+        p = Process(target=process_file, args=(doc, file, True))
+        p.start()
+    else:
+        process_file(doc, file, False)
