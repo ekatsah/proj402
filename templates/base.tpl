@@ -54,6 +54,26 @@
     <div class="dright">
       <a href="{% url admin_index %}" onclick="return Iload('{% url admin_index %}');">Admin</a>
     </div>
+    
+    <div class="dright">
+      <input type="text" value="search" name="q" id="search_q">
+      <input type="submit" value="go" id="search_go">
+      <script type="text/javascript">
+	var search_clicked = 0; 
+	$('#search_q').focus(function() {
+		if (!search_clicked) {
+			search_clicked = 1;
+			$('#search_q').val('');
+			$('#search_q').css('color', 'black');
+		}
+	});
+	$('#search_go').click(function() {
+		var query =  $('#search_q').val().replace(/ /g, '+');
+		$('#content').html('searching for "' + query + '"..');
+		$('#content').load('{% url search_query %}?q=' + query);
+	});
+      </script>
+    </div>
 
 <dl class="menu" >
   <dt onmouseover="mshow('main_menu')" onmouseout="mhide('main_menu')">

@@ -40,6 +40,20 @@
 	padding-left: 12px;
 	padding-right: 12px;
 	font-weight: bold;
+	height: 17px;
+	overflow: hidden;
+}
+
+.dright input {
+	font-size: 11px;
+	border: None;
+	border-radius: 3px;
+	background-color: #eef;
+}
+
+.dright #search_q {
+	color: #888;
+	padding-left: 3px;
 }
 
 .dright a {
