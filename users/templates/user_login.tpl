@@ -7,6 +7,8 @@
 <p>Your username and password didn't match. Please try again.</p>
 {% endif %}
 
+You should use the <a href="https://www.ulb.ac.be/intranet/p402/">NetID</a> system.
+
 <form method="post" action="{% url 'django.contrib.auth.views.login' %}">
 {% csrf_token %}
 <table>
