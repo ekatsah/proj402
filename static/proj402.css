@@ -98,6 +98,21 @@ ul {
 	background-repeat: no-repeat, no-repeat, repeat-x;
 }
 
+.download_but {
+	color: blue;
+	float: left;
+	margin-top: -1px;
+	margin-right: 20px;
+	background-color: #eeeecd;
+	border: 1px #6d78c8 solid;
+	border-radius: 3px;
+	padding-top: 3px;
+	padding-left: 7px;
+	padding-right: 7px;
+	padding-bottom: 3px;
+}
+
+
 .thread_list {
 	border-collapse: collapse;
 }

@@ -109,10 +109,10 @@ $(document).ready(function() {
 
 <div id="pmenu">
   <form action="#" id="zf">
-    <span id="zp">Zoom+</span>&nbsp;&nbsp;&nbsp;<span id="zm">Zoom-</span>&nbsp;
+    <a class="download_but" href="{% url download_file object.id %}">Download</a>
+    <div style="float: left; margin-top: 2px"><img src="/static/l_plus.png" id="zp"/>&nbsp;&nbsp;&nbsp;<img src="/static/l_minus.png" id="zm"/></div>&nbsp;
     &nbsp;&nbsp;<input class="shadow" style="width: 50px" id="zv" value="100%"/>
     <input type="submit" style="display: none"/>&nbsp;&nbsp;&nbsp;
-    <a href="{% url download_file object.id %}">Download</a>
   </form>
 </div>
 
