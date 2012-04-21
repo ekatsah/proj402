@@ -1,4 +1,4 @@
-{% with docs=object.documents.all %}
+{% with docs=object.get_docs %}
 
 <script type="text/javascript">
 

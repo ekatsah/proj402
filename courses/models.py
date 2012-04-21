@@ -11,6 +11,9 @@ class Course(models.Model):
     def add_document(self, document):
         self.documents.add(document)
 
+    def get_docs(self):
+        return sorted(self.documents.all(), key=lambda x: x.points.score, reverse=True)
+
 class Category(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField(null=True)
