@@ -65,5 +65,5 @@ class VoteHistory(models.Model):
     cat = models.CharField(max_length=1, null=True)
     score = models.IntegerField(null=False)
 
-#    class Meta:
-#        unique_together = ('voter', 'ressource', 'resid')
+    class Meta:
+        unique_together = ('voter', 'ressource', 'resid')

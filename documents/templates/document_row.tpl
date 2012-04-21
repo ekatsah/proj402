@@ -1,3 +1,5 @@
+{% load can_vote %}
+
 {% if object.size != object.done %}
     <td class="min"><div>
       <div style="float: left; margin-top: 0px"><img src="/static/loading.gif"></div>
@@ -13,9 +15,10 @@
     <td><center>{{ object.points.full_category }}</center></td>
     <td><center>{{ object.size }}</center></td>
     <td><center>{{ object.points.score }}
+    	{% if user|can_voteD:object %}
       	   ( <span onclick="Dupvote({{ object.id }}, '{{ object.category }}');">+</span>
     	   | <span onclick="Ddownvote({{ object.id }}, '{{ object.category }}');">-</span>
-    	   )</center></td>
+    	   ){% endif %}</center></td>
 {% else %}
     <td class="min"><small><span onclick="preview_doc({{ object.id }}, 'doc_row{{ object.id }}');">info</span></small></td>
     <td style="min-width: 300px;"><a href="{% url view_file object.id %}" onclick="return Iload('{% url view_file object.id %}');">{{ object.name }}</a></td>
@@ -23,7 +26,8 @@
     <td><center>{{ object.points.full_category }}</center></td>
     <td><center>{{ object.size }}</center></td>
     <td><center>{{ object.points.score }} 
+    	{% if user|can_voteD:object %}
     	   ( <span onclick="Dupvote({{ object.id }}, '{{ object.category }}');">+</span>
     	   | <span onclick="Ddownvote({{ object.id }}, '{{ object.category }}');">-</span>
-    	   )</center></td>
+    	   ){% endif %}</center></td>
 {% endif %}
