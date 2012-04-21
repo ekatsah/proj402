@@ -21,7 +21,7 @@ def get_value(dom, name):
 def intra_auth(request):
     sid, uid = request.GET.get("_sid", False), request.GET.get("_uid", False)
     if sid and uid:
-        print USER_CHECK % (sid, uid)
+#        print USER_CHECK % (sid, uid)
         try:
             verifier = urlopen(USER_CHECK % (sid, uid))
         except Exception as e:
@@ -40,6 +40,7 @@ def intra_auth(request):
         except Exception:
             rpwd = ''.join(choice(printable) for x in xrange(100))
             user = User.objects.create_user(username, email, rpwd)
+            user.save()
             user.last_name = name
             user.first_name = firstname
             
