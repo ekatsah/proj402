@@ -33,9 +33,11 @@ function send_vote(s, t) {
 	overlay_title("Upvote");
 	overlay_refresh();
 	$.get('/vote/' + t + '/' + id + '/' + c + '/' + s, function(data) {
-		if (data == 'ok')
+		if (data == 'ok') {
 			overlay_close();
-		else {
+			$('#doc_row' + id).html('reloading..');
+			$('#doc_row' + id).load('{% url row_info 0 %}' + id);
+		} else {
 			$('#overlay_content').html(data);
 			overlay_refresh();
 		}
@@ -46,9 +48,8 @@ Dcategories = {'R': 'Reference', 'O': 'Official Support',
                'S': 'Summary', 'E': 'Old Exam', 'P': 'Old Project',
                'L': 'Old Solutions', 'D': 'Others'};
 
-function Dupvote(id, cat) {
-	var foo  = '<input type="hidden" id="v_score" value="1">';
-	foo += '<input type="hidden" id="v_id" value="' + id + '">';
+function Dvote(id, cat, score, rscore, title) {
+	var foo  = '<input type="hidden" id="v_id" value="' + id + '">';
 	foo += '<select id="v_category">';
 	for (var k in Dcategories)
 		if (k == cat) 
@@ -56,12 +57,20 @@ function Dupvote(id, cat) {
 		else
 			foo += '<option value="' + k + '">' + Dcategories[k] + '</option>';
 	foo += '</select>';
-	bar = '<center><div><input type="button" value="confirm +1" onclick="send_vote(1, \'doc\');"></div></center>'; 
+	bar = '<center><div><input type="button" value="confirm '+score+'" onclick="send_vote('+rscore+', \'doc\');"></div></center>'; 
 	overlay_reset();
-	overlay_title("Upvote");
+	overlay_title(title);
 	$('#overlay_content').html('This document is really in ' + foo + ' ?<br><br>' + bar);
 	overlay_show();
 	overlay_refresh();
+}
+
+function Dupvote(id, cat) {
+	Dvote(id, cat, '+1', 1, 'Upvote');
+}
+
+function Ddownvote(id, cat) {
+	Dvote(id, cat, '-1', -1, 'Downvote');
 }
 
 </script>

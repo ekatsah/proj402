@@ -20,6 +20,10 @@ CAT_DOCUMENTS = (
     ('D', 'Others'),
 )
 
+REF_DOCUMENTS = {'R': 'cat_reference', 'O': 'cat_support', 'S': 'cat_summary', 
+                 'E': 'cat_exam', 'P': 'cat_project', 'L': 'cat_solution', 
+                 'D': 'cat_others'}
+
 RESSOURCES = (
     ('D', 'Document'),
     ('T', 'Thread'),
@@ -61,5 +65,5 @@ class VoteHistory(models.Model):
     cat = models.CharField(max_length=1, null=True)
     score = models.IntegerField(null=False)
 
-    class Meta:
-        unique_together = ('voter', 'ressource', 'resid')
+#    class Meta:
+#        unique_together = ('voter', 'ressource', 'resid')
