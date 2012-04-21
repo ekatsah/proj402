@@ -89,9 +89,13 @@ ul {
 }
 
 .pseudopage {
-	height: 300px;
-	border: 1px #777 solid;
-	background-color: #ffffff;
+	min-height: 165px;
+	margin-bottom: 20px;
+	border-top: 1px #96a2ff solid;
+	background-color: #f5f5f5;
+	background-image: url('background_doc2.png'), url('background_doc2.png'), url('background_doc1.png');
+	background-position: left top, right top, center top;
+	background-repeat: no-repeat, no-repeat, repeat-x;
 }
 
 .thread_list {
