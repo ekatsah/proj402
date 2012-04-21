@@ -29,6 +29,7 @@ class Document(models.Model):
     owner = models.ForeignKey(User)
     refer = models.ForeignKey('courses.Course', related_name="back_course")
     size = models.IntegerField(null=True)
+    words = models.IntegerField(null=True, default=0)
     ready = models.BooleanField(default=False)
     pages = models.ManyToManyField(Page)
     threads = models.ManyToManyField('messages.Thread')
@@ -55,7 +56,8 @@ class Document(models.Model):
         self.save()
 
     def set_wsize(self, num):
-        pass
+        self.words = num
+        self.save()
 
     def add_page(self, num, fname, w, h):
         p = Page(num=num, filename=fname, width=w, height=h)
