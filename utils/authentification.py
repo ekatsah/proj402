@@ -29,7 +29,7 @@ def intra_auth(request):
         ip, username = get_value(dom, "ipAddress"), get_value(dom, "username")
         firstname, name = get_value(dom, "prenom"), get_value(dom, "nom")
         email, regist = get_value(dom, "email"), get_value(dom, "matricule")
-        anet, facid = get_value(dom, "anet"), get_value(facid)
+        anet, facid = get_value(dom, "anet"), get_value(dom, "facid")
         
         if ip != request.META['REMOTE_ADDR']:
             raise Exception("ip forgery")
