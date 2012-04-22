@@ -7,9 +7,10 @@ from django.contrib.auth.management import create_superuser
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
     registration = models.CharField(max_length=80, null=True)
-    courses = models.CharField(max_length=80, null=True)
+    section = models.CharField(max_length=80, null=True)
 
 User.profile = property(lambda u: UserProfile.objects.get_or_create(user=u)[0])
+
 
 def create_admin(app, created_models, verbosity, **kwargs):
     try:
