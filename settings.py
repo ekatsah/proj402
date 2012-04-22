@@ -6,6 +6,8 @@ TEMPLATE_DEBUG = DEBUG
 from os import path
 
 PROJECT_PATH = path.abspath(path.split(__file__)[0])
+# hack for nginx
+FORCE_SCRIPT_NAME = ""
 
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
