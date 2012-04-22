@@ -11,6 +11,10 @@ class UploadFileForm(forms.Form):
     category = forms.ChoiceField(choices=CAT_DOCUMENTS)
     file  = forms.FileField()
 
+class EditForm(forms.Form):
+    name = forms.CharField(max_length=150)
+    description = forms.CharField(widget=forms.Textarea)
+
 class Page(models.Model):
     num = models.IntegerField()
     filename = models.CharField(max_length=100)
@@ -35,7 +39,9 @@ class Document(models.Model):
     threads = models.ManyToManyField('messages.Thread')
     done = models.IntegerField(null=False)
     points = models.ForeignKey(VoteDocument)
-
+    date = models.DateTimeField(auto_now=True, null=False)
+    description = models.TextField()
+    
     @classmethod
     def new(cls, owner, course, file, category, convert=True):
         vd = VoteDocument.objects.create(category=category)
@@ -68,3 +74,13 @@ class Document(models.Model):
         cursor.execute('UPDATE documents_document SET done = done + 1 WHERE id = %d' % self.id)
         connection.commit_unless_managed()
         cursor.close()
+
+    def edit_form(self):
+        return EditForm(initial={'name': self.name, 
+                                 'description': self.description})
+
+    def pretty_name(self):
+        name = self.name.lower().replace(' ', '_')
+        if not name.endswith('.pdf'):
+            name += '.pdf'
+        return name

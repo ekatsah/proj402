@@ -104,6 +104,7 @@ $(document).ready(function() {
   });
   
   $('#pright').scroll(refresh_mpage);
+  $('#pseudopage').load('{% url document_desc object.id %}');
 });
 </script>
 
@@ -127,12 +128,8 @@ $(document).ready(function() {
     </div>
     <div id="pmiddle"></div>
     <div id="pright"><center>
-		<div class="bigpage pseudopage">
-		  <img style="margin-top: -1px; float: left" src="/static/edit.png"/>
-		  <h1>{{ object.name }}<br>PSEUDO PAGE</h1>
-		  <p>Here will stand a lot of information about this particular document.<br><br>
-		  This document is classed in {{ object.points.full_category }}
-		  </p>
+		<div id="pseudopage">
+		loading..
 		</div>
             {% for p in pages %}
                 <div class="bigpage" style="width: {{ p.width|add:37 }}">
