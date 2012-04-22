@@ -21,7 +21,6 @@ def get_value(dom, name):
 def intra_auth(request):
     sid, uid = request.GET.get("_sid", False), request.GET.get("_uid", False)
     if sid and uid:
-#        print USER_CHECK % (sid, uid)
         try:
             verifier = urlopen(USER_CHECK % (sid, uid))
         except Exception as e:
@@ -30,7 +29,7 @@ def intra_auth(request):
         ip, username = get_value(dom, "ipAddress"), get_value(dom, "username")
         firstname, name = get_value(dom, "prenom"), get_value(dom, "nom")
         email, regist = get_value(dom, "email"), get_value(dom, "matricule")
-        anet = get_value(dom, "anet")
+        anet, facid = get_value(dom, "anet"), get_value(facid)
         
         if ip != request.META['REMOTE_ADDR']:
             raise Exception("ip forgery")
@@ -40,13 +39,12 @@ def intra_auth(request):
         except Exception:
             rpwd = ''.join(choice(printable) for x in xrange(100))
             user = User.objects.create_user(username, email, rpwd)
-            user.save()
             user.last_name = name
             user.first_name = firstname
             
             user_profile = user.profile()
             user_profile.registration = regist
-            user_profile.courses = anet
+            user_profile.courses = facid + ':' + anet
             user_profile.save()
             user.save()
 
