@@ -33,6 +33,7 @@ function view_course_box() {
 }
 </script>
 
-<p>welcome {{ user.username }}.</p>
+<p>welcome {{ user.username }}.<br>
+You are in {{ user.profile.courses }} w/ reg = {{ user.profile.registration }}</p>
 <p><input type="button" onclick="view_course_box();" value="view courses"/></p>
 
