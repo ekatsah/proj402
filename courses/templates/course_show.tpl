@@ -17,7 +17,7 @@ function preview_doc(id, place) {
 	if ($('#dprev' + id).length > 0)
 		return;
 	$('#' + place).after('<tr id="tr_doc_' + id + '"><td class="min2"></td><td colspan=5><div id="dprev'+id+'">loading..</div></td></tr>');
-	$('#dprev' + id).load('{% url preview_doc 0 %}' + id, function() {});
+	$('#dprev' + id).load('{% url document_preview 0 %}' + id, function() {});
 }
 
 $(document).ready(function() {
