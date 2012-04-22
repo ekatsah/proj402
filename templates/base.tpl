@@ -11,7 +11,11 @@
 
 	function Iload(url) {
 		$('#content').html('loading..');
-		$('#content').load(url);
+		$.get(url, function(resp) {
+			$('#content').html(resp);
+		}).error(function(resp) {
+			$('#content').html('<h1>ERROR</h1><pre>'+resp['responseText']+'</pre>');
+		});
 		window.location = '/zoidberg#' + url;
 		overlay_close();
 		return false;
