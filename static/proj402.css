@@ -115,6 +115,16 @@ ul {
 	padding-bottom: 3px;
 }
 
+.back_but {
+	color: blue;
+	float: left;
+	margin-top: -1px;
+	margin-right: 20px;
+	padding-top: 3px;
+	padding-left: 7px;
+	padding-right: 7px;
+	padding-bottom: 3px;
+}
 
 .thread_list {
 	border-collapse: collapse;
