@@ -42,7 +42,7 @@ def intra_auth(request):
             user.last_name = name
             user.first_name = firstname
             
-            user_profile = user.profile()
+            user_profile = user.profile
             user_profile.registration = regist
             user_profile.courses = facid + ':' + anet
             user_profile.save()
