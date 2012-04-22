@@ -8,6 +8,6 @@ def can_vote(user, doc, res):
 
 register = template.Library()
 
-@register.filter(is_safe=True)
+@register.filter()
 def can_voteD(user, doc):
     return can_vote(user, doc, 'D')
