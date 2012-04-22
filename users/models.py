@@ -3,11 +3,14 @@ from django.db.models import signals
 from django.contrib.auth import models as authmod
 from django.contrib.auth.models import User
 from django.contrib.auth.management import create_superuser
+from courses.models import Course
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
     registration = models.CharField(max_length=80, null=True)
     section = models.CharField(max_length=80, null=True)
+    course = models.ManyToManyField(Course)
+    welcome = models.BooleanField(default=True)
 
 User.profile = property(lambda u: UserProfile.objects.get_or_create(user=u)[0])
 
