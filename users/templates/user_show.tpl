@@ -7,9 +7,9 @@ function join_course(slug) {
     });
 }
 
-function add_course_box() {
+function view_course_box() {
     overlay_reset();
-    overlay_title("Add course");
+    overlay_title("View course");
     overlay_show();
     
     $.getJSON('{% url courses_all %}', function(data) {
@@ -34,5 +34,5 @@ function add_course_box() {
 </script>
 
 <p>welcome {{ user.username }}.</p>
-<p><input type="button" onclick="add_course_box();" value="add course"/></p>
+<p><input type="button" onclick="view_course_box();" value="view courses"/></p>
 
