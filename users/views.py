@@ -14,7 +14,6 @@ def get_courses(request):
     return render(request, 'user_courses.tpl', {'guess': list()})
 
 def follow(request):
-    print "hop"
     courses = request.POST.get('courses', '')
     if len(courses) == 0:
         return HttpResponse('invalid request is invalid', 'text/html')
