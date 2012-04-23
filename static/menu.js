@@ -35,6 +35,13 @@ function mhide2(name) {
 Mcategories = Array();
 Mcategories[1] = {'name' : 'Science'};
 
+function mappend(i) {
+	if (mca_ready != 0 && mco_ready != 0) {
+		$('#mv' + i).append(mca_ready);
+		$('#mv' + i).append(mco_ready);
+	}
+}
+
 function mmake(i, catid) {
 	var base;
 	document.body.removeChild
@@ -47,23 +54,26 @@ function mmake(i, catid) {
 	base += 'onmouseout="mhide2(\'mv' + i + '\')"></dd></dl>';
 	$('#links').append(base);
 
+	mca_ready = 0;
+	mco_ready = 0;
+
 	$.getJSON(URL_CAT_SUB + catid, function(data) {
-		ul = document.createElement("ul");
+		mca_ready = document.createElement("ul");
 		$('#mt' + i).html(Mcategories[catid].name);
 		$.each(data, function(key, obj) {
 			Mcategories[obj.id] = {'name' : obj.name};
-			$(ul).prepend('<li><span onclick="mmake('+(i+1)+', '+obj.id+');">'+obj.name+'</span></li>');
+			$(mca_ready).prepend('<li><span onclick="mmake('+(i+1)+', '+obj.id+');">'+obj.name+'</span></li>');
 		});
-		$('#mv' + i).append(ul)
+		mappend(i);
 	});
 
 	$.getJSON(URL_COURSES_CAT + catid, function(data) {
-		ul = document.createElement("ul");
+		mco_ready = document.createElement("ul");
 		$('#mt' + i).html(Mcategories[catid].name);
 		$.each(data, function(key, obj) {
 			// HARD_URL
-			$(ul).append('<li class="light"><a href="#/course/s/' + obj.slug + '" onclick="return Iload(\'/course/s/'+obj.slug+'\');">'+obj.name+'</a></li>');
+			$(mco_ready).append('<li class="light"><a href="#/course/s/' + obj.slug + '" onclick="return Iload(\'/course/s/'+obj.slug+'\');">'+obj.name+'</a></li>');
 		});
-		$('#mv' + i).append(ul)
+		mappend(i);
 	});
 }
