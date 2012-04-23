@@ -23,15 +23,27 @@ function cat_new(node) {
 	});
 }
 
-function grow_tree(node, depth) {
+function cat_rm(node, pnode) {
+	$.get('{% url adm_tree_rm "'+node+'" "'+pnode" %}, function(data) {
+		if (data == "ok")
+			build();
+		else
+			alert("error! + data");
+	});
+}
+
+function grow_tree(node, depth, pnode) {
 	if (depth > 10) // anti loop
 		return;
 
 	$('#tree').append('<span style="margin-left: ' + (depth*30) + 'px;"> - ' + categories[node].name);
 	$('#tree').append(' <select id="n' + node + '">' + options);
-	$('#tree').append('</select><input type="button" value="add" onclick="cat_add('+node+');"><br>');
+	$('#tree').append('</select><input type="button" value="add" onclick="cat_add('+node+');">');
+	if (depth != 0)
+		$('#tree').append('<input type="button" value="rm" onclick="cat_rm('+node+', '+pnode+');">');
+	$('#tree').append('<br>');
 	for (var n in categories[node].holds)
-		grow_tree(categories[node].holds[n], depth + 1);
+		grow_tree(categories[node].holds[n], depth + 1, node);
 	$('#tree').append('<span style="margin-left: ' + ((depth+1)*30) + 'px;"> - <input value="new category" id="t'+node+'"><input type="button" value="add" onclick="cat_new('+node+');"></span><br>');
 	$('#tree').append('</span><br>');
 }
@@ -53,7 +65,7 @@ function build() {
 			options += '<option value="' + obj.id + '">' + obj.name + '</option>';
 		});
 
-		grow_tree(1, 0);
+		grow_tree(1, 0, 1);
 	});
 }
 

@@ -15,3 +15,9 @@ def catnew(request, category, name):
     subcat.save();
     cat.holds.add(subcat)
     return HttpResponse('ok', 'text/html')
+
+def catrm(request, category, parent):
+    cat = get_object_or_404(Category, pk=category)
+    supercat = get_object_or_404(Category, pk=parent)
+    supercat.holds.remove(cat)
+    return HttpResponse('ok', 'text/html')
