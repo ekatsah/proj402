@@ -7,7 +7,9 @@
 <p>Your username and password didn't match. Please try again.</p>
 {% endif %}
 
-You should use the <a href="https://www.ulb.ac.be/intranet/p402/">NetID</a> system.
+<strong>This form is only for system accounts</strong><br>
+You must use the <a href="https://www.ulb.ac.be/intranet/p402/">NetID</a> system if your are an ULB student.
+<br><br>
 
 <form method="post" action="{% url 'django.contrib.auth.views.login' %}">
 {% csrf_token %}
