@@ -7,11 +7,15 @@ function join_course(slug) {
     });
 }
 
-function view_course_box() {
+function add_course_box() {
     overlay_reset();
-    overlay_title("View course");
+    overlay_title("Add course");overlay_refresh();
+    $.get('{% url user_courses %}', function(data) {
+		$('#overlay_content').html(data);
+		overlay_refresh();
+    });
     overlay_show();
-    
+/*    
     $.getJSON('{% url courses_all %}', function(data) {
         var items = [];
 
@@ -29,7 +33,7 @@ function view_course_box() {
         }));
         
         overlay_refresh();
-    });
+    });*/
 }
 </script>
 
@@ -53,7 +57,29 @@ If you want to mask this message,
 <a href="{% url mask_welcome %}" onclick="return Iload('{% url mask_welcome %}');">click here</a></p>
 {% endif %}
 
-<p>welcome {{ user.username }}.<br>
-You are in {{ user.profile.section }} w/ reg = {{ user.profile.registration }}</p>
-<p><input type="button" onclick="view_course_box();" value="view courses"/></p>
+<h2>Courses followed</h2>
+{% with courses=user.profile.courses.all %}
+{% if courses %}
 
+<table style="border-collapse: collapse;">
+<tr><th style="padding: 5px;">Course</th><th style="padding: 5px;">Activity</th></tr>
+
+{% for follow in courses %}
+<tr><td style="padding: 5px; text-align: center; border-top: 1px solid black; border-right: 1px solid black">
+    <a href="{% url course_show follow.course.slug %}" 
+    	onclick="return Iload('{% url course_show follow.course.slug %}');">
+    	{{ follow.course.slug }} - {{ follow.course.name }}</a></td>
+    <td style="border-top: 1px solid black; padding: 8px"><center>-</center></td></tr>
+{% endfor %}
+</table>
+ 
+<p>Want to add some courses? <input type="button" onclick="add_course_box();" value="click here"/></p>
+{% else %}
+<p>You don't follow any courses yet. You sould 
+<input type="button" onclick="add_course_box();" value="add some"/></p>
+{% endif %}
+{% endwith %}
+
+<h2>Profile</h2>
+<p>User {{ user.username }}.<br>
+You are in {{ user.profile.section }} w/ reg = {{ user.profile.registration }}</p>

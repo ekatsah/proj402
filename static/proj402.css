@@ -38,6 +38,16 @@ ul {
     list-style-type: none;
 }
 
+.course_add_but {
+	background-color: #e5e5e5;
+	margin-right: 5px;
+	border: 1px #778 solid;
+	border-radius: 3px;
+	font-size: 10px;
+	padding-bottom: 0px;
+	padding-top: 2px;
+}
+
 /* PDF VIEWER */
 
 .page {
