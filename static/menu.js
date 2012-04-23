@@ -33,7 +33,7 @@ function mhide2(name) {
 /* courses show */
 
 Mcategories = Array();
-Mcategories[1] = {'name' : 'Science'};
+Mcategories[1] = {'name' : 'Faculty'};
 
 function mappend(i) {
 	if (mca_ready != 0 && mco_ready != 0) {
