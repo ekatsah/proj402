@@ -40,10 +40,13 @@ function add_course_box() {
 <h1>Hello, {{ user.first_name }} {{ user.last_name }}</h1>
 
 {% if user.profile.welcome %}
-<h2>Welcome!</h2>
-<p>First time, right? Basic rule : Don't panic.<br><br>
+<h2>First time, right? </h2>
+Basic rules : 
+<ol><li>Don't panic.</li>
+    <li>This project is still highly experimental</li></ol>
 
-This joint is a mean for student to exchange documents and messages. You can 
+
+This website is a mean for student to exchange documents and messages. You can 
 see a course with the menu in the top left corner. By clicking on it you will
 load some sub categories and courses and by repeting the process you will
 eventually find something interesting. You can come back on this page with the
