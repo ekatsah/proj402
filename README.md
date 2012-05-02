@@ -2,12 +2,29 @@ Wat?
 ====
 
 This django project is a website providing mean for students to exchange courses and tips.
-To use : First, ./manage.py syncdb && ./manage.py runserver, then login, then go to http://localhost:8000/help
 
 Dependencies
 ============
 
 You'll need pyPdf, django-south, poppler (the binary 'pdftotext') and ImageMagick (the binary 'convert')
+
+Installation using virtualenv
+=============================
+
+To install:
+
+    virtualenv --distribute --no-site-packages ve
+    source ve/bin/activate
+    pip install -r requirements.txt
+    python manage.py syncdb
+
+You still need to install poppler/pdftotext and ImageMagick/convert using your distribution packages.
+
+To run:
+
+    python manage.py runserver
+
+Then go http://localhost:8000/help
 
 License
 =======
