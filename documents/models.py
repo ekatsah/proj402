@@ -5,7 +5,6 @@ from settings import UPLOAD_DIR
 from utils.splitter import run_process_file
 from upvotes.models import VoteDocument, CAT_DOCUMENTS
 
-# Create your models here.
 
 class UploadFileForm(forms.Form):
     category = forms.ChoiceField(choices=CAT_DOCUMENTS)
