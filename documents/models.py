@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from settings import UPLOAD_DIR
 from utils.splitter import run_process_file
 from upvotes.models import VoteDocument, CAT_DOCUMENTS
- 
+
 # Create your models here.
 
 class UploadFileForm(forms.Form):
@@ -21,7 +21,7 @@ class Page(models.Model):
     width = models.IntegerField()
     height = models.IntegerField()
     threads = models.ManyToManyField('messages.Thread')
-    
+
     def get_content(self):
         f = open(self.filename, 'r')
         content = f.read()
@@ -41,7 +41,7 @@ class Document(models.Model):
     points = models.ForeignKey(VoteDocument)
     date = models.DateTimeField(auto_now=True, null=False)
     description = models.TextField()
-    
+
     @classmethod
     def new(cls, owner, course, file, category, convert=True):
         vd = VoteDocument.objects.create(category=category)
@@ -50,7 +50,7 @@ class Document(models.Model):
         doc.save()
         run_process_file(doc, file, convert)
         return doc
-    
+
     def get_content(self):
         f = open(UPLOAD_DIR + '/' + str(self.pk) + '.pdf', 'r')
         content = f.read()
@@ -76,7 +76,7 @@ class Document(models.Model):
         cursor.close()
 
     def edit_form(self):
-        return EditForm(initial={'name': self.name, 
+        return EditForm(initial={'name': self.name,
                                  'description': self.description})
 
     def pretty_name(self):
