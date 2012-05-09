@@ -2,7 +2,7 @@ from django.db import models
 from documents.models import Document
 
 class Course(models.Model):
-    slug = models.SlugField()
+    slug = models.SlugField(unique=True)
     name = models.TextField()
     description = models.TextField(null=True)
     documents = models.ManyToManyField(Document)
