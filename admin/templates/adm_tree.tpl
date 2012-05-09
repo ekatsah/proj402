@@ -37,7 +37,7 @@ function course_new(node) {
 		Pload('course_new_form', '{% url course_new %}', function() {
 			$.get('{% url adm_tree_c_add "'+node+'" "'+slug" %}, function(data) {
 				if (data == 'ok')
-					build();
+					load_cc();
 				else
 					alert("error! " + data);
 			});
@@ -52,7 +52,7 @@ function cat_new(node) {
 	$.get('{% url adm_tree_new "'+node+'" "'+val" %}, function(data) {
 		if (data == "ok") {
 			overlay_close();
-			build();
+			load_cc();
 		} else
 			alert("error! " + data);
 	});
@@ -61,7 +61,7 @@ function cat_new(node) {
 function cat_del(n, pn) {
 	$.get('{% url adm_tree_rm "'+n+'" "'+pn" %}, function(data) {
 		if (data == "ok")
-			build();
+			load_cc();
 		else
 			alert("error! " + data);
 	});
@@ -73,7 +73,7 @@ function cat_app(node) {
 		$.get('{% url adm_tree_add "'+node+'" "'+val" %}, function(data) {
 			if (data == "ok") {
 				overlay_close();
-				build();
+				load_cc();
 			} else
 				alert("error! " + data);
 		});
