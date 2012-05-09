@@ -38,6 +38,12 @@
 	cursor: pointer;
 }
 
+.treeview li .rem {
+	color: black;
+	font-size: 10px;
+	cursor: pointer;
+}
+
 .treeview a.selected {
 	background-color: #eee;
 }

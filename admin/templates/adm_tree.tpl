@@ -40,6 +40,15 @@ function cat_new() {
 	});
 }
 
+function cat_del(n, pn) {
+	$.get('{% url adm_tree_rm "'+n+'" "'+pn" %}, function(data) {
+		if (data == "ok")
+			build();
+		else
+			alert("error! + data");
+	});
+}
+
 function grow_tree(node, depth, pnode) {
 	if (depth > 10) // anti loop
 		return;
@@ -48,7 +57,8 @@ function grow_tree(node, depth, pnode) {
 	
 	for (var n in categories[node].holds) {
 		var li = $(document.createElement('li'));
-		li.append("<span>&nbsp;" + categories[categories[node].holds[n]].name + "</span>");
+		li.append("<span>&nbsp;" + categories[categories[node].holds[n]].name + '</span>');
+		li.append('&nbsp;<span class="rem" onclick="cat_del('+categories[node].holds[n]+','+node+')">detach</span>');
 		li.append(grow_tree(categories[node].holds[n], depth + 1, node));
 		elem.append(li);
 	}
