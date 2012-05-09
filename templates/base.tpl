@@ -68,6 +68,11 @@ jQuery(document).ajaxSend(function(event, xhr, settings) {
 	}
 
 	$(window).ready(function() {
+		$(window).resize(function() {
+			$('#content').height($(window).height() - 117);
+		});
+		$(window).resize();
+
 		var url = window.location.toString();
 		var p = url.indexOf('#');
 		if (p != -1) {
@@ -77,6 +82,7 @@ jQuery(document).ajaxSend(function(event, xhr, settings) {
 				return true;
 			}
 		}
+		
 		Iload('{% url profile %}');
 	});
 </script>
