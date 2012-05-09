@@ -1,5 +1,7 @@
 # encoding: utf-8
 from south.v2 import DataMigration
+from south.db import db
+from django.db import models as modelsd
 
 class Migration(DataMigration):
 
@@ -14,6 +16,13 @@ class Migration(DataMigration):
         zoidberg.contains.add(bts)
         zoidberg.save()
 
+        # Adding M2M table for field documents on 'Course'
+        db.create_table('courses_course_documents', (
+            ('id', modelsd.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
+            ('course', modelsd.ForeignKey(orm['courses.course'], null=False)),
+            ('document', modelsd.ForeignKey(orm['documents.document'], null=False))
+        ))
+        db.create_unique('courses_course_documents', ['course_id', 'document_id'])
 
     def backwards(self, orm):
         "Write your backwards methods here."

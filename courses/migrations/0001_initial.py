@@ -17,14 +17,6 @@ class Migration(SchemaMigration):
         ))
         db.send_create_signal('courses', ['Course'])
 
-        # Adding M2M table for field documents on 'Course'
-        db.create_table('courses_course_documents', (
-            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
-            ('course', models.ForeignKey(orm['courses.course'], null=False)),
-            ('document', models.ForeignKey(orm['documents.document'], null=False))
-        ))
-        db.create_unique('courses_course_documents', ['course_id', 'document_id'])
-
         # Adding M2M table for field threads on 'Course'
         db.create_table('courses_course_threads', (
             ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
