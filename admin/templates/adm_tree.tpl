@@ -95,8 +95,14 @@ function grow_tree(node, depth, pnode) {
 		elem.append(li);
 	}
 
+	for (var n in categories[node].contains) {
+		var li = $(document.createElement('li'));
+		li.append('&nbsp;' + courses[categories[node].contains[n]].slug + ' : ' + courses[categories[node].contains[n]].name);
+		elem.append(li);
+	}
+
 	var add = $(document.createElement('li'))
-	$(add).html('&nbsp;&nbsp;add');
+	$(add).html('&nbsp;add');
 	$(add).addClass("add_but");
 	$(add).click(function() {add_click(node, pnode);});
 	$(elem).append(add);	
@@ -104,11 +110,15 @@ function grow_tree(node, depth, pnode) {
 	return elem;
 }
 
-function build() {
+function load_cc() {
 	$('#tree').html('loading..');
 	$('#list').html('loading..');
+
+	ready_course = 0;
+	ready_category = 0;
+
 	$.getJSON('{% url category_all %}', function(data) {
-		$('#tree').html('');
+		ready_category = 1;
 		$('#list').html('');
 		categories = Array();
 		n2id = Array();
@@ -120,18 +130,38 @@ function build() {
 			$('#list').append('<li>'+ obj.name + ' : ' + obj.description + '</li>');
 			options += '<option value="' + obj.id + '">' + obj.name + '</option>';
 		});
+		build();
+	});
 
-		var e = grow_tree(1, 0, 1);
-		$('#tree').append(e);
-		$(e).treeview({
-		//	control: "#treecontrol",
-			persist: "cookie",
-			cookieId: "adm-tree-catcourses"
+	$.getJSON('{% url courses_all %}', function(data) {
+		ready_course = 1;
+		$('#courses_list').html('');
+		courses = Array();
+
+		$.each(data, function(key, obj) {
+			courses[obj.id] = obj;
+			$('#courses_list').append('<li>'+ obj.slug + ' : ' + obj.name + ', ' + obj.description + '</li>');
 		});
+		build();
 	});
 }
 
-$(document).ready(build);
+function build() {
+	// not all data are here
+	if (ready_course == 0 || ready_category == 0)
+		return;
+	 
+	$('#tree').html('');
+	var e = grow_tree(1, 0, 1);
+	$('#tree').append(e);
+	$(e).treeview({
+	//	control: "#treecontrol",
+		persist: "cookie",
+		cookieId: "adm-tree-catcourses"
+	});
+}
+
+$(document).ready(load_cc);
 </script>
 
 <h1>Category Tree</h1>
@@ -139,3 +169,6 @@ $(document).ready(build);
 
 <h1>All categories</h1>
 <ol id="list"></ol>
+
+<h1>All courses</h1>
+<ol id="courses_list"></ol>
