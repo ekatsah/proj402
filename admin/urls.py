@@ -7,6 +7,7 @@ from admin.views import catadd, catnew, catrm, course_add
 from utils.json import json_list
 from utils.decorators import AR
 from courses.models import NewCourseForm
+from documents.models import Document
 
 urlpatterns = patterns('admin.views',
     url(r'^tree$', AR(login_required(direct_to_template)), 
@@ -30,6 +31,11 @@ urlpatterns = patterns('admin.views',
         {'template_name': 'adm_users.tpl',
          'queryset': User.objects.all()}, 
         name="admin_users"),
+
+    url(r'^documents$', AR(login_required(object_list)), 
+        {'template_name': 'adm_documents.tpl',
+         'queryset': Document.objects.all()}, 
+        name="admin_documents"),
 
     url(r'', AR(login_required(direct_to_template)), 
         {'template': 'admin.tpl'}, name="admin_index"),

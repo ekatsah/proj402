@@ -7,4 +7,7 @@
 	<li><a href="#{% url admin_users %}" onclick="return Iload('{% url admin_users %}');">
 		User Manager</a> Place to see every users, edit some properties.. heck, 
 		it's the fuck'ng LART!</li>
+
+	<li><a href="#{% url admin_documents %}" onclick="return Iload('{% url admin_documents %}');">
+		Document Manager</a> list of documents</li>
 </ul>
