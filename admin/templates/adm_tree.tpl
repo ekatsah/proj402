@@ -39,6 +39,20 @@ function cat_del(n, pn) {
 	});
 }
 
+function cat_app(node) {
+	val = $('#exist_cat').val();
+	if (node != val)
+		$.get('{% url adm_tree_add "'+node+'" "'+val" %}, function(data) {
+			if (data == "ok") {
+				overlay_close();
+				build();
+			} else
+				alert("error! + data");
+		});
+	else
+		alert("no node in node");
+}
+
 function grow_tree(node, depth, pnode) {
 	if (depth > 10) // anti loop
 		return;
