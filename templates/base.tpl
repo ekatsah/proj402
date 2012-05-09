@@ -133,7 +133,7 @@ jQuery(document).ajaxSend(function(event, xhr, settings) {
 
 {% block content %}
 <p><strong>Why not zoidberg?</strong></p>
-<p>If nothing happens, it's probably because you don't have javascript activated.</p>
+<p>If nothing happens, it's probably because you didn't activate javascript.</p>
 {% endblock %}
 
 {% block overlay %}
