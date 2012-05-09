@@ -81,6 +81,19 @@ function cat_app(node) {
 		alert("no node in node");
 }
 
+function cat_rm(id) {
+	$.get('{% url category_del "'+id" %}, function(data) {
+		if (data == "ok")
+			load_cc();
+		else
+			alert("error! " + data);
+	});
+}
+
+function cat_edit(id) {
+	alert("NYI");
+}
+
 function grow_tree(node, depth, pnode) {
 	if (depth > 10) // anti loop
 		return;
@@ -88,10 +101,11 @@ function grow_tree(node, depth, pnode) {
 	var elem = $(document.createElement('ul'));
 	
 	for (var n in categories[node].holds) {
+		var cid = categories[node].holds[n]
 		var li = $(document.createElement('li'));
-		li.append("<span>&nbsp;" + categories[categories[node].holds[n]].name + '</span>');
-		li.append('&nbsp;<span class="rem" onclick="cat_del('+categories[node].holds[n]+','+node+')">detach</span>');
-		li.append(grow_tree(categories[node].holds[n], depth + 1, node));
+		li.append("<span>&nbsp;<small>" + cid + '</small>) '+ categories[cid].name + '</span>');
+		li.append('&nbsp;<span class="rem" onclick="cat_del('+cid+','+node+')">detach</span>');
+		li.append(grow_tree(cid, depth + 1, node));
 		elem.append(li);
 	}
 
@@ -108,6 +122,15 @@ function grow_tree(node, depth, pnode) {
 	$(elem).append(add);	
 
 	return elem;
+}
+
+function links(id) {
+	if (id > 2)
+		return '<small>[<span class="action_link onclick="cat_edit(' + 
+		       id + ');">edit</span>, <span class="action_link" \
+		       onclick="cat_rm(' + id + ');">remove</span>]</small> ';
+	else
+		return '';
 }
 
 function load_cc() {
@@ -127,7 +150,8 @@ function load_cc() {
 		$.each(data, function(key, obj) {
 			categories[obj.id] = obj;
 			n2id[obj.name] = obj.id;
-			$('#list').append('<li>'+ obj.name + ' : ' + obj.description + '</li>');
+			$('#list').append('<li>'+ obj.id + ') ' + links(obj.id) + 
+			           obj.name + ' : ' + obj.description + '</li>');
 			options += '<option value="' + obj.id + '">' + obj.name + '</option>';
 		});
 		build();
@@ -168,7 +192,7 @@ $(document).ready(load_cc);
 <p id="tree"></p>
 
 <h1>All categories</h1>
-<ol id="list"></ol>
+<ul id="list"></ul>
 
 <h1>All courses</h1>
-<ol id="courses_list"></ol>
+<ul id="courses_list"></ul>

@@ -13,6 +13,12 @@ h2 {
 	font-size: 14px;
 	margin-top: 20px;
 }
+
+.action_link {
+	color: blue;
+	cursor: pointer;
+}
+
 #content {
     padding: 20px;
     margin: 0px;

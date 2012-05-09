@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.generic.list_detail import object_detail
 from courses.models import Course, Category
 from utils.json import json_sublist
-from courses.views import subcategory, courses_by_cat, new_course
+from courses.views import subcategory, courses_by_cat, new_course, category_del
 from utils.decorators import AR, enforce_post
 
 urlpatterns = patterns('courses.views',
@@ -19,6 +19,9 @@ urlpatterns = patterns('courses.views',
         {'queryset': Category.objects.all, 
          'fields': ['id', 'name', 'description', 'contains', 'holds']},
         name='category_all'),
+
+    url(r'^categories/del/(?P<category>[^/]+)$', login_required(category_del), 
+        name='category_del'),
 
     url(r'^categories/sub/(?P<catid>[^/]+)$', login_required(subcategory), 
         name='category_sub'),

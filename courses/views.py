@@ -22,3 +22,11 @@ def new_course(request):
         except:
             HttpResponse("Error: Invalid slug")
     return HttpResponse("Error: Invalid form")
+
+def category_del(request, category):
+    cat = get_object_or_404(Category, pk=category)
+    if len(cat.contains.all()) == 0 and len(cat.holds.all()) == 0:
+        cat.delete()
+        return HttpResponse('ok', 'text/html')
+    else:
+        return HttpResponse('not empty object', 'text/html')
