@@ -1,5 +1,11 @@
 from django.db import models
+from django import forms
 from documents.models import Document
+
+class NewCourseForm(forms.Form):
+    slug = forms.SlugField()
+    name = forms.CharField()
+    description = forms.CharField(widget=forms.Textarea)
 
 class Course(models.Model):
     slug = models.SlugField(unique=True)

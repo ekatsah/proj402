@@ -11,11 +11,39 @@ function add_click(node, pnode) {
 	$('#overlay_content').append('<input type="button" value="insert" onclick="cat_new('+node+');"/><br>');
 	$('#overlay_content').append('Use existing category : <select id="exist_cat"/></select>');
 	$('#overlay_content').append('<input type="button" value="insert" onclick="cat_app('+node+');"/><br>');
-	$('#overlay_content').append('Create course : <input id="new_course_slug" value="hell-x-666"/>');
+	$('#overlay_content').append('Add course : <input id="new_course_slug" value="hell-x-666"/>');
 	$('#overlay_content').append('<input type="button" value="insert"/><br>');
+	$('#overlay_content').append('<input type="button" value="create course" onclick="course_new('+node+');"/><br>');
 	$('#exist_cat').html(options);
 	overlay_show();
 	overlay_refresh();
+}
+
+function course_new(node) {
+	overlay_reset();
+	overlay_title("Create course");
+	var form = document.createElement('form');
+	form.id = 'course_new_form';
+	form.method = 'post';
+	form.action = '{% url course_new %}';
+	$(form).append(''+<div><![CDATA[{% csrf_token %}]]></div>);
+	$(form).append(''+<div><![CDATA[<table class="vtop">{{ nform.as_table }}</table>]]></div>);
+	$(form).append('<center><input type="submit" value="create" id="fcreate_course"/></center>');
+	$('#overlay_content').html(form);
+	overlay_show();
+	overlay_refresh();
+	$(form).submit(function() {
+		var slug = $('#id_slug').val();
+		Pload('course_new_form', '{% url course_new %}', function() {
+			$.get('{% url adm_tree_c_add "'+node+'" "'+slug" %}, function(data) {
+				if (data == 'ok')
+					build();
+				else
+					alert("error! " + data);
+			});
+		});
+		return false;
+	});
 }
 
 function cat_new(node) {
