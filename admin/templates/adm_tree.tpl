@@ -7,7 +7,7 @@
 <input id="add_pnode" type="hidden"/>
 
 <div id="add_box">
-Create new category : <input id="new_cat_name"/><input type="button" value="insert" onclick="cat_new"/><br>
+Create new category : <input id="new_cat_name"/><input type="button" value="insert" onclick="cat_new()"/><br>
 
 Use existing category : <select id="exist_cat"/></select><input type="button" value="insert"/><br>
 
