@@ -7,11 +7,12 @@ class Migration(DataMigration):
 
     def forwards(self, orm):
         "Write your forwards methods here."
+        root = orm["courses.category"].objects.create(id="1", name='ROOT', description='Zoidberg root tree of life');
+        zoidberg = orm["courses.category"].objects.create(id="2", name='Project 402', description='Zoidberg release');
 
         discussion = orm["courses.course"].objects.create(slug='402-discussions', name='General discussion about project 402');
         bts = orm["courses.course"].objects.create(slug='402-bugs', name='Bug tracking of project 402');
-        root = orm["courses.category"].objects.create(name='ROOT', description='Zoidberg root tree of life');
-        zoidberg = orm["courses.category"].objects.create(name='Project 402', description='Zoidberg release');
+
         zoidberg.contains.add(discussion)
         zoidberg.contains.add(bts)
         zoidberg.save()
@@ -27,7 +28,8 @@ class Migration(DataMigration):
     def backwards(self, orm):
         "Write your backwards methods here."
 
-
+        db.delete_table('courses_course_documents')
+        
     models = {
         'auth.group': {
             'Meta': {'object_name': 'Group'},
