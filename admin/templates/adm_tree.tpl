@@ -32,8 +32,9 @@ function cat_new() {
 
 	$.get('{% url adm_tree_new "'+node+'" "'+val" %}, function(data) {
 		if (data == "ok") {
-			build();
+			$('#boxes').append($('#add_box'));
 			overlay_close();
+			build();
 		} else
 			alert("error! + data");
 	});
