@@ -2,37 +2,27 @@
 <script src="/static/jquery.treeview.js" type="text/javascript"></script>
 <link rel="stylesheet" href="/static/jquery.treeview.css" />
 
-<div id="boxes" style="display:none">
-<input id="add_node" type="hidden"/>
-<input id="add_pnode" type="hidden"/>
-
-<div id="add_box">
-Create new category : <input id="new_cat_name"/><input type="button" value="insert" onclick="cat_new()"/><br>
-
-Use existing category : <select id="exist_cat"/></select><input type="button" value="insert"/><br>
-
-Create course : <input id="new_course_slug" value="hell-x-666"/><input type="button" value="insert"/><br>
-</div>
-</div>
 <script type="text/javascript">
 
 function add_click(node, pnode) {
 	overlay_reset();
 	overlay_title("Add");
-	$('#overlay_content').html($('#add_box'));
-	$('#add_node').val(node);
-	$('#add_pnode').val(pnode);
+	$('#overlay_content').html('Create new category : <input id="new_cat_name"/>');
+	$('#overlay_content').append('<input type="button" value="insert" onclick="cat_new('+node+');"/><br>');
+	$('#overlay_content').append('Use existing category : <select id="exist_cat"/></select>');
+	$('#overlay_content').append('<input type="button" value="insert" onclick="cat_app('+node+');"/><br>');
+	$('#overlay_content').append('Create course : <input id="new_course_slug" value="hell-x-666"/>');
+	$('#overlay_content').append('<input type="button" value="insert"/><br>');
+	$('#exist_cat').html(options);
 	overlay_show();
 	overlay_refresh();
 }
 
-function cat_new() {
+function cat_new(node) {
 	var val = $('#new_cat_name').val();
-	var node = $('#add_node').val();
 
 	$.get('{% url adm_tree_new "'+node+'" "'+val" %}, function(data) {
 		if (data == "ok") {
-			$('#boxes').append($('#add_box'));
 			overlay_close();
 			build();
 		} else
@@ -88,8 +78,6 @@ function build() {
 			$('#list').append('<li>'+ obj.name + ' : ' + obj.description + '</li>');
 			options += '<option value="' + obj.id + '">' + obj.name + '</option>';
 		});
-
-		$("#exist_cat").html(options);
 
 		var e = grow_tree(1, 0, 1);
 		$('#tree').append(e);
