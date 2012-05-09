@@ -8,7 +8,7 @@ from utils.decorators import AR
 
 urlpatterns = patterns('courses.views',
     url(r'^all$', login_required(json_sublist), 
-        {'queryset': Course.objects.all(),
+        {'queryset': Course.objects.all,
          'fields': ['id', 'slug', 'name', 'description']},
         name='courses_all'),
 
@@ -16,7 +16,7 @@ urlpatterns = patterns('courses.views',
         name='courses_by_cat'),
 
     url(r'^categories/all$', login_required(json_sublist), 
-        {'queryset': Category.objects.all(), 
+        {'queryset': Category.objects.all, 
          'fields': ['id', 'name', 'description', 'contains', 'holds']},
         name='category_all'),
 

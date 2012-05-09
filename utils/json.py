@@ -8,7 +8,7 @@ def json_list(request, queryset):
 
 def json_sublist(request, queryset, fields):
     objects = []
-    for o in queryset:
+    for o in queryset():
         object_str = []
         for f in fields:
             attr = getattr(o, f)
