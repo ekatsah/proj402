@@ -6,80 +6,9 @@ class Migration(DataMigration):
     def forwards(self, orm):
         "Write your forwards methods here."
 
-        genie = orm["courses.course"].objects.create(slug='info-f-307', name='Génie logiciel et management des projets');
-        compilo = orm["courses.course"].objects.create(slug='info-f-403', name='Introduction to Language Theory and Compilation');
-        secu = orm["courses.course"].objects.create(slug='info-f-405', name='Computer security');
-        competcomp = orm["courses.course"].objects.create(slug='info-f-408', name='Computability and complexity');
-        learning_dynamic = orm["courses.course"].objects.create(slug='info-f-409', name='Learning dynamics');
-        ml = orm["courses.course"].objects.create(slug='info-f-422', name='Statistical foundations of machine learning');
-        crypto = orm["courses.course"].objects.create(slug='info-f-514', name='Protocols, cryptanalysis and mathematical cryptology');
-        coding_theory = orm["courses.course"].objects.create(slug='info-h-300', name='Information and coding theory');
-        tech_of_ai = orm["courses.course"].objects.create(slug='info-h-410', name='Techniques of artificial intelligence');
-        optimisation = orm["courses.course"].objects.create(slug='info-h-413', name='Heuristic optimisation');
-        swarm = orm["courses.course"].objects.create(slug='info-h-414', name='Swarm Intelligence');
-        xml = orm["courses.course"].objects.create(slug='info-h-509', name='XML Technologies');
-        rechop = orm["courses.course"].objects.create(slug='math-h-404', name='Operational research');
-        comp_project = orm["courses.course"].objects.create(slug='proj-h-402', name='Computing project');
-
         discussion = orm["courses.course"].objects.create(slug='402-discussions', name='General discussion about project 402');
         bts = orm["courses.course"].objects.create(slug='402-bugs', name='Bug tracking of project 402');
-
-        root = orm["courses.category"].objects.create(name='ROOT', description='root of the category tree');
-
-        bio = orm["courses.category"].objects.create(name='Biology', description='BA-BIOL, BA-IRBI, MA-BMOL...');
-        chemistry = orm["courses.category"].objects.create(name='Chemistry', description='BA-CHIM, MA-CHIM');
-        geography = orm["courses.category"].objects.create(name='Geography', description='BA-GEOG');
-        geology = orm["courses.category"].objects.create(name='Geology', description='BA-GEOL');
-        computing = orm["courses.category"].objects.create(name='Computing', description='BA-INFO, MA-INFO');
-        maths = orm["courses.category"].objects.create(name='Maths', description='BA-MATH, MA-MATH');
-        physics = orm["courses.category"].objects.create(name='Physics', description='BA-PHYS, MA-PHYS');
-
-        bainfo1 = orm["courses.category"].objects.create(name='BA-INFO1', description='First year in computer science');
-        bainfo2 = orm["courses.category"].objects.create(name='BA-INFO2', description='Second year in computer science');
-        bainfo3 = orm["courses.category"].objects.create(name='BA-INFO3', description='Third year in computer science');
-        mainfo1 = orm["courses.category"].objects.create(name='MA-INFO1', description='First year of the master in computer science');
-
-        ai = orm["courses.category"].objects.create(name='Artificial Intelligence', description='IA stuff and topics');
-        algoopt = orm["courses.category"].objects.create(name='Algorithm Optimisation', description='Mega mathematical brain needed');
-        beerd = orm["courses.category"].objects.create(name='Beer drinking', description='Ballmer peak related things');
-
-        root.holds.add(bio)
-        root.holds.add(chemistry)
-        root.holds.add(geography)
-        root.holds.add(geology)
-        root.holds.add(computing)
-        root.holds.add(maths)
-        root.holds.add(physics)
-        root.save()
-
-        computing.holds.add(bainfo1)
-        computing.holds.add(bainfo2)
-        computing.holds.add(bainfo3)
-        computing.holds.add(mainfo1)
-        computing.save()
-
-        mainfo1.holds.add(ai)
-        mainfo1.holds.add(algoopt)
-        mainfo1.holds.add(beerd)
-
-        mainfo1.contains.add(genie)
-        mainfo1.contains.add(compilo)
-        mainfo1.contains.add(secu)
-        mainfo1.contains.add(competcomp)
-        mainfo1.contains.add(crypto)
-        mainfo1.contains.add(coding_theory)
-        mainfo1.contains.add(xml)
-        mainfo1.contains.add(rechop)
-        mainfo1.contains.add(comp_project)
-        mainfo1.save()
-
-        ai.contains.add(learning_dynamic)
-        ai.contains.add(ml)
-        ai.contains.add(tech_of_ai)
-        ai.contains.add(optimisation)
-        ai.contains.add(swarm)
-        ai.save()
-
+        root = orm["courses.category"].objects.create(name='ROOT', description='Zoidberg root tree of life');
         zoidberg = orm["courses.category"].objects.create(name='Project 402', description='Zoidberg release');
         zoidberg.contains.add(discussion)
         zoidberg.contains.add(bts)
