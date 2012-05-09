@@ -1,33 +1,40 @@
+<script src="/static/jquery.cookie.js" type="text/javascript"></script>
+<script src="/static/jquery.treeview.js" type="text/javascript"></script>
+<link rel="stylesheet" href="/static/jquery.treeview.css" />
+
+<div id="boxes" style="display:none">
+<input id="add_node" type="hidden"/>
+<input id="add_pnode" type="hidden"/>
+
+<div id="add_box">
+Create new category : <input id="new_cat_name"/><input type="button" value="insert" onclick="cat_new"/><br>
+
+Use existing category : <select id="exist_cat"/></select><input type="button" value="insert"/><br>
+
+Create course : <input id="new_course_slug" value="hell-x-666"/><input type="button" value="insert"/><br>
+</div>
+</div>
 <script type="text/javascript">
 
-function cat_add(node) {
-	val = $('#n'+node).val();
-	if (node != val)
-		$.get('{% url adm_tree_add "'+node+'" "'+val" %}, function(data) {
-			if (data == "ok")
-				build();
-			else
-				alert("error! + data");
-		});
-	else
-		alert("no node in node");
+function add_click(node, pnode) {
+	overlay_reset();
+	overlay_title("Add");
+	$('#overlay_content').html($('#add_box'));
+	$('#add_node').val(node);
+	$('#add_pnode').val(pnode);
+	overlay_show();
+	overlay_refresh();
 }
 
-function cat_new(node) {
-	val = $('#t'+node).val();
+function cat_new() {
+	var val = $('#new_cat_name').val();
+	var node = $('#add_node').val();
+
 	$.get('{% url adm_tree_new "'+node+'" "'+val" %}, function(data) {
-		if (data == "ok")
+		if (data == "ok") {
 			build();
-		else
-			alert("error! + data");
-	});
-}
-
-function cat_rm(node, pnode) {
-	$.get('{% url adm_tree_rm "'+node+'" "'+pnode" %}, function(data) {
-		if (data == "ok")
-			build();
-		else
+			overlay_close();
+		} else
 			alert("error! + data");
 	});
 }
@@ -36,16 +43,22 @@ function grow_tree(node, depth, pnode) {
 	if (depth > 10) // anti loop
 		return;
 
-	$('#tree').append('<span style="margin-left: ' + (depth*30) + 'px;"> - ' + categories[node].name);
-	$('#tree').append(' <select id="n' + node + '">' + options);
-	$('#tree').append('</select><input type="button" value="add" onclick="cat_add('+node+');">');
-	if (depth != 0)
-		$('#tree').append('<input type="button" value="rm" onclick="cat_rm('+node+', '+pnode+');">');
-	$('#tree').append('<br>');
-	for (var n in categories[node].holds)
-		grow_tree(categories[node].holds[n], depth + 1, node);
-	$('#tree').append('<span style="margin-left: ' + ((depth+1)*30) + 'px;"> - <input value="new category" id="t'+node+'"><input type="button" value="add" onclick="cat_new('+node+');"></span><br>');
-	$('#tree').append('</span><br>');
+	var elem = $(document.createElement('ul'));
+	
+	for (var n in categories[node].holds) {
+		var li = $(document.createElement('li'));
+		li.append("<span>&nbsp;" + categories[categories[node].holds[n]].name + "</span>");
+		li.append(grow_tree(categories[node].holds[n], depth + 1, node));
+		elem.append(li);
+	}
+
+	var add = $(document.createElement('li'))
+	$(add).html('&nbsp;&nbsp;add');
+	$(add).addClass("add_but");
+	$(add).click(function() {add_click(node, pnode);});
+	$(elem).append(add);	
+
+	return elem;
 }
 
 function build() {
@@ -65,7 +78,15 @@ function build() {
 			options += '<option value="' + obj.id + '">' + obj.name + '</option>';
 		});
 
-		grow_tree(1, 0, 1);
+		$("#exist_cat").html(options);
+
+		var e = grow_tree(1, 0, 1);
+		$('#tree').append(e);
+		$(e).treeview({
+		//	control: "#treecontrol",
+			persist: "cookie",
+			cookieId: "adm-tree-catcourses"
+		});
 	});
 }
 
