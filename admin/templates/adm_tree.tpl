@@ -26,7 +26,7 @@ function cat_new(node) {
 			overlay_close();
 			build();
 		} else
-			alert("error! + data");
+			alert("error! " + data);
 	});
 }
 
@@ -35,7 +35,7 @@ function cat_del(n, pn) {
 		if (data == "ok")
 			build();
 		else
-			alert("error! + data");
+			alert("error! " + data);
 	});
 }
 
@@ -47,7 +47,7 @@ function cat_app(node) {
 				overlay_close();
 				build();
 			} else
-				alert("error! + data");
+				alert("error! " + data);
 		});
 	else
 		alert("no node in node");
