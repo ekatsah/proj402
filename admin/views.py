@@ -23,7 +23,6 @@ def catrm(request, category, parent):
     return HttpResponse('ok', 'text/html')
 
 def course_add(request, category, slug):
-    print "course_add"
     cat = get_object_or_404(Category, pk=category)
     course = get_object_or_404(Course, slug=slug)
     cat.contains.add(course)
