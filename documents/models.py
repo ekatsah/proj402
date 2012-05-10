@@ -20,16 +20,23 @@ class EditForm(forms.Form):
 
 class Page(models.Model):
     num = models.IntegerField()
-    filename = models.CharField(max_length=100)
+    filename = models.CharField(max_length=100, default='blank')
+    mininame = models.CharField(max_length=100, default='blank')
     width = models.IntegerField()
     height = models.IntegerField()
     threads = models.ManyToManyField('messages.Thread')
 
-    def get_content(self):
-        f = open(self.filename, 'r')
+    def get_file(self, name):
+        f = open(name, 'r')
         content = f.read()
         f.close()
         return content
+
+    def get_content(self):
+        return self.get_file(self.filename)
+
+    def get_mini(self):
+        return self.get_file(self.mininame)
 
 class Document(models.Model):
     name = models.TextField()
@@ -78,8 +85,8 @@ class Document(models.Model):
         self.words = num
         self.save()
 
-    def add_page(self, num, fname, w, h):
-        p = Page(num=num, filename=fname, width=w, height=h)
+    def add_page(self, num, fname, mname, w, h):
+        p = Page(num=num, filename=fname, mininame=mname, width=w, height=h)
         p.save()
         self.pages.add(p)
 

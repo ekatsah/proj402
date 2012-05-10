@@ -2,9 +2,18 @@
 
 <script type="text/javascript">
 
+img_urlz = { {% for p in pages %}"#bimg{{ forloop.counter }}":"{%url download_page p.id %}",{% endfor %} '0': '0'};
+
+function load_image(id) {
+	elem = '#bimg' + id;
+	if ($(elem) != undefined && $(elem).attr('src') == '/static/blank.png')
+		$(elem).attr('src', img_urlz[elem]);
+}
+
 function construct_b2m() {
 	b2m = Array();
-	boff = 315; // value of the first margin + pseudo page height
+	// value of the first margin + pseudo page height
+	boff = $('#pseudopage').height() + 15;
 	
 	$('.bigimg').each(function(idx) {
 		b2m[idx] = boff + 5;
@@ -36,8 +45,7 @@ function pzoom() {
 		$(this).height(sizes[idx].height * zoom /100);
 	});
 	$('.bigpage').each(function(idx) {
-		if (idx)
-			$(this).width($('#bimg' + idx).width() + 40);
+		$(this).width($('#bimg' + (1 + idx)).width() + 40);
 	});
 	construct_b2m();
 	$('#zv').val(Math.floor(zoom) + '%');
@@ -51,6 +59,13 @@ function refresh_mpage() {
 	++current_page;
 	$('#mimg' + current_page).css('border', '3px #5080ff solid');
 	$('#pleft').scrollTop(m2p[current_page - 1]);
+	if (backup_current_page != current_page) {
+		// FIXME take account of page height!!
+		var n = current_page - 2, t = current_page + 2;
+		for (; n < t; ++n)
+			load_image(n);
+		backup_current_page = current_page;
+	}
 }
 
 $(document).ready(function() {
@@ -61,6 +76,7 @@ $(document).ready(function() {
 
   zoom = 100;
   current_page = 0;
+  backup_current_page = 0;
   construct_sizes();
   construct_b2m();
   construct_m2p();
@@ -104,8 +120,35 @@ $(document).ready(function() {
   });
   
   $('#pright').scroll(refresh_mpage);
-  $('#pseudopage').load('{% url document_desc object.id %}');
+  
+{% if user.get_profile.moderate %}
+  $('#edit_but').click(function(event) {
+	overlay_reset();
+	overlay_title("Edit Document");
+	var form = document.createElement('form');
+	form.id = 'edit_form';
+	form.method = 'post';
+	form.action = '{% url document_edit object.id %}';
+	$(form).append('<input type="hidden" value="{{ csrf_token }} name="csrfmiddlewaretoken"/>');
+	$(form).append('<table class="vtop">{{ eform.as_table|escapejs }}</table>');
+	$(form).append('<center><input type="submit" value="edit" id="edit_button"/></center>');
+	$('#overlay_content').html(form);
+	overlay_show();
+	overlay_refresh();
+	$(form).submit(function() {
+		Pload('edit_form', '{% url document_edit object.id %}', function(data) {
+			$.getJSON('{% url document_desc object.id %}', function(doc) {
+				$('#doc_name').html(doc.name);
+				$('#doc_desc').html(doc.name);
+			});
+		});
+		return false;
+	});
+  });
+{% endif %}
+
 });
+
 </script>
 
 <div id="pmenu">
@@ -124,15 +167,23 @@ $(document).ready(function() {
         {% for p in object.pages.all %}
             <p>page {{ forloop.counter }}</p>
             <img id="mimg{{ forloop.counter }}" class="page minimg"
-                src="{% url download_page p.id %}" 
+                src="{% url download_mpage p.id %}" 
                 width="118" height="{% widthratio p.height p.width 118 %}"><br>
         {% endfor %}</center>
     </div>
     <div id="pmiddle"></div>
     <div id="pright"><center>
 		<div id="pseudopage">
-		loading..
+		{% if user.get_profile.moderate %}
+			<img style="margin-top: -1px; float: left; cursor: pointer"
+				src="/static/edit.png" id="edit_but"/>
+		{% endif %}
+			<h1 id="doc_name">{{ object.name }}</h1>
+			<p>Document uploaded by {{ object.owner.username }} on {{ object.date|date:"d/m/y H:i" }}<br>
+			This document is classed in {{ object.points.full_category }}<br><br>
+			<span id="doc_desc">{{ object.description }}</span></p>
 		</div>
+
             {% for p in pages %}
                 <div class="bigpage" style="width: {{ p.width|add:37 }}">
                     <div class="pbutton" id="pbut{{ forloop.counter }}">
@@ -145,7 +196,7 @@ $(document).ready(function() {
                     </div>
                     
                     <img id="bimg{{ forloop.counter }}"
-                        class="page bigimg" src="{% url download_page p.id %}" 
+                        class="page bigimg" src="/static/blank.png" 
                         width="{{ p.width }}" height="{{ p.height }}"><br>
                 </div>
             {% endfor %}

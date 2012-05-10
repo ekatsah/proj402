@@ -37,12 +37,16 @@ def process_page(doc, page, num, convert):
     out = file("/tmp/%d_cur.pdf" % doc.pk, 'w')
     tmp.write(out)
     out.close()
-    pagename = "%s/doc_%03d_%04d.png" % (UPLOAD_DIR, doc.pk, num)
+    pagename = "%s/doc_%04d_%04d.png" % (UPLOAD_DIR, doc.pk, num)
+    mininame = "%s/doc_mini_%04d_%04d.png" % (UPLOAD_DIR, doc.pk, num)
     if convert:
         system("convert -density 400 /tmp/%d_cur.pdf -resize 25%% %s" % 
                (doc.pk, pagename))
-    doc.add_page(num, pagename, page.bleedBox.getWidth(), 
+        system("convert -density 100 /tmp/%d_cur.pdf -resize 10%% %s" % 
+               (doc.pk, mininame))
+    doc.add_page(num, pagename, mininame, page.bleedBox.getWidth(), 
                  page.bleedBox.getHeight())
+    system("rm /tmp/%d_cur.pdf" % doc.pk)
 
 def process_file(doc, upfile, convert=True):
     filename = UPLOAD_DIR + '/' + str(doc.pk) + '.pdf'
@@ -74,7 +78,8 @@ def download_file(doc, name, url, convert=True):
         raw_doc = urlopen(url)
         process_file(doc, raw_doc, convert)
     except Exception as e:
-        pass # NEED TO LOG!  FIXME
+        # NEED TO LOG!  FIXME
+        print "download or process error : " + str(e)
 
 # convert used for testing purpose
 def run_process_file(doc, file, convert=True):

@@ -1,9 +1,9 @@
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import get_object_or_404
 from django.core.urlresolvers import reverse
+from documents.models import UploadFileForm, UploadHttpForm
+from documents.models import EditForm, Document, Page
 from courses.models import Course
-from documents.models import UploadFileForm, UploadHttpForm, EditForm, Document, Page
-from settings import UPLOAD_DIR
 from re import match
 
 def upload_file(request, slug):
@@ -42,6 +42,10 @@ def download_page(request, pid=None):
     page = get_object_or_404(Page, pk=pid)
     return HttpResponse(page.get_content(), mimetype="image/png")
 
+def download_mpage(request, pid=None):
+    page = get_object_or_404(Page, pk=pid)
+    return HttpResponse(page.get_mini(), mimetype="image/png")
+
 def edit_post(request, id):
     doc = get_object_or_404(Document, pk=id)
     form = EditForm(request.POST)
@@ -49,12 +53,17 @@ def edit_post(request, id):
         doc.name = form.cleaned_data['name']
         doc.description = form.cleaned_data['description']
         doc.save()
+        return HttpResponse('ok', 'text/html')
     else:
         return HttpResponse('form invalid', 'text/html')
-        
-    return HttpResponse('ok', 'text/html')
-
+    
 def remove(request, id):
     doc = get_object_or_404(Document, pk=id)
     doc.delete()
     return HttpResponse('ok', 'text/html')
+
+def description(request, id):
+    doc = get_object_or_404(Document, pk=id)
+    return HttpResponse('{"id": %d, "name":"%s", "description":"%s"}' %
+                        (doc.id, doc.name, doc.description),
+                        'application/json')
