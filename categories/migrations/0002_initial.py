@@ -9,7 +9,7 @@ from categories.models import Category as new_cat
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        holds, contains = dict(), dist()
+        holds, contains = dict(), dict()
         
         for cat in old_cat.objects.all():
             ncat = new_cat.objects.create(id=cat.id, name=cat.name, 
