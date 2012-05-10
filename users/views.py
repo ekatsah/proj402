@@ -1,5 +1,7 @@
 from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import get_object_or_404
 from django.core.urlresolvers import reverse
+from django.contrib.auth.models import User
 from django.shortcuts import render
 from courses.models import Course
 from users.models import CourseFollow
@@ -33,3 +35,16 @@ def follow(request):
         up.courses.add(cf)
     
     return HttpResponse('ok', 'text/html')
+
+def modo(uid, flag):
+    u = get_object_or_404(User, pk=uid)
+    up = u.get_profile()
+    up.moderate = flag
+    up.save()
+    return HttpResponse('ok', 'text/html')
+
+def set_modo(request, uid):
+    return modo(uid, True)
+
+def unset_modo(request, uid):
+    return modo(uid, False)
