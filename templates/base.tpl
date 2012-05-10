@@ -55,6 +55,15 @@ jQuery(document).ajaxSend(function(event, xhr, settings) {
 		return false;
 	}
 
+	function Gload(url, func) {
+		$.get(url, function(data) {
+			if (data.indexOf("ok") == 0)
+				func(data);
+			else
+				alert("error! " + data);
+		});
+	}
+
 	function Pload(form, url, func) {
 		$.post(url, $('#' + form).serialize(), function(data) {
 			if (data.indexOf("ok") == 0) {
