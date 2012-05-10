@@ -33,6 +33,14 @@
     border-radius: 15px;
 }
 
+#overlay_box hr {
+    border-top: 1px solid #105ff6;
+    border-bottom: none;
+    border-left: none;
+    border-right: none;
+    background-color: #e5e5e5;
+}
+
 #overlay_box h3 {
     font-size: 15px;
     color: #001f46;

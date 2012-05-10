@@ -2,8 +2,9 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import get_object_or_404
 from django.core.urlresolvers import reverse
 from courses.models import Course
-from documents.models import UploadFileForm, EditForm, Document, Page
+from documents.models import UploadFileForm, UploadHttpForm, EditForm, Document, Page
 from settings import UPLOAD_DIR
+from re import match
 
 def upload_file(request, slug):
     form = UploadFileForm(request.POST, request.FILES)
@@ -15,6 +16,21 @@ def upload_file(request, slug):
             
     # FIXME add an error management
     return HttpResponseRedirect(reverse('course_show', args=[slug]))
+
+# FIXME MAJOR REFACTOR NEEDED (/me begins to crash)
+def upload_http(request, slug):
+    form = UploadHttpForm(request.POST)
+    if form.is_valid():
+        course = get_object_or_404(Course, slug=slug)
+        url = form.cleaned_data['url']
+        name = match(r'.*/([^/]+)$', url).group(1)
+        if len(name) < 4:
+            return HttpResponse('name invalid', 'text/html')
+        d = Document.new_raw(request.user, course, name, url, 
+                         form.cleaned_data['category'])
+        course.add_document(d)
+        return HttpResponse('ok', 'text/html')
+    return HttpResponse('form invalid', 'text/html')
 
 def download_file(request, id):
     document = get_object_or_404(Document, pk=id)

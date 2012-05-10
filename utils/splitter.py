@@ -4,6 +4,7 @@ from settings import UPLOAD_DIR
 from multiprocessing import Process
 from django.db import models, connection
 from pyPdf import PdfFileReader, PdfFileWriter
+from urllib2 import urlopen
 
 def parse_words(doc, content):
     # split and keep the words
@@ -49,12 +50,12 @@ def process_file(doc, upfile, convert=True):
     fd = open(filename, 'w')
     fd.write(upfile.read())
     fd.close()
-    
+
     # sauvegarde du nombre de page
     fd = file(filename, 'r')
     pdf = PdfFileReader(fd)
     doc.set_npages(pdf.numPages)
-    
+
     # activate the search system
     system("pdftotext " + filename)
     words = file(UPLOAD_DIR + '/' + str(doc.pk) + '.txt', 'r') 
@@ -68,6 +69,13 @@ def process_file(doc, upfile, convert=True):
         num += 1
     fd.close()
 
+def download_file(doc, name, url, convert=True):
+    try:
+        raw_doc = urlopen(url)
+        process_file(doc, raw_doc, convert)
+    except Exception as e:
+        pass # NEED TO LOG!  FIXME
+
 # convert used for testing purpose
 def run_process_file(doc, file, convert=True):
     if convert:
@@ -75,3 +83,11 @@ def run_process_file(doc, file, convert=True):
         p.start()
     else:
         process_file(doc, file, False)
+
+# convert used for testing purpose
+def run_download_file(doc, name, url, convert=True):
+    if convert:
+        p = Process(target=download_file, args=(doc, name, url))
+        p.start()
+    else:
+        download_file(doc, name, url, False)

@@ -1,6 +1,7 @@
 from django.conf.urls.defaults import patterns, url
 from django.contrib.auth.decorators import login_required
 from django.views.generic.list_detail import object_detail
+from documents.models import UploadFileForm, UploadHttpForm
 from courses.models import Course
 from utils.json import json_sublist
 from courses.views import new_course
@@ -24,6 +25,8 @@ urlpatterns = patterns('courses.views',
 
     url(r'^s/(?P<slug>[^/]+)', AR(login_required(object_detail)),
         {'queryset': Course.objects.all(), 
-         'template_name': 'course_show.tpl'},
+         'template_name': 'course_show.tpl',
+         'extra_context': {'uform': UploadFileForm(),
+                           'hform': UploadHttpForm()}},
         name='course_show'),
 )

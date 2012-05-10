@@ -4,16 +4,11 @@ from django.views.generic.list_detail import object_detail
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 from documents.models import UploadFileForm, EditForm, Document
-from documents.views import upload_file, download_file, download_page, edit_post
+from documents.views import upload_file, upload_http, download_file 
+from documents.views import download_page, edit_post
 from utils.decorators import AR, moderate
 
 urlpatterns = patterns('documents.views',
-    url(r'^get$', 
-        AR(login_required(direct_to_template)), 
-        {'template': 'upload_form.tpl', 
-         'extra_context': {'form': UploadFileForm()}}, 
-        name="upload_form"),
-
     url(r'^preview/(?P<object_id>[^/]+)$',
         AR(login_required(object_detail)),
         {'queryset': Document.objects.all(),
@@ -45,6 +40,10 @@ urlpatterns = patterns('documents.views',
     url(r'^put/(?P<slug>[^/]+)$', 
         require_POST(login_required(upload_file)), 
         name="upload_file"),
+
+    url(r'^put_http/(?P<slug>[^/]+)$', 
+        require_POST(login_required(upload_http)), 
+        name="upload_http_file"),
 
     url(r'^r/(?P<id>\d+)/.*', 
         login_required(download_file), 
