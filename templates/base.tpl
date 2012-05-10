@@ -95,10 +95,12 @@ jQuery(document).ajaxSend(function(event, xhr, settings) {
       <a href="{% url user_logout %}">Logout</a>
     </div>
 
+{% if user.get_profile.moderate %}
     <div class="dright">
       <a href="{% url admin_index %}" onclick="return Iload('{% url admin_index %}');">Admin</a>
     </div>
-    
+{% endif %}
+
     <div class="dright">
       <input type="text" value="search" name="q" id="search_q">
       <input type="submit" value="go" id="search_go">

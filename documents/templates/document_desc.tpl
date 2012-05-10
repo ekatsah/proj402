@@ -1,4 +1,6 @@
+{% if user.get_profile.moderate %}
 <img style="margin-top: -1px; float: left" src="/static/edit.png" id="edit_but"/>
+{% endif %}
 <h1>{{ object.name }}</h1>
 <p>Document uploaded by {{ object.owner.username }} on {{ object.date|date:"d/m/y H:i" }}<br>
 This document is classed in {{ object.points.full_category }}<br><br>

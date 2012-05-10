@@ -4,28 +4,33 @@ from categories.views import sub_categories, attach_category, detach_category
 from categories.views import del_category, new_category, attach_course
 from categories.views import detach_course, sub_courses
 from categories.models import Category
-from utils.decorators import enforce_post
+from utils.decorators import enforce_post, moderate
 from utils.json import json_sublist
 
 urlpatterns = patterns('categories.views',
     url(r'^new',
-        enforce_post(login_required(new_category)),
+        moderate(enforce_post(login_required(new_category))),
         name="category_new"),
 
     url(r'^attach/(?P<category>[^/]+)/(?P<subcategory>[^/]+)$', 
-        login_required(attach_category), name="category_attach"),
+        moderate(login_required(attach_category)),
+        name="category_attach"),
 
     url(r'^detach/(?P<category>[^/]+)/(?P<parent>[^/]+)$',
-        login_required(detach_category), name="category_detach"),
+        moderate(login_required(detach_category)),
+        name="category_detach"),
 
     url(r'^add_course/(?P<category>[^/]+)/(?P<slug>[^/]+)$',
-        login_required(attach_course), name="cat_course_add"),
+        moderate(login_required(attach_course)),
+        name="cat_course_add"),
 
     url(r'^del_course/(?P<category>[^/]+)/(?P<slug>[^/]+)$',
-        login_required(detach_course), name="cat_course_del"),
+        moderate(login_required(detach_course)),
+        name="cat_course_del"),
 
     url(r'^del/(?P<category>[^/]+)$',
-        login_required(del_category), name='category_del'),
+        moderate(login_required(del_category)),
+        name='category_del'),
 
     url(r'^sub/(?P<catid>[^/]+)$', 
         login_required(sub_categories), name='category_sub'),

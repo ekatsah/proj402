@@ -1,4 +1,4 @@
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, HttpResponseForbidden
 
 # Ajax rewrite.
 def AR(function):
@@ -17,3 +17,12 @@ def enforce_post(function):
 		else:
 			return HttpResponse("Error: Not a post request")
 	return check_post
+
+# enforce moderator rights
+def moderate(function):
+	def check_modo(request, *args, **kwargs):
+		if request.user.get_profile().moderate:
+			return function(request, *args, **kwargs)
+		else:
+			return HttpResponseForbidden("get out!")
+	return check_modo

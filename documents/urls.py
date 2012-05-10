@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 from documents.models import UploadFileForm, EditForm, Document
 from documents.views import upload_file, download_file, download_page, edit_post
-from utils.decorators import AR
+from utils.decorators import AR, moderate
 
 urlpatterns = patterns('documents.views',
     url(r'^get$', 
@@ -39,7 +39,7 @@ urlpatterns = patterns('documents.views',
         name="document_desc"),
 
     url(r'^post_ed/(?P<id>[^/]+)$',
-        require_POST(login_required(edit_post)),
+        moderate(require_POST(login_required(edit_post))),
         name="edit_post"),
 
     url(r'^put/(?P<slug>[^/]+)$', 

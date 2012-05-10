@@ -19,6 +19,7 @@ class UserProfile(models.Model):
     section = models.CharField(max_length=80, null=True)
     courses = models.ManyToManyField(CourseFollow)
     welcome = models.BooleanField(default=True)
+    moderate = models.BooleanField(default=False)
 
 User.profile = property(lambda u: UserProfile.objects.get_or_create(user=u)[0])
 
