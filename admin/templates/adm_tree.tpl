@@ -8,13 +8,16 @@ function add_click(node, pnode) {
 	overlay_reset();
 	overlay_title("Add");
 	$('#overlay_content').html('Create new category : <input id="new_cat_name"/>');
-	$('#overlay_content').append('<input type="button" value="insert" onclick="cat_new('+node+');"/><br>');
+	$('#overlay_content').append('<input id="NCbut" type="button" value="insert" onclick="cat_new('+node+');"/><br>');
 	$('#overlay_content').append('Use existing category : <select id="exist_cat"/></select>');
-	$('#overlay_content').append('<input type="button" value="insert" onclick="cat_app('+node+');"/><br>');
+	$('#overlay_content').append('<input id="ECbut" type="button" value="insert" onclick="cat_app('+node+');"/><br>');
 	$('#overlay_content').append('Add course : <input id="new_course_slug" value="hell-x-666"/>');
-	$('#overlay_content').append('<input type="button" value="insert" onclick="course_attach('+node+');"/><br>');
+	$('#overlay_content').append('<input id="NCSbut" type="button" value="insert" onclick="course_attach('+node+');"/><br>');
 	$('#overlay_content').append('<input type="button" value="create course" onclick="course_new('+node+');"/><br>');
 	$('#exist_cat').html(options);
+	$('#new_cat_name').keypress(function(e) { if (e.which == 13) cat_new(node); });
+	$('#exist_cat').keypress(function(e) { if (e.which == 13) cat_app(node); });
+	$('#new_course_slug').keypress(function(e) { if (e.which == 13) course_attach(node); });
 	overlay_show();
 	overlay_refresh();
 }
