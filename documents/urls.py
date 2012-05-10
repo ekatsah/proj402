@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 from documents.models import UploadFileForm, EditForm, Document
 from documents.views import upload_file, upload_http, download_file 
-from documents.views import download_page, edit_post
+from documents.views import download_page, edit_post, remove
 from utils.decorators import AR, moderate
 
 urlpatterns = patterns('documents.views',
@@ -14,6 +14,10 @@ urlpatterns = patterns('documents.views',
         {'queryset': Document.objects.all(),
          'template_name': 'document_prev.tpl'},
         name="document_preview"),
+
+    url(r'^remove/(?P<id>[^/]+)$',
+        moderate(login_required(remove)),
+        name="document_remove"),
 
     url(r'^row/(?P<object_id>[^/]+)$',
         login_required(object_detail),

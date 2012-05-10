@@ -53,3 +53,8 @@ def edit_post(request, id):
         return HttpResponse('form invalid', 'text/html')
         
     return HttpResponse('ok', 'text/html')
+
+def remove(request, id):
+    doc = get_object_or_404(Document, pk=id)
+    doc.delete()
+    return HttpResponse('ok', 'text/html')
