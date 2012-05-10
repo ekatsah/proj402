@@ -67,7 +67,7 @@ jQuery(document).ajaxSend(function(event, xhr, settings) {
 	function Pload(form, url, func) {
 		$.post(url, $('#' + form).serialize(), function(data) {
 			if (data.indexOf("ok") == 0) {
-				func();
+				func(data);
 				overlay_close();
 			}
 			else

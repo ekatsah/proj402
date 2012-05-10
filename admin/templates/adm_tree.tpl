@@ -45,6 +45,7 @@ function course_new(node) {
 }
 
 function cat_new(node) {
+	var cname = $('#new_cat_name').val();
 	overlay_reset();
 	overlay_title("Create category");
 	var form = document.createElement('form');
@@ -55,52 +56,35 @@ function cat_new(node) {
 	$(form).append(''+<div><![CDATA[<table class="vtop">{{ cform.as_table }}</table>]]></div>);
 	$(form).append('<center><input type="submit" value="create" id="fcreate_category"/></center>');
 	$('#overlay_content').html(form);
+	$('#id_name').val(cname);
 	overlay_show();
 	overlay_refresh();
 	$(form).submit(function() {
 		Pload('category_new_form', '{% url category_new %}', function(data) {
 			cat_id = data.substr(3);
-			$.get('{% url category_attach "'+node+'" "'+cat_id" %}, function(data) {
-				if (data == 'ok')
-					load_cc();
-				else
-					alert("error! " + data);
-			});
+			Gload('{% url category_attach "'+node+'" "'+cat_id" %}, load_cc);
 		});
 		return false;
 	});
 }
 
 function cat_del(n, pn) {
-	$.get('{% url category_detach "'+n+'" "'+pn" %}, function(data) {
-		if (data == "ok")
-			load_cc();
-		else
-			alert("error! " + data);
-	});
+	Gload('{% url category_detach "'+n+'" "'+pn" %}, load_cc);
 }
 
 function cat_app(node) {
 	val = $('#exist_cat').val();
 	if (node != val)
-		$.get('{% url category_attach "'+node+'" "'+val" %}, function(data) {
-			if (data == "ok") {
-				overlay_close();
-				load_cc();
-			} else
-				alert("error! " + data);
+		Gload('{% url category_attach "'+node+'" "'+val" %}, function() {
+			overlay_close();
+			load_cc();
 		});
 	else
 		alert("no node in node");
 }
 
 function cat_rm(id) {
-	$.get('{% url category_del "'+id" %}, function(data) {
-		if (data == "ok")
-			load_cc();
-		else
-			alert("error! " + data);
-	});
+	Gload('{% url category_del "'+id" %}, load_cc);
 }
 
 function cat_edit(id) {
@@ -108,12 +92,7 @@ function cat_edit(id) {
 }
 
 function course_detach(id, node) {
-	$.get('{% url cat_course_del "'+node+'" "'+courses[id].slug" %}, function(data) {
-		if (data == "ok")
-			load_cc();
-		else
-			alert("error! " + data);
-	});
+	Gload('{% url cat_course_del "'+node+'" "'+courses[id].slug" %}, load_cc);
 }
 
 function course_attach(node, prev_slug) {
@@ -121,12 +100,7 @@ function course_attach(node, prev_slug) {
 	if (prev_slug != undefined)
 		slug = prev_slug;
 
-	$.get('{% url cat_course_add "'+node+'" "'+slug" %}, function(data) {
-		if (data == 'ok')
-			load_cc();
-		else
-			alert("error! " + data);
-	});
+	Gload('{% url cat_course_add "'+node+'" "'+slug" %}, load_cc);
 }
 
 function grow_tree(node, depth, pnode) {
