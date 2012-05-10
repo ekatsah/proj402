@@ -12,7 +12,7 @@ function add_click(node, pnode) {
 	$('#overlay_content').append('Use existing category : <select id="exist_cat"/></select>');
 	$('#overlay_content').append('<input type="button" value="insert" onclick="cat_app('+node+');"/><br>');
 	$('#overlay_content').append('Add course : <input id="new_course_slug" value="hell-x-666"/>');
-	$('#overlay_content').append('<input type="button" value="insert"/><br>');
+	$('#overlay_content').append('<input type="button" value="insert" onclick="course_attach('+node+');"/><br>');
 	$('#overlay_content').append('<input type="button" value="create course" onclick="course_new('+node+');"/><br>');
 	$('#exist_cat').html(options);
 	overlay_show();
@@ -35,12 +35,7 @@ function course_new(node) {
 	$(form).submit(function() {
 		var slug = $('#id_slug').val();
 		Pload('course_new_form', '{% url course_new %}', function() {
-			$.get('{% url cat_course_add "'+node+'" "'+slug" %}, function(data) {
-				if (data == 'ok')
-					load_cc();
-				else
-					alert("error! " + data);
-			});
+			course_attach(node, slug);
 		});
 		return false;
 	});
@@ -112,6 +107,19 @@ function cat_edit(id) {
 function course_detach(id, node) {
 	$.get('{% url cat_course_del "'+node+'" "'+courses[id].slug" %}, function(data) {
 		if (data == "ok")
+			load_cc();
+		else
+			alert("error! " + data);
+	});
+}
+
+function course_attach(node, prev_slug) {
+	var slug = $("#new_course_slug").val();
+	if (prev_slug != undefined)
+		slug = prev_slug;
+
+	$.get('{% url cat_course_add "'+node+'" "'+slug" %}, function(data) {
+		if (data == 'ok')
 			load_cc();
 		else
 			alert("error! " + data);
