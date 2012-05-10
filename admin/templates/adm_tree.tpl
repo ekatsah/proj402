@@ -94,6 +94,15 @@ function cat_edit(id) {
 	alert("NYI");
 }
 
+function course_detach(id, node) {
+	$.get('{% url course_detach "'+id+'" "'+node" %}, function(data) {
+		if (data == "ok")
+			load_cc();
+		else
+			alert("error! " + data);
+	});
+}
+
 function grow_tree(node, depth, pnode) {
 	if (depth > 10) // anti loop
 		return;
@@ -104,14 +113,16 @@ function grow_tree(node, depth, pnode) {
 		var cid = categories[node].holds[n]
 		var li = $(document.createElement('li'));
 		li.append("<span>&nbsp;<small>" + cid + '</small>) '+ categories[cid].name + '</span>');
-		li.append('&nbsp;<span class="rem" onclick="cat_del('+cid+','+node+')">detach</span>');
+		li.append('&nbsp;<span class="rem" onclick="cat_del('+cid+','+node+')">[detach]</span>');
 		li.append(grow_tree(cid, depth + 1, node));
 		elem.append(li);
 	}
 
 	for (var n in categories[node].contains) {
 		var li = $(document.createElement('li'));
-		li.append('&nbsp;' + courses[categories[node].contains[n]].slug + ' : ' + courses[categories[node].contains[n]].name);
+		var cid = categories[node].contains[n]
+		li.append('&nbsp;' + courses[cid].slug + ' : ' + courses[cid].name);
+		li.append('&nbsp;<span class="rem" onclick="course_detach('+cid+','+node+')">[detach]</span>');
 		elem.append(li);
 	}
 

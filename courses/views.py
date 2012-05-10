@@ -30,3 +30,9 @@ def category_del(request, category):
         return HttpResponse('ok', 'text/html')
     else:
         return HttpResponse('not empty object', 'text/html')
+
+def course_detach(request, course, category):
+    cat = get_object_or_404(Category, pk=category)
+    cou = get_object_or_404(Course, pk=course)
+    cat.contains.remove(cou)
+    return HttpResponse('ok', 'text/html')
