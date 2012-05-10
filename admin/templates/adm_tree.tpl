@@ -29,8 +29,8 @@ function course_new(node) {
 	form.id = 'course_new_form';
 	form.method = 'post';
 	form.action = '{% url course_new %}';
-	$(form).append(''+<div><![CDATA[{% csrf_token %}]]></div>);
-	$(form).append(''+<div><![CDATA[<table class="vtop">{{ nform.as_table }}</table>]]></div>);
+	$(form).append('<input type="hidden" value="{{ csrf_token }} name="csrfmiddlewaretoken"/>');
+	$(form).append('<table class="vtop">{{ nform.as_table|escapejs }}</table>');
 	$(form).append('<center><input type="submit" value="create" id="fcreate_course"/></center>');
 	$('#overlay_content').html(form);
 	overlay_show();
@@ -52,8 +52,8 @@ function cat_new(node) {
 	form.id = 'category_new_form';
 	form.method = 'post';
 	form.action = '{% url category_new %}';
-	$(form).append(''+<div><![CDATA[{% csrf_token %}]]></div>);
-	$(form).append(''+<div><![CDATA[<table class="vtop">{{ cform.as_table }}</table>]]></div>);
+	$(form).append('<input type="hidden" value="{{ csrf_token }} name="csrfmiddlewaretoken"/>');
+	$(form).append('<table class="vtop">{{ cform.as_table|escapejs }}</table>');
 	$(form).append('<center><input type="submit" value="create" id="fcreate_category"/></center>');
 	$('#overlay_content').html(form);
 	$('#id_name').val(cname);
