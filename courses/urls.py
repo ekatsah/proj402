@@ -4,11 +4,11 @@ from django.views.generic.list_detail import object_detail
 from courses.models import Course
 from utils.json import json_sublist
 from courses.views import new_course
-from utils.decorators import AR, enforce_post
+from utils.decorators import AR, enforce_post, moderate
 
 urlpatterns = patterns('courses.views',
     url(r'^new',
-        enforce_post(login_required(new_course)),
+        moderate(enforce_post(login_required(new_course))),
         name="course_new"),
 
     url(r'^all$', login_required(json_sublist), 
