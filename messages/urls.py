@@ -5,7 +5,7 @@ from django.views.generic.list_detail import object_detail
 from utils.decorators import AR, enforce_post
 from messages.models import Thread, Message, NewPostForm
 from messages.views import post_thread, list_thread, new_thread, post_msg
-from courses.models import Category
+from categories.models import Category
 
 urlpatterns = patterns('notes.views',
     url(r'^boards',

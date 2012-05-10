@@ -20,6 +20,7 @@ class Course(models.Model):
     def get_docs(self):
         return sorted(self.documents.all(), key=lambda x: x.points.score, reverse=True)
 
+# DEPRECATED - soon to be removed when serv migrate
 class Category(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField(null=True)

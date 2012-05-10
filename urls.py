@@ -6,6 +6,7 @@ from utils.authentification import intra_auth
 
 urlpatterns = patterns('',
     url(r'^user/', include('users.urls'), name='users'),
+    url(r'^category/', include('categories.urls'), name='categories'),
     url(r'^course/', include('courses.urls'), name='courses'),
     url(r'^document/', include('documents.urls'), name='documents'),
     url(r'^msg/', include('messages.urls'), name='messages'),

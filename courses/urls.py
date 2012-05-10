@@ -1,44 +1,26 @@
 from django.conf.urls.defaults import patterns, url
 from django.contrib.auth.decorators import login_required
 from django.views.generic.list_detail import object_detail
-from courses.models import Course, Category
+from courses.models import Course
 from utils.json import json_sublist
-from courses.views import subcategory, courses_by_cat, new_course, category_del, course_detach
+from courses.views import new_course
 from utils.decorators import AR, enforce_post
 
 urlpatterns = patterns('courses.views',
+    url(r'^new',
+        enforce_post(login_required(new_course)),
+        name="course_new"),
+
     url(r'^all$', login_required(json_sublist), 
         {'queryset': Course.objects.all,
          'fields': ['id', 'slug', 'name', 'description']},
         name='courses_all'),
-
-    url(r'^sub/(?P<catid>[^/]+)$', login_required(courses_by_cat), 
-        name='courses_by_cat'),
-
-    url(r'^categories/all$', login_required(json_sublist), 
-        {'queryset': Category.objects.all, 
-         'fields': ['id', 'name', 'description', 'contains', 'holds']},
-        name='category_all'),
-
-    url(r'^categories/del/(?P<category>[^/]+)$', login_required(category_del), 
-        name='category_del'),
-
-    url(r'^categories/sub/(?P<catid>[^/]+)$', login_required(subcategory), 
-        name='category_sub'),
 
     url(r'^get/(?P<slug>[^/]+)',
         login_required(object_detail),
         {'queryset': Course.objects.all(), 
          'template_name': 'course_get.tpl'},
         name="course_get"),
-
-    url(r'^new',
-        enforce_post(login_required(new_course)),
-        name="course_new"),
-
-    url(r'^detach/(?P<course>[^/]+)/(?P<category>[^/]+)$',
-        login_required(course_detach),
-        name="course_detach"),
 
     url(r'^s/(?P<slug>[^/]+)', AR(login_required(object_detail)),
         {'queryset': Course.objects.all(), 
