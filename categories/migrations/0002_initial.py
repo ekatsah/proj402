@@ -9,17 +9,22 @@ from categories.models import Category as new_cat
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        holds, contains = dict(), dist()
+        holds, contains = dict(), dict()
         
         for cat in old_cat.objects.all():
             ncat = new_cat.objects.create(id=cat.id, name=cat.name, 
                                           description=cat.description)
         for cat in old_cat.objects.all():
-            ncat = new_cat.objects.get(cat.id)
-            for h in cat.holds.all():
-                    ncat.holds.add(h)
-            for c in cat.contains.all():
-                 ncat.contains.add(c)
+            try:
+                ncat = new_cat.objects.get(pk=cat.id)
+                for h in cat.holds.all():
+                    hcat = new_cat.objects.get(pk=h.id)
+                    ncat.holds.add(hcat)
+                for c in cat.contains.all():
+                    ccat = new_cat.objects.get(pk=c.id)
+                    ncat.contains.add(ccat)
+            except:
+                print "echec import for %s" % cat.name
 
     def backwards(self, orm):
         # Deleting model 'Category'
