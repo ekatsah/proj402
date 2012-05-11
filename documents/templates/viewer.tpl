@@ -3,6 +3,7 @@
 <script type="text/javascript">
 
 img_urlz = { {% for p in pages %}"#bimg{{ forloop.counter }}":"{%url download_page p.id %}",{% endfor %} '0': '0'};
+mini_urlz = { {% for p in pages %}"mimg{{ forloop.counter }}":"{%url download_mpage p.id %}",{% endfor %} '0': '0'};
 
 function load_image(id) {
 	elem = '#bimg' + id;
@@ -147,6 +148,13 @@ $(document).ready(function() {
   });
 {% endif %}
 
+  function load_min(i) {
+  	$('#mimg'+i).attr('src', mini_urlz['mimg'+i]);
+  	if (i < {{ object.size }})
+  		setTimeout(function() { load_min(i+1); }, 10);
+  }
+  setTimeout(function () { load_min(1); }, 10);
+
 });
 
 </script>
@@ -167,7 +175,7 @@ $(document).ready(function() {
         {% for p in object.pages.all %}
             <p>page {{ forloop.counter }}</p>
             <img id="mimg{{ forloop.counter }}" class="page minimg"
-                src="{% url download_mpage p.id %}" 
+                src="/static/blank.png" 
                 width="118" height="{% widthratio p.height p.width 118 %}"><br>
         {% endfor %}</center>
     </div>
