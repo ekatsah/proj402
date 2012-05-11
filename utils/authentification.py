@@ -1,12 +1,15 @@
+from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
+from django.template import RequestContext
 from django.contrib.auth import login
 from xml.dom.minidom import parseString
 from string import printable
 from random import choice
 from settings import USER_CHECK
 from urllib2 import urlopen
+from base64 import b64encode
 
 def get_text(nodelist):
     rc = [ node.data for node in nodelist if node.nodeType == node.TEXT_NODE ]
@@ -23,14 +26,23 @@ def intra_auth(request):
     if sid and uid:
         try:
             verifier = urlopen(USER_CHECK % (sid, uid))
+            infos = verifier.read()
         except Exception as e:
-            raise Exception("ULB checker failed, error = '%s'" % str(e))
-        dom = parseString(verifier.read(10000))
-        ip, username = get_value(dom, "ipAddress"), get_value(dom, "username")
-        firstname, name = get_value(dom, "prenom"), get_value(dom, "nom")
-        email, regist = get_value(dom, "email"), get_value(dom, "matricule")
-        anet, facid = get_value(dom, "anet"), get_value(dom, "facid")
-        
+            return render_to_response('error.tpl', 
+                                      {'msg': "ULB ERR#1: " + str(e)},
+                                      context_instance=RequestContext(request))
+
+        dom = parseString(infos)
+        try:
+            ip, username = get_value(dom, "ipAddress"), get_value(dom, "username")
+            firstname, name = get_value(dom, "prenom"), get_value(dom, "nom")
+            email, regist = get_value(dom, "email"), get_value(dom, "matricule")
+            anet, facid = get_value(dom, "anet"), get_value(dom, "facid")
+        except:
+            msg = b64encode(infos)
+            msg = [ msg[y * 78:(y+1)*78] for y in xrange((len(msg)/78) +1) ]
+            return render_to_response('error.tpl', {'msg': "\n".join(msg)},
+                                      context_instance=RequestContext(request))
         try:
             user = User.objects.get(username=username)
         except Exception:
