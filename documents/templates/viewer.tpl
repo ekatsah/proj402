@@ -210,8 +210,16 @@ $(document).ready(function() {
                     <div class="comments">
                          <img style="float: left; margin-top: -8px" src="/static/com-left.png"/>
                          <div class="white" onclick="new_thread_box({{ object.refer.id }}, {{ object.id }}, {{ p.id }});">Add comment</div>
+                         {% if p.threads.all %}
                          <img style="margin-bottom: -12px; margin-top: -8px;" src="/static/com-middle.png"/>
-                         <div class="white">Read the 3 comments</div>
+                         {% with c=p.threads.all|length %}
+                         {% if c == 1 %}
+                         <div class="white" onclick="list_thread({{ object.refer.id }}, {{ object.id }}, {{ p.id }});">Read the comment</div>
+                         {% else %}
+                         <div class="white" onclick="list_thread({{ object.refer.id }}, {{ object.id }}, {{ p.id }});">Read the {{ c }} comments</div>
+                         {% endif %}
+                         {% endwith %}
+                         {% endif %}
                          <img style="float: right; margin-top: -8px" src="/static/com-right.png"/>
                     </div>
                 </div>
