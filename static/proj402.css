@@ -19,6 +19,12 @@ h2 {
 	cursor: pointer;
 }
 
+input[type=text], textarea {
+	border: 1px solid #666;
+	background-color: #e0e0ef;
+	border-radius: 3px;
+}
+
 #content {
     padding: 20px;
     margin: 0px;
