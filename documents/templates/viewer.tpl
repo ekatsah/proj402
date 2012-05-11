@@ -140,7 +140,7 @@ $(document).ready(function() {
 		Pload('edit_form', '{% url document_edit object.id %}', function(data) {
 			$.getJSON('{% url document_desc object.id %}', function(doc) {
 				$('#doc_name').html(doc.name);
-				$('#doc_desc').html(doc.name);
+				$('#doc_desc').html(doc.description);
 			});
 		});
 		return false;
