@@ -1,23 +1,28 @@
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import get_object_or_404
 from django.core.urlresolvers import reverse
+from django.db import transaction
 from documents.models import UploadFileForm, UploadHttpForm
 from documents.models import EditForm, Document, Page
+from utils.splitter import run_process_file, run_download_file
 from courses.models import Course
 from re import match
 
+@transaction.commit_manually
 def upload_file(request, slug):
     form = UploadFileForm(request.POST, request.FILES)
     if form.is_valid():
         course = get_object_or_404(Course, slug=slug)
-        d = Document.new(request.user, course, request.FILES['file'], 
+        d = Document.new(request.user, course, request.FILES['file'].name, 
                          form.cleaned_data['category'])
         course.add_document(d)
-            
+        transaction.commit()
+        run_process_file(d.id, request.FILES['file'])
     # FIXME add an error management
     return HttpResponseRedirect(reverse('course_show', args=[slug]))
 
 # FIXME MAJOR REFACTOR NEEDED (/me begins to crash)
+@transaction.commit_manually
 def upload_http(request, slug):
     form = UploadHttpForm(request.POST)
     if form.is_valid():
@@ -26,9 +31,11 @@ def upload_http(request, slug):
         name = match(r'.*/([^/]+)$', url).group(1)
         if len(name) < 4:
             return HttpResponse('name invalid', 'text/html')
-        d = Document.new_raw(request.user, course, name, url, 
+        d = Document.new(request.user, course, name, 
                          form.cleaned_data['category'])
         course.add_document(d)
+        transaction.commit()
+        run_download_file(d.id, url)
         return HttpResponse('ok', 'text/html')
     return HttpResponse('form invalid', 'text/html')
 

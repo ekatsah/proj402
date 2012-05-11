@@ -16,8 +16,7 @@ ADMINS = (
 MANAGERS = ADMINS
 
 try:
-    from production import db_prod
-    DATABASES = { 'default': db_prod }
+    from production import DATABASES, UPLOAD_LOG
 except:
     DATABASES = {
         'default': {
@@ -29,6 +28,8 @@ except:
             'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
         }
     }
+    
+    UPLOAD_LOG = '/tmp/upload_log'
 
 USER_CHECK = 'http://www.ulb.ac.be/commons/check?_type=normal&_sid=%s&_uid=%s'
 UPLOAD_DIR =  '%s/documents/r' % PROJECT_PATH

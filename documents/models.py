@@ -2,7 +2,6 @@ from django.db import models, connection
 from django import forms
 from django.contrib.auth.models import User
 from settings import UPLOAD_DIR
-from utils.splitter import run_process_file, run_download_file
 from upvotes.models import VoteDocument, CAT_DOCUMENTS
 
 
@@ -52,23 +51,12 @@ class Document(models.Model):
     date = models.DateTimeField(auto_now=True, null=False)
     description = models.TextField()
 
-    # FIXME refactor needed
     @classmethod
-    def new(cls, owner, course, file, category, convert=True):
-        vd = VoteDocument.objects.create(category=category)
-        doc = cls(name=file.name, owner=owner, refer=course, done=0, size=1,
-                  points=vd)
-        doc.save()
-        run_process_file(doc, file, convert)
-        return doc
-
-    @classmethod
-    def new_raw(cls, owner, course, name, url, category, convert=True):
+    def new(cls, owner, course, name, category, convert=True):
         vd = VoteDocument.objects.create(category=category)
         doc = cls(name=name, owner=owner, refer=course, done=0, size=1,
                   points=vd)
         doc.save()
-        run_download_file(doc, name, url, convert)
         return doc
 
     def get_content(self):
