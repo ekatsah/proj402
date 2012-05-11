@@ -31,9 +31,6 @@ def intra_auth(request):
         email, regist = get_value(dom, "email"), get_value(dom, "matricule")
         anet, facid = get_value(dom, "anet"), get_value(dom, "facid")
         
-        if ip != request.META['REMOTE_ADDR']:
-            raise Exception("ip forgery")
-        
         try:
             user = User.objects.get(username=username)
         except Exception:
