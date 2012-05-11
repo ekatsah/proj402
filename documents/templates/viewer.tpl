@@ -18,7 +18,7 @@ function construct_b2m() {
 	
 	$('.bigimg').each(function(idx) {
 		b2m[idx] = boff + 5;
-		boff = boff + 17 + $('#bimg' + (1 + idx)).height();
+		boff = boff + 17 + $('#bpa' + (1 + idx)).height();
 	});
 }
 
@@ -46,7 +46,7 @@ function pzoom() {
 		$(this).height(sizes[idx].height * zoom /100);
 	});
 	$('.bigpage').each(function(idx) {
-		$(this).width($('#bimg' + (1 + idx)).width() + 40);
+		$(this).width($('#bimg' + (1 + idx)).width() + 2);
 	});
 	construct_b2m();
 	$('#zv').val(Math.floor(zoom) + '%');
@@ -193,19 +193,27 @@ $(document).ready(function() {
 		</div>
 
             {% for p in pages %}
-                <div class="bigpage" style="width: {{ p.width|add:37 }}">
-                    <div class="pbutton" id="pbut{{ forloop.counter }}">
+                <div id="bpa{{ forloop.counter }}" class="bigpage" style="width: {{ p.width|add:2 }}">
+                   <!-- <div class="pbutton" id="pbut{{ forloop.counter }}">
                     {% if p.threads.all %}
                       <span class="see_threads" id="pseethread{{ forloop.counter }}" 
                             onclick="list_thread({{ object.refer.id }}, {{ object.id }}, {{ p.id }});">C</span><br>
                     {% endif %}
                       <span class="add_comment"
-                            onclick="new_thread_box({{ object.refer.id }}, {{ object.id }}, {{ p.id }});">A</span>
-                    </div>
+                            onclick="">A</span>
+                    </div>-->
                     
                     <img id="bimg{{ forloop.counter }}"
                         class="page bigimg" src="/static/blank.png" 
-                        width="{{ p.width }}" height="{{ p.height }}"><br>
+                        width="{{ p.width }}" height="{{ p.height }}">
+
+                    <div class="comments">
+                         <img style="float: left; margin-top: -8px" src="/static/com-left.png"/>
+                         <div class="white" onclick="new_thread_box({{ object.refer.id }}, {{ object.id }}, {{ p.id }});">Add comment</div>
+                         <img style="margin-bottom: -12px; margin-top: -8px;" src="/static/com-middle.png"/>
+                         <div class="white">Read the 3 comments</div>
+                         <img style="float: right; margin-top: -8px" src="/static/com-right.png"/>
+                    </div>
                 </div>
             {% endfor %}
     </center></div>

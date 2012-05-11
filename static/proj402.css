@@ -97,12 +97,6 @@ ul {
 .bigpage {
 	margin: 15px;
 }
-.pbutton {
-	float: left;
-	width: 24px;
-	padding: 3px;
-	border: 1px green solid;
-}
 
 .shadow {
 	border: 1px #ccc solid;
@@ -185,6 +179,25 @@ ul {
 .thread_list .min2 {
 	border-right: 2px #3070f0 solid;
 	min-width: 10px;
+}
+
+.comments {
+	height: 37px;
+	background-image: url('/static/com-back.png');
+	background-repeat: repeat-x;
+	margin: 0px;
+	padding-top: 8px;
+}
+
+.comments .white {
+	display: inline;
+	color: white;
+	font-size: 16px;
+	text-shadow: black 1px 1px 1px;
+	font-weight: bold;
+	margin-left: 10px;
+	margin-right: 10px;
+	cursor: pointer;
 }
 
 /* ADMIN */
