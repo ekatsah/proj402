@@ -13,7 +13,7 @@ def json_sublist(request, queryset, fields):
         for f in fields:
             attr = getattr(o, f)
             if type(attr) == unicode:
-                object_str.append('"%s": "%s"' % (f, attr))
+                object_str.append('"%s": "%s"' % (f, attr.replace('"', '\\"')))
             elif type(attr) == int:
                 object_str.append('"%s": "%d"' % (f, attr))
             elif attr is None:
