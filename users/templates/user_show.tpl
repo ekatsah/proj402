@@ -15,25 +15,6 @@ function add_course_box() {
 		overlay_refresh();
     });
     overlay_show();
-/*    
-    $.getJSON('{% url courses_all %}', function(data) {
-        var items = [];
-
-        $.each(data, function(key, val) {
-            S = val.slug;
-            // HARD_URL
-            items.push('<li><a href="/course/s/' + S + '" onclick="return Iload(\'/course/s/' + S + '\');">' + S + '</a> : ' + 
-                val.name + ' <a onclick="join_course(\'' + S + 
-                '\');">join</a></li>');
-        });
-
-        $('#overlay_content').html($('<ul/>', {
-            'class': 'course_list',
-            html: items.join('')
-        }));
-        
-        overlay_refresh();
-    });*/
 }
 </script>
 
