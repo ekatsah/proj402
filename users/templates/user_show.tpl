@@ -16,13 +16,22 @@ function add_course_box() {
     });
     overlay_show();
 }
+
+function mask_welcome() {
+	Gload('{% url mask_welcome %}', function() {
+		$('#welcome_msg').css('display', 'none');
+	});
+	return false;
+}
+
 </script>
 
 <h1>Hello, {{ user.first_name }} {{ user.last_name }}</h1>
 
 {% if user.profile.welcome %}
+<div id="welcome_msg">
 <h2>First time, right? </h2>
-Basic rules : 
+<p>Basic rules : 
 <ol><li>Don't panic.</li>
     <li>This project is still highly experimental</li></ol>
 
@@ -38,7 +47,8 @@ application below. If you want more information, you would probably want to read
 <a href="{% url help %}" onclick="return Iload('{% url help %}');">help</a><br><br>
 
 If you want to mask this message, 
-<a href="{% url mask_welcome %}" onclick="return Iload('{% url mask_welcome %}');">click here</a></p>
+<a href="{% url mask_welcome %}" onclick="return mask_welcome();">click here</a></p>
+</div>
 {% endif %}
 
 <h2>Courses followed</h2>

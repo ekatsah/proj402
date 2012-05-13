@@ -1,16 +1,16 @@
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
 from django.shortcuts import render
 from courses.models import Course
-from users.models import CourseFollow
+from users.models import CourseFollow, CreateUserForm
 
 def mask_welcome(request):
     up = request.user.profile
     up.welcome = False
     up.save()
-    return HttpResponseRedirect(reverse('profile'))
+    return HttpResponse('ok', 'text/html')
 
 def get_courses(request):
     return render(request, 'user_courses.tpl', {'guess': list()})
