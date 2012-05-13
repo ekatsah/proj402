@@ -12,6 +12,28 @@ function set_modo(uid) {
 	});
 }
 
+function create_user() {
+	overlay_reset();
+	overlay_title("Create User");
+	var form = document.createElement('form');
+	form.id = 'create_user_form';
+	form.method = 'post';
+	form.action = '{% url user_new %}';
+	$(form).append('<input type="hidden" value="{{ csrf_token }} name="csrfmiddlewaretoken"/>');
+	$(form).append('<table class="vtop">{{ uform.as_table|escapejs }}</table>');
+	$(form).append('<center><input type="submit" value="create" id="create_user"/></center>');
+	$('#overlay_content').html(form);
+	$('#id_comment').val('Please comment here why you added this user, when, who he is etc');
+	overlay_show();
+	overlay_refresh();
+	$(form).submit(function() {
+		Pload('create_user_form', '{% url user_new %}', function() {
+			Iload('{% url admin_users %}');
+		});
+		return false;
+	});
+}
+
 </script>
 
 <h1>Users</h1>
@@ -29,3 +51,5 @@ function set_modo(uid) {
     </tr>
 {% endfor %}
 </table>
+
+<input type="button" value="create user" onclick="create_user();"/>

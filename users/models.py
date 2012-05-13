@@ -6,6 +6,18 @@ from django.contrib.auth import models as authmod
 from django.contrib.auth.models import User
 from django.contrib.auth.management import create_superuser
 from courses.models import Course
+from django import forms
+
+class CreateUserForm(forms.Form):
+    username = forms.CharField()
+    password = forms.CharField()
+    email = forms.EmailField()
+    last_name = forms.CharField()
+    first_name = forms.CharField()
+    fac_id = forms.CharField()
+    section = forms.CharField()
+    registration = forms.CharField()
+    comment = forms.CharField(widget=forms.Textarea)
 
 class CourseFollow(models.Model):
     course = models.ForeignKey(Course)
@@ -20,6 +32,7 @@ class UserProfile(models.Model):
     courses = models.ManyToManyField(CourseFollow)
     welcome = models.BooleanField(default=True)
     moderate = models.BooleanField(default=False)
+    comment = models.TextField(null=True)
 
 User.profile = property(lambda u: UserProfile.objects.get_or_create(user=u)[0])
 

@@ -7,6 +7,7 @@ from utils.decorators import AR, moderate
 from courses.models import NewCourseForm
 from categories.models import NewCategoryForm
 from documents.models import Document
+from users.models import CreateUserForm
 
 urlpatterns = patterns('admin.views',
     url(r'^tree$', moderate(AR(login_required(direct_to_template))), 
@@ -17,7 +18,8 @@ urlpatterns = patterns('admin.views',
 
     url(r'^users$', moderate(AR(login_required(object_list))), 
         {'template_name': 'adm_users.tpl',
-         'queryset': User.objects.all()}, 
+         'queryset': User.objects.all(),
+         'extra_context': {'uform': CreateUserForm()}}, 
         name="admin_users"),
 
     url(r'^documents$', moderate(AR(login_required(object_list))), 

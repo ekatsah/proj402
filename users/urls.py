@@ -3,8 +3,9 @@ from django.views.generic.simple import direct_to_template
 from django.contrib.auth.views import login, logout
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
-from utils.decorators import AR, moderate
+from utils.decorators import AR, moderate, enforce_post
 from users.views import mask_welcome, get_courses, follow, unset_modo, set_modo
+from users.views import new_user
 
 urlpatterns = patterns('users.views',
     url(r'^$', 
@@ -34,4 +35,8 @@ urlpatterns = patterns('users.views',
     url(r'^unset_modo/(?P<uid>[^/]+)$',
         moderate(login_required(unset_modo)),
         name="user_unset_modo"),
+    
+    url(r'^new$',
+        enforce_post(moderate(login_required(new_user))),
+        name='user_new'),
 )
