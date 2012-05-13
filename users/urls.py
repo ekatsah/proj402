@@ -28,10 +28,10 @@ urlpatterns = patterns('users.views',
     url(r'^logout/$', logout, {'next_page': '/'}, name="user_logout"),
     
     url(r'^set_modo/(?P<uid>[^/]+)$',
-        login_required(moderate(set_modo)),
+        moderate(login_required(set_modo)),
         name="user_set_modo"),
 
     url(r'^unset_modo/(?P<uid>[^/]+)$',
-        login_required(moderate(unset_modo)),
+        moderate(login_required(unset_modo)),
         name="user_unset_modo"),
 )
