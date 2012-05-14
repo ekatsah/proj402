@@ -69,6 +69,26 @@ function refresh_mpage() {
 	}
 }
 
+function page_thread(pid) {
+	overlay_reset();
+	overlay_title("New Thread");
+	var form = document.createElement('form');
+	form.id = 'new_thread_form';
+	form.method = 'post';
+	form.action = '{% url thread_post %}';
+	$(form).append('<input type="hidden" value="{{ csrf_token }} name="csrfmiddlewaretoken"/>');
+	$(form).append('<table class="vtop">{{ tform.as_table|escapejs }}</table>');
+	$(form).append('<center><input type="submit" value="post" id="fnew_thread"/></center>');
+	$('#overlay_content').html(form);
+	overlay_show();
+	overlay_refresh();
+	$(form).submit(function() {
+		Pload('new_thread_form', '{% url course_new %}', function() {
+			course_attach(node, slug);
+		});
+		return false;
+	});
+}
 $(document).ready(function() {
   $(window).resize(function() {
   	$('#pages').height($(window).height() - 155);
@@ -200,7 +220,7 @@ $(document).ready(function() {
 
                     <div class="comments">
                          <img style="float: left; margin-top: -8px" src="/static/com-left.png"/>
-                         <div class="white" onclick="">Add comment</div>
+                         <div class="white" onclick="page_thread({{p.id}});">Add comment</div>
                          {% if p.threads.all %}
                          <img style="margin-bottom: -12px; margin-top: -8px;" src="/static/com-middle.png"/>
                          {% with c=p.threads.all|length %}

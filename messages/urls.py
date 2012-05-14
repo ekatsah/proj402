@@ -26,9 +26,9 @@ urlpatterns = patterns('notes.views',
 
     url(r'^post_thread$', 
         enforce_post(login_required(post_thread)), 
-        name="post_thread"),
+        name="thread_post"),
     
     url(r'^post_msg$', 
         enforce_post(login_required(post_msg)), 
-        name="post_msg"),
+        name="message_post"),
 )
