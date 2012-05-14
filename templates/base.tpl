@@ -3,7 +3,6 @@
 {% block header %}
 <script src="/static/overlay.js"></script>
 <script src="/static/menu.js"></script>
-<script src="/static/messages.js"></script>
 
 <script type="text/javascript">
 
