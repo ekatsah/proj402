@@ -3,8 +3,8 @@ from django.contrib.auth.decorators import login_required
 from django.views.generic.simple import direct_to_template
 from django.views.generic.list_detail import object_detail
 from utils.decorators import AR, enforce_post
-from messages.models import Thread, Message, NewPostForm
-from messages.views import post_thread, list_thread, new_thread, post_msg
+from messages.models import Thread, Message
+from messages.views import post_thread, list_thread, post_msg
 from categories.models import Category
 
 urlpatterns = patterns('notes.views',
@@ -14,37 +14,20 @@ urlpatterns = patterns('notes.views',
          'template': 'boards.tpl'},
         name="general_boards"),
 
-    url(r'^new_thread/(?P<courseid>[^/]+)/(?P<docid>[^/]+)/(?P<pageid>[^/]+)$', 
-        login_required(new_thread), 
-        name="new_thread"),
-
-    url(r'^list_thread/(?P<courseid>[^/]+)/(?P<docid>[^/]+)/(?P<pageid>[^/]+)$', 
+    url(r'^list/(?P<courseid>[^/]+)/(?P<docid>[^/]+)/(?P<pageid>[^/]+)$', 
         login_required(list_thread),
-        name="list_thread"),
+        name="thread_list"),
     
-    url(r'^prev_thread/(?P<object_id>\d+)$', 
-        login_required(object_detail), 
-        {'queryset': Thread.objects.all(), 
-         'template_name': 'preview_thread.tpl'},
-        name="preview_thread"),
-
     url(r'^view_thread/(?P<object_id>\d+)$', 
         AR(login_required(object_detail)), 
         {'queryset': Thread.objects.all(), 
-         'template_name': 'view_thread.tpl'},
-        name="view_thread"),
+         'template_name': 'thread_view.tpl'},
+        name="thread_view"),
 
     url(r'^post_thread$', 
         enforce_post(login_required(post_thread)), 
         name="post_thread"),
     
-    url(r'^new_message/(?P<object_id>\d+)$',
-        login_required(object_detail),
-        {'queryset': Message.objects.all(),
-         'template_name': 'new_message.tpl',
-         'extra_context': {'form': NewPostForm()}},
-        name="new_message"),
-
     url(r'^post_msg$', 
         enforce_post(login_required(post_msg)), 
         name="post_msg"),

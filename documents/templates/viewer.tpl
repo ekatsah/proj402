@@ -194,29 +194,20 @@ $(document).ready(function() {
 
             {% for p in pages %}
                 <div id="bpa{{ forloop.counter }}" class="bigpage" style="width: {{ p.width|add:2 }}">
-                   <!-- <div class="pbutton" id="pbut{{ forloop.counter }}">
-                    {% if p.threads.all %}
-                      <span class="see_threads" id="pseethread{{ forloop.counter }}" 
-                            onclick="list_thread({{ object.refer.id }}, {{ object.id }}, {{ p.id }});">C</span><br>
-                    {% endif %}
-                      <span class="add_comment"
-                            onclick="">A</span>
-                    </div>-->
-                    
                     <img id="bimg{{ forloop.counter }}"
                         class="page bigimg" src="/static/blank.png" 
                         width="{{ p.width }}" height="{{ p.height }}">
 
                     <div class="comments">
                          <img style="float: left; margin-top: -8px" src="/static/com-left.png"/>
-                         <div class="white" onclick="new_thread_box({{ object.refer.id }}, {{ object.id }}, {{ p.id }});">Add comment</div>
+                         <div class="white" onclick="">Add comment</div>
                          {% if p.threads.all %}
                          <img style="margin-bottom: -12px; margin-top: -8px;" src="/static/com-middle.png"/>
                          {% with c=p.threads.all|length %}
                          {% if c == 1 %}
-                         <div class="white" onclick="list_thread({{ object.refer.id }}, {{ object.id }}, {{ p.id }});">Read the comment</div>
+                         <div class="white" onclick="">Read the comment</div>
                          {% else %}
-                         <div class="white" onclick="list_thread({{ object.refer.id }}, {{ object.id }}, {{ p.id }});">Read the {{ c }} comments</div>
+                         <div class="white" onclick="">Read the {{ c }} comments</div>
                          {% endif %}
                          {% endwith %}
                          {% endif %}

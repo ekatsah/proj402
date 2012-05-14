@@ -122,9 +122,8 @@ function Ddownvote(id, cat) {
 
 <h2>Discussions</h2>
 <div id="course{{ object.id }}" style="margin-bottom: 10px;">loading..</div>
-<div><input type="button" onclick="new_thread_box({{ object.id }}, 0, 0);" value="new thread"></div>
+<div><input type="button" onclick="" value="new thread"></div>
 <script type="text/javascript">
-	$('#course{{ object.id }}').load('{% url list_thread object.id 0 0 %}'); 
 </script>
 
 {% endwith %}
