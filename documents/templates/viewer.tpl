@@ -89,9 +89,9 @@ function doc_thread() {
 	$(form).submit(function() {
 		Pload('new_thread_form', '{% url thread_post %}', function() {
 			if ($('#doc_cfront').length == 0)
-				$('doc_comment').html('<div id="doc_cfront" class="doc_com" onclick="">Read the comment</div>');
+				$('doc_comment').html('<div id="doc_cfront" class="doc_com" onclick="doc_show_thread();">Read the comment</div>');
 			else if ($('#doc_comCTR').length == 0)
-				$('doc_comment').html('<div id="doc_cfront" class="doc_com" onclick="">Read the <span id="doc_comCTR">2</span>comments</div>');
+				$('doc_comment').html('<div id="doc_cfront" class="doc_com" onclick="doc_show_thread();">Read the <span id="doc_comCTR">2</span>comments</div>');
 			else
 				$('#doc_comCTR').html(parseInt($('#doc_comCTR').html()) + 1);
 		});
@@ -99,6 +99,21 @@ function doc_thread() {
 	});
 }
 
+function doc_show_thread() {
+	$('#com_content').html('<strong>Loading..</strong>');
+	$('#com_content').css('display', 'block');
+	$.getJSON('{% url thread_list object.refer.id object.id 0 %}', function(data) {
+		$('#com_content').html('<h1>Threads about this document : </h1><table id="comtabledoc" class="thread_list"><tr><th>Subject</th><th>Poster</th><th>#post</th><th>Last Activity</th></tr></table>');
+		$.each(data, function(key, obj) {
+			var td = '<tr><td><a href="{% url thread_view "'+obj.id+'" %}"';
+			td += ' onclick="return Iload(\'{% url thread_view "'+obj.id+'" %}\');">';
+			td += obj.subject + '</a></td><td>' + obj.owner_name + '</td><td><center>';
+			td += obj.length + '</center></td><td>' + obj.date_max + '</td></tr>';
+			$('#comtabledoc').append(td);
+		});
+	});
+}	
+	
 function page_thread(pid) {
 	overlay_reset();
 	overlay_title("New Thread");
@@ -273,11 +288,13 @@ $(document).ready(function() {
 			<div id="doc_comment">
 			{% with c=object.threads.all|length %}
 			{% if c == 1 %}
-			<div id="doc_cfront" class="doc_com" onclick="">Read the comment</div>
+			<div id="doc_cfront" class="doc_com" onclick="doc_show_thread();">Read the comment</div>
 			{% endif %}{% if c > 1 %}
-			<div id="doc_cfront" class="doc_com" onclick="">Read the <span id="doc_comCTR">{{ c }}</span> comments</div>
+			<div id="doc_cfront" class="doc_com" onclick="doc_show_thread();">Read the <span id="doc_comCTR">{{ c }}</span> comments</div>
 			{% endif %}
 			{% endwith %}
+			</div>
+			<div id="com_content">
 			</div>
 		</div>
 

@@ -231,7 +231,14 @@ ul {
 	background-color: #deeeff;
 }
 
-
+#com_content {
+	border: 2px #96a2ff solid;
+	border-radius: 4px;
+	padding: 10px;
+	margin: 20px;
+	float: left;
+	display: none;
+}
 /* ADMIN */
 
 #tree input {
