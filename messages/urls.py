@@ -18,7 +18,7 @@ urlpatterns = patterns('notes.views',
         login_required(list_thread),
         name="thread_list"),
     
-    url(r'^view_thread/(?P<object_id>\d+)$', 
+    url(r'^view_thread/(?P<object_id>[^/]+)$', 
         AR(login_required(object_detail)), 
         {'queryset': Thread.objects.all(), 
          'template_name': 'thread_view.tpl'},

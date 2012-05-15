@@ -103,6 +103,21 @@ function page_thread(pid) {
 	});
 }
 
+function page_show(pid) {
+	$('#comfront' + pid).html('<strong>Loading..</strong>');
+	$('#comfront' + pid).css('display', 'block');
+	$.getJSON('{% url thread_list object.refer.id object.id "'+pid" %}, function(data) {
+		$('#comfront' + pid).html('<table id="comtable'+pid+'" class="thread_list"><tr><th>Subject</th><th>Poster</th><th>#post</th><th>Last Activity</th></tr></table>');
+		$.each(data, function(key, obj) {
+			var td = '<tr><td><a href="{% url thread_view "'+obj.id+'" %}"';
+			td += ' onclick="return Iload(\'{% url thread_view "'+obj.id+'" %}\');">';
+			td += obj.subject + '</a></td><td>' + obj.owner_name + '</td><td><center>';
+			td += obj.length + '</center></td><td>' + obj.date_max + '</td></tr>';
+			$('#comtable' + pid).append(td);
+		});
+	});
+}
+
 $(document).ready(function() {
   $(window).resize(function() {
   	$('#pages').height($(window).height() - 155);
@@ -232,6 +247,8 @@ $(document).ready(function() {
                         class="page bigimg" src="/static/blank.png" 
                         width="{{ p.width }}" height="{{ p.height }}">
 
+                    <div class="comment_front"><div id="comfront{{ p.id }}" class="cominside">
+                    </div></div>
                     <div class="comments">
                          <img style="float: left; margin-top: -8px" src="/static/com-left.png"/>
                          <div class="white" onclick="page_thread({{p.id}});">Add comment</div>
@@ -240,9 +257,9 @@ $(document).ready(function() {
                          <img style="margin-bottom: -12px; margin-top: -8px;" src="/static/com-middle.png"/>
                          {% with c=p.threads.all|length %}
                          {% if c == 1 %}
-                         <div class="white" onclick="" id="cntk{{p.id}}">Read the comment</div>
+                         <div class="white" onclick="page_show({{p.id}});" id="cntk{{p.id}}">Read the comment</div>
                          {% else %}
-                         <div class="white" onclick="">Read the <span id="cntr{{p.id}}">{{ c }}</span> comments</div>
+                         <div class="white" onclick="page_show({{p.id}});">Read the <span id="cntr{{p.id}}">{{ c }}</span> comments</div>
                          {% endif %}
                          {% endwith %}
                          {% endif %}

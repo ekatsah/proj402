@@ -54,12 +54,14 @@ def list_thread(request, courseid, docid, pageid):
 
     threads = list()
     for thread in set:
-        orig, last = thread.msgs.all()[0], thread.msgs.all()[-1]
+        count = len(thread.msgs.all())
+        orig, last = thread.msgs.all()[0], thread.msgs.all()[count - 1]
         threads.append("""{"id": %d, "subject": "%s", "length": %d, "date_min":
-            "%s", "date_max": "%s", "owner_id": %d, "owner_name": "%s %s"}""" % 
-            (thread.id, thread.subject.replace('"', '\\"'), len(thread.msgs.all()),
-             str(orig.date), str(last.date), thread.poster.id, 
-             thread.poster.first_name, thread.poster.last_name))
+            "%s", "owner_id": %d, "date_max": "%s", "owner_name": "%s %s"}""" % 
+            (thread.id, thread.subject.replace('"', '\\"'), count,
+             orig.date.strftime("%d/%m/%y %H:%M"), thread.poster.id, 
+             last.date.strftime("%d/%m/%y %H:%M"), thread.poster.first_name, 
+             thread.poster.last_name))
     return HttpResponse('[%s]' % ','.join(threads), 'application/javascript')
 
 def post_msg(request):
