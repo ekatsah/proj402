@@ -5,6 +5,8 @@
 <script src="/static/menu.js"></script>
 <script src="/static/messages.js"></script>
 
+<script src="/static/jquery.address-1.4.min.js"></script>
+
 <script type="text/javascript">
 
 // From https://docs.djangoproject.com/en/dev/ref/contrib/csrf/
@@ -50,7 +52,11 @@ jQuery(document).ajaxSend(function(event, xhr, settings) {
 		}).error(function(resp) {
 			$('#content').html('<h1>ERROR</h1><pre>'+resp['responseText']+'</pre>');
 		});
-		window.location = '/zoidberg#' + url;
+		
+		var exist_url = window.location.toString();
+		var target = exist_url.substring(0, exist_url.indexOf('#') + 1) + url;
+		current_page = target;
+		window.location = target;
 		overlay_close();
 		return false;
 	}
@@ -76,24 +82,33 @@ jQuery(document).ajaxSend(function(event, xhr, settings) {
 		return false;
 	}
 
-	$(window).ready(function() {
-		$(window).resize(function() {
-			$('#content').height($(window).height() - 117);
-		});
-		$(window).resize();
-
+	function url_load() {
 		var url = window.location.toString();
 		var p = url.indexOf('#');
 		if (p != -1) {
 			var target = url.substring(p + 1);
 			if (target.length > 0) {
 				Iload(target);
-				return true;
 			}
-		}
-		
-		Iload('{% url profile %}');
+		} else
+			Iload('{% url profile %}');
+	}
+
+	$(window).ready(function() {
+		$(window).resize(function() {
+			$('#content').height($(window).height() - 117);
+		});
+		$(window).resize();
+
+		current_page = window.location;
+		url_load();
 	});
+	
+	$.address.externalChange(function(e) {
+		if (window.location != current_page)
+			url_load();
+	});
+
 </script>
 {% endblock %}
 
