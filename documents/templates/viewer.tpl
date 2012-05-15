@@ -93,10 +93,10 @@ function page_thread(pid) {
 			if (jq.length)
 				jq.html(parseInt(jq.html()) + 1);
 			else if (jq2.length)
-				jq2.html('<div class="white" onclick="" id="cntk'+pid+'">Read the comment</div>');
+				jq2.html('<div class="white" onclick="page_show('+pid+');" id="cntk'+pid+'">Read the <span id="cntk'+pid+'">2</span> comments</div>');
 			else {
 				$('#read'+pid).append('<img style="margin-bottom: -12px; margin-top: -8px;" src="/static/com-middle.png"/>');
-				$('#read'+pid).append('<div class="white" onclick="" id="cntk'+pid+'">Read the comment</div>');
+				$('#read'+pid).append('<div class="white" onclick="page_show('+pid+');" id="cntk'+pid+'">Read the comment</div>');
 			}
 		});
 		return false;
