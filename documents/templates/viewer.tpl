@@ -79,16 +79,30 @@ function page_thread(pid) {
 	$(form).append('<input type="hidden" value="{{ csrf_token }} name="csrfmiddlewaretoken"/>');
 	$(form).append('<table class="vtop">{{ tform.as_table|escapejs }}</table>');
 	$(form).append('<center><input type="submit" value="post" id="fnew_thread"/></center>');
+	$(form).append('<p>This thread is about the page : <br><center><img src="{% url download_page "'+pid+'" %}" style="max-height: 400px;"/></center></p>');
 	$('#overlay_content').html(form);
+	$('#id_course').val({{ object.refer.id }});
+	$('#id_document').val({{ object.id }});
+	$('#id_page').val(pid);
 	overlay_show();
 	overlay_refresh();
 	$(form).submit(function() {
-		Pload('new_thread_form', '{% url course_new %}', function() {
-			course_attach(node, slug);
+		Pload('new_thread_form', '{% url thread_post %}', function() {
+			var jq = $('#cntr' + pid);
+			var jq2 = $('#cntk' + pid);
+			if (jq.length)
+				jq.html(parseInt(jq.html()) + 1);
+			else if (jq2.length)
+				jq2.html('<div class="white" onclick="" id="cntk'+pid+'">Read the comment</div>');
+			else {
+				$('#read'+pid).append('<img style="margin-bottom: -12px; margin-top: -8px;" src="/static/com-middle.png"/>');
+				$('#read'+pid).append('<div class="white" onclick="" id="cntk'+pid+'">Read the comment</div>');
+			}
 		});
 		return false;
 	});
 }
+
 $(document).ready(function() {
   $(window).resize(function() {
   	$('#pages').height($(window).height() - 155);
@@ -221,16 +235,18 @@ $(document).ready(function() {
                     <div class="comments">
                          <img style="float: left; margin-top: -8px" src="/static/com-left.png"/>
                          <div class="white" onclick="page_thread({{p.id}});">Add comment</div>
+                         <div id="read{{p.id}}" style="display: inline">
                          {% if p.threads.all %}
                          <img style="margin-bottom: -12px; margin-top: -8px;" src="/static/com-middle.png"/>
                          {% with c=p.threads.all|length %}
                          {% if c == 1 %}
-                         <div class="white" onclick="">Read the comment</div>
+                         <div class="white" onclick="" id="cntk{{p.id}}">Read the comment</div>
                          {% else %}
-                         <div class="white" onclick="">Read the {{ c }} comments</div>
+                         <div class="white" onclick="">Read the <span id="cntr{{p.id}}">{{ c }}</span> comments</div>
                          {% endif %}
                          {% endwith %}
                          {% endif %}
+                         </div>
                          <img style="float: right; margin-top: -8px" src="/static/com-right.png"/>
                     </div>
                 </div>

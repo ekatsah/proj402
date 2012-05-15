@@ -45,7 +45,7 @@ urlpatterns = patterns('documents.views',
         login_required(download_file), 
         name="download_file"),
 
-    url(r'^i/(?P<pid>\d+)$', 
+    url(r'^i/(?P<pid>[^/]+)$', 
         login_required(download_page), 
         name="download_page"),
 
