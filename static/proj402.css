@@ -218,6 +218,20 @@ ul {
 	display: none;
 }
 
+.doc_com {
+	border: 2px #96a2ff solid;
+	border-radius: 4px;
+	color: #0050a9;
+	padding: 4px 10px 4px 10px;
+	font-family: arial;
+	float: right;
+	margin-right: 15px;
+	display: inline;
+	cursor: pointer;
+	background-color: #deeeff;
+}
+
+
 /* ADMIN */
 
 #tree input {

@@ -69,6 +69,36 @@ function refresh_mpage() {
 	}
 }
 
+function doc_thread() {
+	overlay_reset();
+	overlay_title("New Thread");
+	var form = document.createElement('form');
+	form.id = 'new_thread_form';
+	form.method = 'post';
+	form.action = '{% url thread_post %}';
+	$(form).append('<input type="hidden" value="{{ csrf_token }} name="csrfmiddlewaretoken"/>');
+	$(form).append('<table class="vtop">{{ tform.as_table|escapejs }}</table>');
+	$(form).append('<center><input type="submit" value="post" id="fnew_thread"/></center>');
+	$(form).append('<p>This thread is about the document : <strong>{{ object.name }}</strong></p>');
+	$('#overlay_content').html(form);
+	$('#id_course').val({{ object.refer.id }});
+	$('#id_document').val({{ object.id }});
+	$('#id_page').val(0);
+	overlay_show();
+	overlay_refresh();
+	$(form).submit(function() {
+		Pload('new_thread_form', '{% url thread_post %}', function() {
+			if ($('#doc_cfront').length == 0)
+				$('doc_comment').html('<div id="doc_cfront" class="doc_com" onclick="">Read the comment</div>');
+			else if ($('#doc_comCTR').length == 0)
+				$('doc_comment').html('<div id="doc_cfront" class="doc_com" onclick="">Read the <span id="doc_comCTR">2</span>comments</div>');
+			else
+				$('#doc_comCTR').html(parseInt($('#doc_comCTR').html()) + 1);
+		});
+		return false;
+	});
+}
+
 function page_thread(pid) {
 	overlay_reset();
 	overlay_title("New Thread");
@@ -239,6 +269,16 @@ $(document).ready(function() {
 			<p>Document uploaded by {{ object.owner.username }} on {{ object.date|date:"d/m/y H:i" }}<br>
 			This document is classed in {{ object.points.full_category }}<br><br>
 			<span id="doc_desc">{{ object.description }}</span></p>
+			<div id="doc_comadd" onclick="doc_thread();" class="doc_com">Add comment</div>
+			<div id="doc_comment">
+			{% with c=object.threads.all|length %}
+			{% if c == 1 %}
+			<div id="doc_cfront" class="doc_com" onclick="">Read the comment</div>
+			{% endif %}{% if c > 1 %}
+			<div id="doc_cfront" class="doc_com" onclick="">Read the <span id="doc_comCTR">{{ c }}</span> comments</div>
+			{% endif %}
+			{% endwith %}
+			</div>
 		</div>
 
             {% for p in pages %}
