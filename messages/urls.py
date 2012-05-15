@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.generic.simple import direct_to_template
 from django.views.generic.list_detail import object_detail
 from utils.decorators import AR, enforce_post
-from messages.models import Thread, Message
+from messages.models import Thread, Message, NewPostForm
 from messages.views import post_thread, list_thread, post_msg
 from categories.models import Category
 
@@ -21,7 +21,8 @@ urlpatterns = patterns('notes.views',
     url(r'^view_thread/(?P<object_id>[^/]+)$', 
         AR(login_required(object_detail)), 
         {'queryset': Thread.objects.all(), 
-         'template_name': 'thread_view.tpl'},
+         'template_name': 'thread_view.tpl',
+         'extra_context': {'mform': NewPostForm()}},
         name="thread_view"),
 
     url(r'^post_thread$', 
