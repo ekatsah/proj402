@@ -239,6 +239,64 @@ ul {
 	float: left;
 	display: none;
 }
+
+/* Thread view */
+
+#op_info {
+	margin: 10px;
+	float: left;
+	min-width: 100px;
+}
+
+#outer_post {
+	float: left;
+	margin-left: 10px;
+}
+
+#outer_post h2 {
+	margin-top: 5px;
+	font-size: 16px
+}
+
+#left_post {
+	float: left;
+	margin-top: 0px;
+	padding: 10px;
+	margin-right: 0px;
+	border: 1px #bbb solid;
+	border-top-left-radius: 10px;
+	border-bottom-left-radius: 10px;
+	padding: 15px;
+}
+
+#right_post {
+	float: left;
+	margin-top: 0px;
+	padding: 15px;
+	border-top: 1px #bbb solid;
+	border-right: 1px #bbb solid;
+	border-bottom: 1px #bbb solid;
+	border-top-right-radius: 10px;
+	border-bottom-right-radius: 10px;
+}
+
+#right_post img {
+	border: 1px #eee solid;
+	margin-top: 8px;
+}
+
+.real_inner_post {
+	border: 1px #bbb solid;
+	border-radius: 10px;
+	padding: 15px;
+}
+
+.hr_view {
+	background-color: #ccc;
+	border: none;
+	height: 1px;
+}
+
 /* ADMIN */
 
 #tree input {

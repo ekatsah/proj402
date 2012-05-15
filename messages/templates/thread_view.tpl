@@ -1,40 +1,53 @@
-<script type="text/javascript">
-	function reply() {
-		overlay_reset();
-		overlay_title("Reply");
-		overlay_show();
-		$('#overlay_content').load('{% url new_message object.id %}', overlay_refresh);
-	}
-</script>
-
 {% with first=object.msgs.all|first %}
+
 <div>
-  <div style="margin-top: 10px; float: left; width: 100px;">
-    <strong>{{ first.owner.username }}</strong><br>Other stats.
+  <div id="op_info">
+    <strong>{{ first.owner.first_name }} {{ first.owner.last_name }}</strong><br>
+    Other stats.<br><br>
+    <input type="button" value="reply" onclick="reply();"/>
   </div>
 
-  <div style="float: left; margin-left: 10px;">
-    <h2 style="margin-top: 2px;">{{ object.subject }}</h2><div>
-    <div style="border: 1px #bbb solid; border-radius: 10px; padding: 15px">{{ first.text }}</div>
+  <div id="outer_post">
+    <small>Posted in
+      <a href="{% url course_show object.referc.slug %}" 
+         onclick="return Iload('{% url course_show object.referc.slug %}');">
+        {{ object.referc.name }}
+      </a>
+      {% if object.referd %} :: 
+        <a href="{% url view_file object.referd.id %}" 
+           onclick="return Iload('{% url view_file object.referd.id %}');">
+          {{ object.referd.name }}
+        </a>
+      {% endif %}
+    </small>
+
+    <h2>{{ object.subject }}</h2>
+
+    {% if object.referp %}
+    	<div id="left_post">
+    	  <div id="inner_post">{{ first.text }}</div>
+    	</div>
+    	
+    	<div id="right_post">
+    	  About page<br>
+	  <img id="page_image" src="{% url download_mpage object.referp.id %}"/> 
+	</div>
+    {% else %}
+	<div id="inner_post" class="real_inner_post">{{ first.text }}</div>
+    {% endif %}
   </div>
-  
-  {% if object.referp %}
-  <div style="float: left; margin-left: 10px;">
-    This thread is about the page <img src="{% url download_page object.referp.id %}" 
-                        width="{{ p.width }}" height="{{ p.height }}">
-  </div>
-  {% endif %}
 </div>
 
-<div style="clear: both; padding: 10px;">
-  <input type="button" value="reply" onclick="reply();"/>
-</div>
+{% if object.referp %}
+<script type="text/javascript">
+	var h = Math.max($('#left_post').height(), $('#right_post').height());
+	$('#left_post').height(h);
+	$('#right_post').height(h);
+</script>
+{% endif %}
 
-{% for m in object.msgs.all %}{% if not forloop.first %}
-<div style="border: 1px #ccc solid; padding: 15px; border-radius: 3px; margin: 3px;">
-<p style="margin: 0px"><strong>On {{ m.date|date:"d/m/y H:i" }}, {{ m.owner.username }} wrote : </strong><br>
-{{ m.text }}</p>
+<div style="clear: both; margin-top: 10px; padding-top: 10px;">
+  <hr class="hr_view"/>
 </div>
-{% endif %}{% endfor %}
 
 {% endwith %}
