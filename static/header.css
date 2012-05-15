@@ -45,9 +45,9 @@
 	overflow: hidden;
 }
 
-.dright input {
+.dright .search {
 	font-size: 11px;
-	border: None;
+	border: none;
 	border-radius: 3px;
 	background-color: #eef;
 }
