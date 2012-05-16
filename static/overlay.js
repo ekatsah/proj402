@@ -20,15 +20,22 @@ $(window).resize(function() {
 		overlay_refresh();
 });
 
+function overlay_escape(e) {
+	if (e.keyCode == 27)
+		overlay_close();
+}
+
 // show the overlay layout
 function overlay_show() {
 	overlay_refresh();
 	$('#front').css('display', 'block');
+	$(document).keypress(overlay_escape);
 }
 
 // close the overlay layout
 function overlay_close() {
 	$('#front').css('display', 'none');
+	$(document).unbind('keypress', overlay_escape);
 }
 
 function overlay_reset() {

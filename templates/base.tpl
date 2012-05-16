@@ -170,7 +170,7 @@ jQuery(document).ajaxSend(function(event, xhr, settings) {
 
 {% block overlay %}
 <div id="front">
-	<div id="grey"></div>
+	<div id="grey" onclick="overlay_close()"></div>
 	<div id="overlay_box">
 		<h3 id="overlay_title"></h3>
 		<img src="/static/close.gif" id="overlay_closeb">
