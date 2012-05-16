@@ -69,6 +69,100 @@ function refresh_mpage() {
 	}
 }
 
+function doc_thread() {
+	overlay_reset();
+	overlay_title("New Thread");
+	var form = document.createElement('form');
+	form.id = 'new_thread_form';
+	form.method = 'post';
+	form.action = '{% url thread_post %}';
+	$(form).append('<input type="hidden" value="{{ csrf_token }} name="csrfmiddlewaretoken"/>');
+	$(form).append('<table class="vtop">{{ tform.as_table|escapejs }}</table>');
+	$(form).append('<center><input type="submit" value="post" id="fnew_thread"/></center>');
+	$(form).append('<p>This thread is about the document : <strong>{{ object.name }}</strong></p>');
+	$('#overlay_content').html(form);
+	$('#id_course').val({{ object.refer.id }});
+	$('#id_document').val({{ object.id }});
+	$('#id_page').val(0);
+	overlay_show();
+	overlay_refresh();
+	$(form).submit(function() {
+		Pload('new_thread_form', '{% url thread_post %}', function() {
+			if ($('#doc_cfront').length == 0)
+				$('doc_comment').html('<div id="doc_cfront" class="doc_com" onclick="doc_show_thread();">Read the comment</div>');
+			else if ($('#doc_comCTR').length == 0)
+				$('doc_comment').html('<div id="doc_cfront" class="doc_com" onclick="doc_show_thread();">Read the <span id="doc_comCTR">2</span>comments</div>');
+			else
+				$('#doc_comCTR').html(parseInt($('#doc_comCTR').html()) + 1);
+		});
+		return false;
+	});
+}
+
+function doc_show_thread() {
+	$('#com_content').html('<strong>Loading..</strong>');
+	$('#com_content').css('display', 'block');
+	$.getJSON('{% url thread_list object.refer.id object.id 0 %}', function(data) {
+		$('#com_content').html('<h1>Threads about this document : </h1><table id="comtabledoc" class="thread_list"><tr><th>Subject</th><th>Poster</th><th>#post</th><th>Last Activity</th></tr></table>');
+		$.each(data, function(key, obj) {
+			var td = '<tr><td><a href="{% url thread_view "'+obj.id+'" %}"';
+			td += ' onclick="return Iload(\'{% url thread_view "'+obj.id+'" %}\');">';
+			td += obj.subject + '</a></td><td>' + obj.owner_name + '</td><td><center>';
+			td += obj.length + '</center></td><td>' + obj.date_max + '</td></tr>';
+			$('#comtabledoc').append(td);
+		});
+	});
+}	
+	
+function page_thread(pid) {
+	overlay_reset();
+	overlay_title("New Thread");
+	var form = document.createElement('form');
+	form.id = 'new_thread_form';
+	form.method = 'post';
+	form.action = '{% url thread_post %}';
+	$(form).append('<input type="hidden" value="{{ csrf_token }} name="csrfmiddlewaretoken"/>');
+	$(form).append('<table class="vtop">{{ tform.as_table|escapejs }}</table>');
+	$(form).append('<center><input type="submit" value="post" id="fnew_thread"/></center>');
+	$(form).append('<p>This thread is about the page : <br><center><img src="{% url download_page "'+pid+'" %}" style="max-height: 400px;"/></center></p>');
+	$('#overlay_content').html(form);
+	$('#id_course').val({{ object.refer.id }});
+	$('#id_document').val({{ object.id }});
+	$('#id_page').val(pid);
+	overlay_show();
+	overlay_refresh();
+	$(form).submit(function() {
+		Pload('new_thread_form', '{% url thread_post %}', function() {
+			var jq = $('#cntr' + pid);
+			var jq2 = $('#cntk' + pid);
+			if (jq.length)
+				jq.html(parseInt(jq.html()) + 1);
+			else if (jq2.length)
+				jq2.html('<div class="white" onclick="page_show('+pid+');" id="cntk'+pid+'">Read the <span id="cntk'+pid+'">2</span> comments</div>');
+			else {
+				$('#read'+pid).append('<img style="margin-bottom: -12px; margin-top: -8px;" src="/static/com-middle.png"/>');
+				$('#read'+pid).append('<div class="white" onclick="page_show('+pid+');" id="cntk'+pid+'">Read the comment</div>');
+			}
+		});
+		return false;
+	});
+}
+
+function page_show(pid) {
+	$('#comfront' + pid).html('<strong>Loading..</strong>');
+	$('#comfront' + pid).css('display', 'block');
+	$.getJSON('{% url thread_list object.refer.id object.id "'+pid" %}, function(data) {
+		$('#comfront' + pid).html('<table id="comtable'+pid+'" class="thread_list"><tr><th>Subject</th><th>Poster</th><th>#post</th><th>Last Activity</th></tr></table>');
+		$.each(data, function(key, obj) {
+			var td = '<tr><td><a href="{% url thread_view "'+obj.id+'" %}"';
+			td += ' onclick="return Iload(\'{% url thread_view "'+obj.id+'" %}\');">';
+			td += obj.subject + '</a></td><td>' + obj.owner_name + '</td><td><center>';
+			td += obj.length + '</center></td><td>' + obj.date_max + '</td></tr>';
+			$('#comtable' + pid).append(td);
+		});
+	});
+}
+
 $(document).ready(function() {
   $(window).resize(function() {
   	$('#pages').height($(window).height() - 155);
@@ -190,36 +284,43 @@ $(document).ready(function() {
 			<p>Document uploaded by {{ object.owner.username }} on {{ object.date|date:"d/m/y H:i" }}<br>
 			This document is classed in {{ object.points.full_category }}<br><br>
 			<span id="doc_desc">{{ object.description }}</span></p>
+			<div id="doc_comadd" onclick="doc_thread();" class="doc_com">Add comment</div>
+			<div id="doc_comment">
+			{% with c=object.threads.all|length %}
+			{% if c == 1 %}
+			<div id="doc_cfront" class="doc_com" onclick="doc_show_thread();">Read the comment</div>
+			{% endif %}{% if c > 1 %}
+			<div id="doc_cfront" class="doc_com" onclick="doc_show_thread();">Read the <span id="doc_comCTR">{{ c }}</span> comments</div>
+			{% endif %}
+			{% endwith %}
+			</div>
+			<div id="com_content">
+			</div>
 		</div>
 
             {% for p in pages %}
                 <div id="bpa{{ forloop.counter }}" class="bigpage" style="width: {{ p.width|add:2 }}">
-                   <!-- <div class="pbutton" id="pbut{{ forloop.counter }}">
-                    {% if p.threads.all %}
-                      <span class="see_threads" id="pseethread{{ forloop.counter }}" 
-                            onclick="list_thread({{ object.refer.id }}, {{ object.id }}, {{ p.id }});">C</span><br>
-                    {% endif %}
-                      <span class="add_comment"
-                            onclick="">A</span>
-                    </div>-->
-                    
                     <img id="bimg{{ forloop.counter }}"
                         class="page bigimg" src="/static/blank.png" 
                         width="{{ p.width }}" height="{{ p.height }}">
 
+                    <div class="comment_front"><div id="comfront{{ p.id }}" class="cominside">
+                    </div></div>
                     <div class="comments">
                          <img style="float: left; margin-top: -8px" src="/static/com-left.png"/>
-                         <div class="white" onclick="new_thread_box({{ object.refer.id }}, {{ object.id }}, {{ p.id }});">Add comment</div>
+                         <div class="white" onclick="page_thread({{p.id}});">Add comment</div>
+                         <div id="read{{p.id}}" style="display: inline">
                          {% if p.threads.all %}
                          <img style="margin-bottom: -12px; margin-top: -8px;" src="/static/com-middle.png"/>
                          {% with c=p.threads.all|length %}
                          {% if c == 1 %}
-                         <div class="white" onclick="list_thread({{ object.refer.id }}, {{ object.id }}, {{ p.id }});">Read the comment</div>
+                         <div class="white" onclick="page_show({{p.id}});" id="cntk{{p.id}}">Read the comment</div>
                          {% else %}
-                         <div class="white" onclick="list_thread({{ object.refer.id }}, {{ object.id }}, {{ p.id }});">Read the {{ c }} comments</div>
+                         <div class="white" onclick="page_show({{p.id}});">Read the <span id="cntr{{p.id}}">{{ c }}</span> comments</div>
                          {% endif %}
                          {% endwith %}
                          {% endif %}
+                         </div>
                          <img style="float: right; margin-top: -8px" src="/static/com-right.png"/>
                     </div>
                 </div>

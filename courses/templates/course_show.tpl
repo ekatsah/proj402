@@ -48,6 +48,8 @@ $(document).ready(function() {
 	{% for d in docs %}
 	$('#doc_row{{ d.id }}').load('{% url row_info d.id %}');
 	{% endfor %}
+
+	course_thread_show();
 });
 
 function send_vote(s, t) {
@@ -97,6 +99,50 @@ function Ddownvote(id, cat) {
 	Dvote(id, cat, '-1', -1, 'Downvote');
 }
 
+function course_thread_show() {
+	$.getJSON('{% url thread_list object.id 0 0 %}', function(data) {
+		$('#course_forums').html('<table id="comtable" class="thread_list"><tr><th>Subject</th><th>Poster</th><th>#post</th><th>Last Activity</th></tr></table>');
+		var found = 0;
+
+		$.each(data, function(key, obj) {
+			found = 1;
+			var td = '<tr><td><a href="{% url thread_view "'+obj.id+'" %}"';
+			td += ' onclick="return Iload(\'{% url thread_view "'+obj.id+'" %}\');">';
+			td += obj.subject + '</a></td><td>' + obj.owner_name + '</td><td><center>';
+			td += obj.length + '</center></td><td>' + obj.date_max + '</td></tr>';
+			$('#comtable').append(td);
+		});
+
+		if (found == 0)
+			 $('#course_forums').html('No thread found');
+	});
+}
+
+function course_thread() {
+	overlay_reset();
+	overlay_title("New Thread");
+	var form = document.createElement('form');
+	form.id = 'new_thread_form';
+	form.method = 'post';
+	form.action = '{% url thread_post %}';
+	$(form).append('<input type="hidden" value="{{ csrf_token }} name="csrfmiddlewaretoken"/>');
+	$(form).append('<table class="vtop">{{ tform.as_table|escapejs }}</table>');
+	$(form).append('<center><input type="submit" value="post" id="fnew_thread"/></center>');
+	$('#overlay_content').html(form);
+	$('#id_course').val({{ object.id }});
+	$('#id_document').val(0);
+	$('#id_page').val(0);
+	overlay_show();
+	overlay_refresh();
+	$(form).submit(function() {
+		Pload('new_thread_form', '{% url thread_post %}', function() {
+			$('#course_forums').html('reloading..');
+			course_thread_show();
+		});
+		return false;
+	});
+}
+
 </script>
 
 <h1>{{ object.name }}</h1>
@@ -121,10 +167,9 @@ function Ddownvote(id, cat) {
 <p><input type="button" onclick="upload_file();" value="upload file"/></p>
 
 <h2>Discussions</h2>
-<div id="course{{ object.id }}" style="margin-bottom: 10px;">loading..</div>
-<div><input type="button" onclick="new_thread_box({{ object.id }}, 0, 0);" value="new thread"></div>
+<div id="course_forums" style="margin-bottom: 10px;">loading..</div>
+<div><input type="button" onclick="course_thread()" value="new thread"></div>
 <script type="text/javascript">
-	$('#course{{ object.id }}').load('{% url list_thread object.id 0 0 %}'); 
 </script>
 
 {% endwith %}

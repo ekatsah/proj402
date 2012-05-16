@@ -35,25 +35,6 @@ def post_thread(request):
         return HttpResponse("ok")
     return HttpResponse("Error: Invalid form")
 
-def new_thread(request, courseid, docid, pageid):
-    course = get_object_or_404(Course, pk=courseid)
-    doc, page = None, None
-
-    if docid != "0":
-        doc = get_object_or_404(Document, pk=docid)
-        if doc not in course.documents.all():
-            raise Exception("Corrupt Query, step doc")
-
-    if pageid != "0":
-        page = get_object_or_404(Page, pk=pageid)
-        if page not in doc.pages.all():
-            raise Exception("Corrupt Query, step page")
-
-    return render_to_response('new_thread.tpl',
-                {'course': course, 'form': NewThreadForm(), 
-                 'document': doc, 'page': page}, 
-                context_instance=RequestContext(request))
-
 def list_thread(request, courseid, docid, pageid):
     course = get_object_or_404(Course, pk=courseid)
     set = course.threads.all()
@@ -71,9 +52,17 @@ def list_thread(request, courseid, docid, pageid):
             raise Exception("Corrupt Query, step page")
         set = page.threads.all()
 
-    return render_to_response('list_thread.tpl',
-                {'threads': set, 'page': page, 'course': course, 'document': doc},
-                context_instance=RequestContext(request))
+    threads = list()
+    for thread in set:
+        count = len(thread.msgs.all())
+        orig, last = thread.msgs.all()[0], thread.msgs.all()[count - 1]
+        threads.append("""{"id": %d, "subject": "%s", "length": %d, "date_min":
+            "%s", "owner_id": %d, "date_max": "%s", "owner_name": "%s %s"}""" % 
+            (thread.id, thread.subject.replace('"', '\\"'), count,
+             orig.date.strftime("%d/%m/%y %H:%M"), thread.poster.id, 
+             last.date.strftime("%d/%m/%y %H:%M"), thread.poster.first_name, 
+             thread.poster.last_name))
+    return HttpResponse('[%s]' % ','.join(threads), 'application/javascript')
 
 def post_msg(request):
     form = NewPostForm(request.POST)

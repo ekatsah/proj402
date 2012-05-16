@@ -6,6 +6,7 @@ from documents.models import UploadFileForm, EditForm, Document
 from documents.views import upload_file, upload_http, download_file, description
 from documents.views import download_page, download_mpage, edit_post, remove
 from utils.decorators import AR, moderate, enforce_post
+from messages.models import NewThreadForm
 
 urlpatterns = patterns('documents.views',
     url(r'^preview/(?P<object_id>[^/]+)$',
@@ -44,7 +45,7 @@ urlpatterns = patterns('documents.views',
         login_required(download_file), 
         name="download_file"),
 
-    url(r'^i/(?P<pid>\d+)$', 
+    url(r'^i/(?P<pid>[^/]+)$', 
         login_required(download_page), 
         name="download_page"),
 
@@ -56,6 +57,7 @@ urlpatterns = patterns('documents.views',
         AR(login_required(object_detail)), 
         {'queryset': Document.objects.all(), 
          'template_name': 'viewer.tpl',
-         'extra_context': {'eform': EditForm()}},
+         'extra_context': {'eform': EditForm(),
+                           'tform': NewThreadForm()}},
         name='view_file'),
 )

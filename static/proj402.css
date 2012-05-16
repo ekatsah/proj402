@@ -23,6 +23,8 @@ input[type=text], input[type=password], textarea {
 	border: 1px solid #666;
 	background-color: #e0e0ef;
 	border-radius: 3px;
+	box-shadow: rgba(0,0,100,0.2) 1px 1px;
+	padding: 2px;
 }
 
 #content {
@@ -198,6 +200,118 @@ ul {
 	margin-left: 10px;
 	margin-right: 10px;
 	cursor: pointer;
+}
+
+.comment_front {
+	background-color: #004fb2;
+}
+
+.cominside {
+	margin-left: 10px;
+	margin-right: 10px;
+	margin-top: 0px;
+	margin-bottom: 0px;
+	padding: 3px;
+	border-bottom-left-radius: 5px; 
+	border-bottom-right-radius: 5px; 
+	background-color: #eee;
+	display: none;
+}
+
+.doc_com {
+	border: 2px #96a2ff solid;
+	border-radius: 4px;
+	color: #0050a9;
+	padding: 4px 10px 4px 10px;
+	font-family: arial;
+	float: right;
+	margin-right: 15px;
+	display: inline;
+	cursor: pointer;
+	background-color: #deeeff;
+}
+
+#com_content {
+	border: 2px #96a2ff solid;
+	border-radius: 4px;
+	padding: 10px;
+	margin: 20px;
+	float: left;
+	display: none;
+}
+
+/* Thread view */
+
+#op_info {
+	margin: 10px;
+	float: left;
+	min-width: 100px;
+}
+
+#outer_post {
+	float: left;
+	margin-left: 10px;
+}
+
+#outer_post h2 {
+	margin-top: 5px;
+	font-size: 16px
+}
+
+#left_post {
+	float: left;
+	margin-top: 0px;
+	padding: 10px;
+	margin-right: 0px;
+	border: 1px #bbb solid;
+	border-top-left-radius: 10px;
+	border-bottom-left-radius: 10px;
+	padding: 15px;
+}
+
+#right_post {
+	float: left;
+	margin-top: 0px;
+	padding: 15px;
+	border-top: 1px #bbb solid;
+	border-right: 1px #bbb solid;
+	border-bottom: 1px #bbb solid;
+	border-top-right-radius: 10px;
+	border-bottom-right-radius: 10px;
+}
+
+#right_post img {
+	border: 1px #eee solid;
+	margin-top: 8px;
+}
+
+.real_inner_post {
+	border: 1px #bbb solid;
+	border-radius: 10px;
+	padding: 15px;
+}
+
+.hr_view {
+	background-color: #ccc;
+	border: none;
+	height: 1px;
+}
+
+.forums_reply {
+	padding: 15px;
+	border-left: 1px #2585ff solid;
+	border-radius: 10px;
+	margin: 3px;
+}
+
+.forums_reply_p {
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+.forums_reply_header {
+	margin: 0px;
+	font-size: 11px;
 }
 
 /* ADMIN */

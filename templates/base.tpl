@@ -3,7 +3,6 @@
 {% block header %}
 <script src="/static/overlay.js"></script>
 <script src="/static/menu.js"></script>
-<script src="/static/messages.js"></script>
 
 <script src="/static/jquery.address-1.4.min.js"></script>
 
@@ -130,8 +129,8 @@ jQuery(document).ajaxSend(function(event, xhr, settings) {
 {% endif %}
 
     <div class="dright">
-      <input type="text" value="search" name="q" id="search_q">
-      <input type="submit" value="go" id="search_go">
+      <input class="search" type="text" value="search" name="q" id="search_q">
+      <input class="search" type="submit" value="go" id="search_go">
       <script type="text/javascript">
 	var search_clicked = 0; 
 	$('#search_q').focus(function() {
