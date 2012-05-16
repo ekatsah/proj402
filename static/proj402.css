@@ -297,6 +297,23 @@ ul {
 	height: 1px;
 }
 
+.forums_reply {
+	padding: 15px;
+	border-left: 1px #2585ff solid;
+	border-radius: 10px;
+	margin: 3px;
+}
+
+.forums_reply_p {
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+.forums_reply_header {
+	margin: 0px;
+	font-size: 11px;
+}
+
 /* ADMIN */
 
 #tree input {

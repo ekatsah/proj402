@@ -85,4 +85,11 @@ function reply(id) {
   <hr class="hr_view"/>
 </div>
 
+{% for m in object.msgs.all %}{% if not forloop.first %}
+<div class="forums_reply">
+<p class="forums_reply_header">On {{ m.date|date:"d/m/y H:i" }}, {{ m.owner.first_name }} {{ m.owner.last_name }} wrote :</p>
+<p class="forums_reply_p">{{ m.text }}</p>
+</div>
+{% endif %}{% endfor %}
+
 {% endwith %}
