@@ -48,6 +48,23 @@ $(document).ready(function() {
 	{% for d in docs %}
 	$('#doc_row{{ d.id }}').load('{% url row_info d.id %}');
 	{% endfor %}
+
+	$.getJSON('{% url thread_list object.id 0 0 %}', function(data) {
+		$('#course_forums').html('<table id="comtable" class="thread_list"><tr><th>Subject</th><th>Poster</th><th>#post</th><th>Last Activity</th></tr></table>');
+		var found = 0;
+
+		$.each(data, function(key, obj) {
+			found = 1;
+			var td = '<tr><td><a href="{% url thread_view "'+obj.id+'" %}"';
+			td += ' onclick="return Iload(\'{% url thread_view "'+obj.id+'" %}\');">';
+			td += obj.subject + '</a></td><td>' + obj.owner_name + '</td><td><center>';
+			td += obj.length + '</center></td><td>' + obj.date_max + '</td></tr>';
+			$('#comtable').append(td);
+		});
+
+		if (found == 0)
+			 $('#course_forums').html('No thread found');
+	});
 });
 
 function send_vote(s, t) {
@@ -121,7 +138,7 @@ function Ddownvote(id, cat) {
 <p><input type="button" onclick="upload_file();" value="upload file"/></p>
 
 <h2>Discussions</h2>
-<div id="course{{ object.id }}" style="margin-bottom: 10px;">loading..</div>
+<div id="course_forums" style="margin-bottom: 10px;">loading..</div>
 <div><input type="button" onclick="" value="new thread"></div>
 <script type="text/javascript">
 </script>
