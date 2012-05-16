@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.generic.list_detail import object_detail
 from documents.models import UploadFileForm, UploadHttpForm
 from courses.models import Course
+from messages.models import NewThreadForm
 from utils.json import json_sublist
 from courses.views import new_course
 from utils.decorators import AR, enforce_post, moderate
@@ -27,6 +28,7 @@ urlpatterns = patterns('courses.views',
         {'queryset': Course.objects.all(), 
          'template_name': 'course_show.tpl',
          'extra_context': {'uform': UploadFileForm(),
-                           'hform': UploadHttpForm()}},
+                           'hform': UploadHttpForm(),
+                           'tform': NewThreadForm()}},
         name='course_show'),
 )
