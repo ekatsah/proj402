@@ -10,7 +10,7 @@
     
     <body>
         <div id="top">
-            <h1>PROJ-402 <small>alpha</small></h1>
+            <h1 id="big_title">PROJ-402 <small>alpha</small></h1>
             {% block links %}
             {% endblock %}
         </div>

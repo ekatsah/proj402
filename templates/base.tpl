@@ -102,6 +102,10 @@ jQuery(document).ajaxSend(function(event, xhr, settings) {
 
 		current_page = window.location;
 		url_load();
+		
+		// make the title a link to profile
+		$('#big_title').css('cursor', 'pointer');
+		$('#big_title').click(function() { Iload('{% url profile %}'); });
 	});
 	
 	$.address.externalChange(function(e) {
