@@ -38,12 +38,17 @@
   </div>
 </div>
 
-{% if object.referp %}
 <script type="text/javascript">
 
-var h = Math.max($('#left_post').height(), $('#right_post').height());
-$('#left_post').height(h);
-$('#right_post').height(h);
+{% if object.referp %}
+
+$('#page_image').load(function () {
+	var h = Math.max($('#left_post').height(), $('#right_post').height());
+	$('#left_post').height(h);
+	$('#right_post').height(h);
+});
+
+{% endif %}
 
 messages = {
 {% for m in object.msgs.all %}
@@ -79,7 +84,7 @@ function reply(id) {
 
 
 </script>
-{% endif %}
+
 
 <div style="clear: both; margin-top: 10px; padding-top: 10px;">
   <hr class="hr_view"/>
