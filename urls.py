@@ -15,6 +15,8 @@ urlpatterns = patterns('',
     url(r'^search/', include('search.urls'), name='search'),
 
     url(r'^$', direct_to_template, {'template': 'layout.tpl'}, name='index'),
+    
+    (r'^favicon\.ico$', 'django.views.generic.simple.redirect_to', {'url': '/static/favicon.ico'}),
 
     # entry point
     url(r'^zoidberg$', login_required(direct_to_template), 
