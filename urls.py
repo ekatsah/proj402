@@ -3,6 +3,7 @@ from django.views.generic.simple import direct_to_template
 from django.contrib.auth.decorators import login_required
 from utils.decorators import AR
 from utils.authentification import intra_auth
+from utils.home import home
 
 urlpatterns = patterns('',
     url(r'^user/', include('users.urls'), name='users'),
@@ -14,12 +15,12 @@ urlpatterns = patterns('',
     url(r'^vote/', include('upvotes.urls'), name='votes'),
     url(r'^search/', include('search.urls'), name='search'),
 
-    url(r'^$', direct_to_template, {'template': 'layout.tpl'}, name='index'),
-    
+    url(r'^$', home, name='index'),
+
     (r'^favicon\.ico$', 'django.views.generic.simple.redirect_to', {'url': '/static/favicon.ico'}),
 
     # entry point
-    url(r'^zoidberg$', login_required(direct_to_template), 
+    url(r'^zoidberg$', login_required(direct_to_template),
         {'template': 'base.tpl'}, name='index'),
 
     url('^help$', AR(direct_to_template), {'template': 'help.tpl'}, name='help'),

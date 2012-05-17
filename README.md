@@ -6,7 +6,7 @@ This django project is a website providing mean for students to exchange courses
 Dependencies
 ============
 
-You'll need pyPdf, django-south, poppler (the binary 'pdftotext') and ImageMagick (the binary 'convert')
+You'll need pyPdf, django-south, poppler (the binary 'pdftotext') and GraphicsMagic (the binary 'gm')
 
 Installation using virtualenv
 =============================
