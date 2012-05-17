@@ -35,7 +35,8 @@ def intra_auth(request):
         dom = parseString(infos)
         try:
             ip, username = get_value(dom, "ipAddress"), get_value(dom, "username")
-            firstname, name = get_value(dom, "prenom"), get_value(dom, "nom")
+            first_name = get_value(dom, "prenom").capitalize()
+            last_name = get_value(dom, "nom").capitalize()
             email, regist = get_value(dom, "email"), get_value(dom, "matricule")
             anet, facid = get_value(dom, "anet"), get_value(dom, "facid")
         except:
@@ -48,8 +49,8 @@ def intra_auth(request):
         except Exception:
             rpwd = ''.join(choice(printable) for x in xrange(100))
             user = User.objects.create_user(username, email, rpwd)
-            user.last_name = name
-            user.first_name = firstname
+            user.last_name = last_name
+            user.first_name = first_name
             user.save()
 
         user_profile = user.profile
