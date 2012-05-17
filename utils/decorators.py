@@ -31,5 +31,5 @@ def moderate(function):
         if request.user.get_profile().moderate:
             return function(request, *args, **kwargs)
         else:
-            return HttpResponseForbidden("get out!")
+            return HttpResponseForbidden("You don't have permissions to access this part of the website.")
     return check_modo
