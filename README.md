@@ -50,3 +50,10 @@ Create a 'fake' user to use without NetID
     >>> user_profile.section = "fac:section"
     >>> user_profile.save()
     >>> user.save()
+
+Turn a user (fake or not) into an admin
+---------------------------------------
+    >>> u = User.objects.get(pk=id)
+    >>> up = u.profile
+    >>> up.moderate = 1
+    >>> up.save()
