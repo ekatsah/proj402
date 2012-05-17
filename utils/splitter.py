@@ -1,5 +1,5 @@
 from re import sub
-from os import system
+from os import system, path, makedirs
 from settings import UPLOAD_DIR, UPLOAD_LOG
 from multiprocessing import Process
 from django.db import models, connection, close_connection, transaction
@@ -47,8 +47,8 @@ def process_page(doc, page, num, convert):
     out = file("/tmp/%d_cur.pdf" % doc.pk, 'w')
     tmp.write(out)
     out.close()
-    pagename = "%s/doc_%04d_%04d.jpg" % (UPLOAD_DIR, doc.pk, num)
-    mininame = "%s/doc_mini_%04d_%04d.jpg" % (UPLOAD_DIR, doc.pk, num)
+    pagename = "%s/%s/%04d_%04d.jpg" % (UPLOAD_DIR, doc.refer.slug, doc.pk, num)
+    mininame = "%s/%s/%04d_%04d_m.jpg" % (UPLOAD_DIR, doc.refer.slug, doc.pk, num)
     w, h = page.bleedBox.getWidth(), page.bleedBox.getHeight()
     if convert:
         system("gm convert -resize %dx%d -quality 90 -density 350 /tmp/%d_cur.pdf %s" %
@@ -65,7 +65,11 @@ def process_file_safe(docid, upfile, convert=True):
     doc = Document.objects.get(pk=docid)
     logger.info('Starting processing of doc %d (from %s) : %s' % 
                 (docid, doc.owner.username, doc.name))
-    filename = UPLOAD_DIR + '/' + str(docid) + '.pdf'
+    filename = "%s/%s/%04d.pdf" % (UPLOAD_DIR, doc.refer.slug, docid)
+
+    # check if course subdirectory exist
+    if not path.exists(UPLOAD_DIR + '/' + doc.refer.slug):
+        makedirs(UPLOAD_DIR + '/' + doc.refer.slug)
 
     # sauvegarde du document original
     fd = open(filename, 'w')
@@ -80,7 +84,7 @@ def process_file_safe(docid, upfile, convert=True):
 
     # activate the search system
     system("pdftotext " + filename)
-    words = open(UPLOAD_DIR + '/' + str(docid) + '.txt', 'r') 
+    words = open("%s/%s/%04d.txt" % (UPLOAD_DIR, doc.refer.slug, docid), 'r') 
     doc.set_wsize(parse_words(doc, words.read()))
     words.close()
     transaction.commit()
