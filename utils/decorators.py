@@ -22,7 +22,7 @@ def enforce_post(function):
         if request.method == 'POST':
             return function(request, *args, **kwargs)
         else:
-            return HttpResponse("Error: Not a post request")
+            return HttpResponse("Error: Not a POST request")
     return check_post
 
 # enforce moderator rights
