@@ -224,7 +224,7 @@ ul {
 	color: #0050a9;
 	padding: 4px 10px 4px 10px;
 	font-family: arial;
-	float: right;
+	float: center;
 	margin-right: 15px;
 	display: inline;
 	cursor: pointer;
@@ -236,7 +236,8 @@ ul {
 	border-radius: 4px;
 	padding: 10px;
 	margin: 20px;
-	float: left;
+	margin-left: 30%;
+	margin-right: 30%;
 	display: none;
 }
 
