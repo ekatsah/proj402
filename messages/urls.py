@@ -10,7 +10,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.generic.simple import direct_to_template
 from django.views.generic.list_detail import object_detail
 from utils.decorators import AR, enforce_post
-from messages.models import Thread, Message, NewPostForm
+from messages.models import Thread, Message, NewPostForm, NewThreadForm
 from messages.views import post_thread, list_thread, post_msg
 from categories.models import Category
 
@@ -18,7 +18,8 @@ urlpatterns = patterns('notes.views',
     url(r'^boards',
         AR(login_required(direct_to_template)),
         {'set': Category.objects.filter(name='Project 402')[0],
-         'template': 'boards.tpl'},
+         'template': 'boards.tpl',
+         'extra_context': {'tform': NewThreadForm()}},
         name="general_boards"),
 
     url(r'^list/(?P<courseid>[^/]+)/(?P<docid>[^/]+)/(?P<pageid>[^/]+)$', 

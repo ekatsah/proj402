@@ -8,11 +8,63 @@
 # your option) any later version.
 
 {% endcomment %}
+
 {% for s in params.set.contains.all %}
-	<h2>{{ s.name }}</h2>
-	<div id="course{{ s.id }}" style="margin-bottom: 10px;">loading..</div>
-	<div><input type="button" onclick="new_thread_box({{ s.id }}, 0, 0);" value="new thread"></div>
-	<script type="text/javascript">
-		$('#course{{ s.id }}').load('{% url list_thread s.id 0 0 %}'); 
-	</script>
+
+<h2>{{ s.name }}</h2>
+<div id="board{{s.id}}" style="margin-bottom: 10px;">loading..</div>
+<div><input type="button" onclick="board_thread({{s.id}})" value="new thread"></div>
+
 {% endfor %}
+
+<script type="text/javascript">
+
+function board_thread_show(id) {
+	$.getJSON('{% url thread_list "'+id+'" 0 0 %}', function(data) {
+		$('#board'+id).html('<table id="comtable'+id+'" class="thread_list"><tr><th>Subject</th><th>Poster</th><th>#post</th><th>Last Activity</th></tr></table>');
+		var found = 0;
+
+		$.each(data, function(key, obj) {
+			found = 1;
+			var td = '<tr><td><a href="{% url thread_view "'+obj.id+'" %}"';
+			td += ' onclick="return Iload(\'{% url thread_view "'+obj.id+'" %}\');">';
+			td += obj.subject + '</a></td><td>' + obj.owner_name + '</td><td><center>';
+			td += obj.length + '</center></td><td>' + obj.date_max + '</td></tr>';
+			$('#comtable'+id).append(td);
+		});
+
+		if (found == 0)
+			 $('#board'+id).html('No thread found');
+	});
+}
+
+function board_thread(id) {
+	overlay_reset();
+	overlay_title("New Thread");
+	var form = document.createElement('form');
+	form.id = 'new_thread_form';
+	form.method = 'post';
+	form.action = '{% url thread_post %}';
+	$(form).append('<input type="hidden" value="{{ csrf_token }} name="csrfmiddlewaretoken"/>');
+	$(form).append('<table class="vtop">{{ tform.as_table|escapejs }}</table>');
+	$(form).append('<center><input type="submit" value="post" id="fnew_thread"/></center>');
+	$('#overlay_content').html(form);
+	$('#id_course').val(id);
+	$('#id_document').val(0);
+	$('#id_page').val(0);
+	overlay_show();
+	overlay_refresh();
+	$(form).submit(function() {
+		Pload('new_thread_form', '{% url thread_post %}', function() {
+			$('#board'+id).html('reloading..');
+			board_thread_show(id);
+		});
+		return false;
+	});
+}
+
+{% for s in params.set.contains.all %}
+board_thread_show({{s.id}});
+{% endfor %}
+
+</script>
