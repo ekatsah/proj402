@@ -8,6 +8,7 @@
 # your option) any later version.
 
 {% endcomment %}
+{% load i18n %}
 <html>
     <head>
         <title>PROJ-402</title>
