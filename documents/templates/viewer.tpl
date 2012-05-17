@@ -8,7 +8,7 @@
 # your option) any later version.
 
 {% endcomment %}
-{% with pages=object.pages.all %}
+{% with pages=object.all_pages %}
 
 <script type="text/javascript">
 
@@ -276,7 +276,7 @@ $(document).ready(function() {
 
 <div id="pages">
     <div id="pleft"><center>
-        {% for p in pages|dictsort:"id" %}
+        {% for p in pages %}
             <p>page {{ forloop.counter }}</p>
             <img id="mimg{{ forloop.counter }}" class="page minimg"
                 src="/static/blank.png" 
@@ -308,7 +308,7 @@ $(document).ready(function() {
 			</div>
 		</div>
 
-            {% for p in pages|dictsort:"id" %}
+            {% for p in pages %}
                 <div id="bpa{{ forloop.counter }}" class="bigpage" style="width: {{ p.width|add:2 }}">
                     <img id="bimg{{ forloop.counter }}"
                         class="page bigimg" src="/static/blank.png" 

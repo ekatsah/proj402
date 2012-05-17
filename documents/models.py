@@ -99,3 +99,6 @@ class Document(models.Model):
         if not name.endswith('.pdf'):
             name += '.pdf'
         return name
+
+    def all_pages(self):
+        return self.pages.all().order_by('id')
