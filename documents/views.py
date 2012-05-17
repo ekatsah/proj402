@@ -18,7 +18,6 @@ from django.core.urlresolvers import reverse
 from django.db import transaction
 from documents.models import UploadFileForm, UploadHttpForm
 from documents.models import EditForm, Document, Page
-from utils.splitter import run_process_file, run_download_file
 from courses.models import Course
 from re import match
 
@@ -31,7 +30,7 @@ def upload_file(request, slug):
                          form.cleaned_data['category'])
         course.add_document(d)
         transaction.commit()
-        run_process_file(d.id, request.FILES['file'])
+        #run_process_file(d.id, request.FILES['file'])
     # FIXME add an error management
     return HttpResponseRedirect(reverse('course_show', args=[slug]))
 
@@ -49,7 +48,7 @@ def upload_http(request, slug):
                          form.cleaned_data['category'])
         course.add_document(d)
         transaction.commit()
-        run_download_file(d.id, url)
+        #run_download_file(d.id, url)
         return HttpResponse('ok', 'text/html')
     return HttpResponse('form invalid', 'text/html')
 
