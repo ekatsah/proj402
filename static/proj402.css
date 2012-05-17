@@ -236,7 +236,8 @@ ul {
 	border-radius: 4px;
 	padding: 10px;
 	margin: 20px;
-	float: left;
+	margin-left: 30%;
+	margin-right: 30%;
 	display: none;
 }
 
