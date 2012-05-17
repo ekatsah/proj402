@@ -285,28 +285,28 @@ $(document).ready(function() {
     </div>
     <div id="pmiddle"></div>
     <div id="pright"><center>
-		<div id="pseudopage">
-		{% if user.get_profile.moderate %}
-			<img style="margin-top: -1px; float: left; cursor: pointer"
-				src="/static/edit.png" id="edit_but"/>
-		{% endif %}
-			<h1 id="doc_name">{{ object.name }}</h1>
-			<p>Document uploaded by {{ object.owner.username }} on {{ object.date|date:"d/m/y H:i" }}<br>
-			This document is classed in {{ object.points.full_category }}<br><br>
-			<span id="doc_desc">{{ object.description }}</span></p>
-			<div id="doc_comadd" onclick="doc_thread();" class="doc_com">Add comment</div>
-			<div id="doc_comment">
-			{% with c=object.threads.all|length %}
-			{% if c == 1 %}
-			<div id="doc_cfront" class="doc_com" onclick="doc_show_thread();">Read the comment</div>
-			{% endif %}{% if c > 1 %}
-			<div id="doc_cfront" class="doc_com" onclick="doc_show_thread();">Read the <span id="doc_comCTR">{{ c }}</span> comments</div>
-			{% endif %}
-			{% endwith %}
-			</div>
-			<div id="com_content">
-			</div>
-		</div>
+        <div id="pseudopage">
+        {% if user.get_profile.moderate %}
+            <img style="margin-top: -1px; float: left; cursor: pointer"
+                src="/static/edit.png" id="edit_but"/>
+        {% endif %}
+            <h1 id="doc_name">{{ object.name }}</h1>
+            <p>Document uploaded by {{ object.owner.username }} on {{ object.date|date:"d/m/y H:i" }}<br>
+            This document is classed in {{ object.points.full_category }}<br><br>
+            <span id="doc_desc">{{ object.description }}</span></p>
+            <div id="doc_comadd" onclick="doc_thread();" class="doc_com">Add comment</div>
+            <div id="doc_comment">
+            {% with c=object.threads.all|length %}
+            {% if c == 1 %}
+            <div id="doc_cfront" class="doc_com" onclick="doc_show_thread();">Read the comment</div>
+            {% endif %}{% if c > 1 %}
+            <div id="doc_cfront" class="doc_com" onclick="doc_show_thread();">Read the <span id="doc_comCTR">{{ c }}</span> comments</div>
+            {% endif %}
+            {% endwith %}
+            </div>
+            <div id="com_content">
+            </div>
+        </div>
 
             {% for p in pages %}
                 <div id="bpa{{ forloop.counter }}" class="bigpage" style="width: {{ p.width|add:2 }}">
