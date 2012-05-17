@@ -60,7 +60,7 @@ class Document(models.Model):
         return doc
 
     def get_content(self):
-        f = open(UPLOAD_DIR + '/' + str(self.pk) + '.pdf', 'r')
+        f = open("%s/%s/%04d.pdf" % (UPLOAD_DIR, self.refer.slug, self.id), 'r')
         content = f.read()
         f.close()
         return content

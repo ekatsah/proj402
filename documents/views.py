@@ -47,11 +47,11 @@ def download_file(request, id):
 
 def download_page(request, pid=None):
     page = get_object_or_404(Page, pk=pid)
-    return HttpResponse(page.get_content(), mimetype="image/png")
+    return HttpResponse(page.get_content(), mimetype="image/jpeg")
 
 def download_mpage(request, pid=None):
     page = get_object_or_404(Page, pk=pid)
-    return HttpResponse(page.get_mini(), mimetype="image/png")
+    return HttpResponse(page.get_mini(), mimetype="image/jpeg")
 
 def edit_post(request, id):
     doc = get_object_or_404(Document, pk=id)
