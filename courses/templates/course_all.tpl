@@ -15,7 +15,7 @@
 {% if object_list %}
 <ul>
   {% for course in object_list|dictsort:"slug" %}
-  <li id="li_course_{{course.id}}" class="a_course_li"><div id="course_{{course.id}}" 
+  <li id="li_course_{{course.id}}" class="a_course_li"><div id="course_{{course.id}}"
                           class="a_course_div" onclick="follow({{course.id}}, '{{course.slug}}');">
       <strong>{{ course.slug }}</strong> : {{ course.name }}
   </div></li>
@@ -28,7 +28,7 @@
 <script langage="javascript">
 {% for cf in user.profile.courses.all %}
 $('#course_{{cf.course.id}}').addClass('followed_course_div');
-$('#li_course_{{cf.course.id}}').addClass('followed_course_li');
+$('#li_course_{{cf.course.id}}').addClass('followed_course_li').append(' <span class="following" style="color: green;"><i>following</i></span>');
 {% endfor %}
 
 function follow(id, slug) {
