@@ -5,20 +5,21 @@
     <li>Categories, courses selection</li>
     <li>Pdf uploading, parsing, viewing & downloading</li>
     <li>In document view, there is a mini image tracking & clicking and a zoom</li>
-    <li>In document view, an user can add a thread (by clicking on the 'A') and viewing a list (with the 'C') of thread by page</li>
-    <li>User profile</li>
-    <li>Admin : categories management</li>
+    <li>In document view, an user can add a thread for a page or a document</li>
+    <li>The user can view the threads and it's reply</li>
+    <li>Admins : users, documents & categories management</li>
+    <li>User profile and followed courses</li>
     <li>This help \o/</li>
   </ul>
 </p>
 
 <p>
-  Typical user scenar :<br>
+  Want to help?<br>
   <ol>
-    <li>Before you can view, of course ./manage.py syncdb && ./manage.py runserver</li>
-    <li>Select a course (some are present in computing/ma-info1 [/artificial intel])</li>
-    <li>Upload a pdf. Wait for it, there is no async process yet, for big pdf it take a while</li>
-    <li>View the pdf.</li>
+    <li>Use this application, upload files and do stuff</li>
+    <li>When you see a bug or have a great feature idea, <a href="http://wiki.urlab.be/urlab:p402">go there</a></li>
+    <li>Want to moderate? Create new categories or courses? <a href="mailto:p402@cerkinfo.be">write us an email</a></li>
+    <li>Want to help the developement? Join us on <a href="irc://chat.freenode.net/urlab">#urlab irc channel</a> or meet us AFK</li>
   </ol>
 </p>
 
