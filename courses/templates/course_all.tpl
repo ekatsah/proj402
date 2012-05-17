@@ -12,6 +12,7 @@
 <p>List of all courses. The blue ones are the courses you follow.<br>
    Click on the others to follow new one</p>
 
+{% if object_list %}
 <ul>
   {% for course in object_list|dictsort:"slug" %}
   <li id="li_course_{{course.id}}" class="a_course_li"><div id="course_{{course.id}}" 
@@ -20,6 +21,9 @@
   </div></li>
   {% endfor %}
 </ul>
+{% else %}
+<p><i>No courses available yet.</i></p>
+{% endif %}
 
 <script langage="javascript">
 {% for cf in user.profile.courses.all %}
