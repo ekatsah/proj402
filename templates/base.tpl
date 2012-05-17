@@ -167,7 +167,7 @@ jQuery(document).ajaxSend(function(event, xhr, settings) {
       <li onclick="mmake(1, 1);"><span>Courses</span></li>
       <li><a href="{% url general_boards %}" 
              onclick="return Iload('{% url general_boards %}');">General Forums</a></li>
-      <li><span>Walls</span></li>
+      <!-- <li><span>Walls</span></li> -->
       <li><a href="{% url help %}" onclick="return Iload('{% url help %}');">Help</a></li>
       <li><a href="https://github.com/ekatsah/proj402">Developpement</a></li>
     </ul>
