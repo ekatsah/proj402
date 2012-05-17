@@ -117,6 +117,7 @@
 	padding-right: 15px;
 }
 
+
 .menu li:hover {
 	background-color: #3375c5;
 }
@@ -131,5 +132,9 @@
 
 .menu span {
 	cursor: pointer;
+}
 
+.menu li span:after {
+	content: " »";
+	color: #EEE;
 }
