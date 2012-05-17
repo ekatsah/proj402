@@ -36,7 +36,7 @@ function course_new(node) {
 	overlay_show();
 	overlay_refresh();
 	$(form).submit(function() {
-		var slug = $('#id_slug').val();
+		var slug = $('#id_slug').val().toLowerCase();
 		Pload('course_new_form', '{% url course_new %}', function() {
 			course_attach(node, slug);
 		});

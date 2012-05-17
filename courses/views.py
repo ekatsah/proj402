@@ -6,7 +6,8 @@ def new_course(request):
     if form.is_valid():
         data = form.cleaned_data;
         try:
-            course = Course.objects.create(slug=data['slug'], name=data['name'],
+            slug = data['slug'].lower()
+            course = Course.objects.create(slug=slug, name=data['name'],
                                            description=data['description'])
             return HttpResponse("ok")
         except:
