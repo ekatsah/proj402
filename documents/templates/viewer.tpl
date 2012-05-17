@@ -2,9 +2,9 @@
 
 # Copyright 2011, hast. All rights reserved.
 #
-# This program is free software: you can redistribute it and/or modify it 
-# under the terms of the GNU Affero General Public License as published by 
-# the Free Software Foundation, either version 3 of the License, or (at 
+# This program is free software: you can redistribute it and/or modify it
+# under the terms of the GNU Affero General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or (at
 # your option) any later version.
 
 {% endcomment %}
@@ -207,10 +207,10 @@ $(document).ready(function() {
   	else
 	  	zoom = zoom * 0.9;
   	if (zoom < 10)
-  		zoom = 10; 
+  		zoom = 10;
   	pzoom();
   });
-  
+
   $('#zf').submit(function() {
   	zoom = $('#zv').val();
   	var i = zoom.indexOf("%");
@@ -223,9 +223,9 @@ $(document).ready(function() {
   		zoom = 10;
   	pzoom();
   });
-  
+
   $('#pright').scroll(refresh_mpage);
-  
+
 {% if user.get_profile.moderate %}
   $('#edit_but').click(function(event) {
 	overlay_reset();
@@ -265,7 +265,7 @@ $(document).ready(function() {
 
 <div id="pmenu">
   <form action="#" id="zf">
-    <a class="back_but" href="{% url course_show object.refer.slug %}" 
+    <a class="back_but" href="{% url course_show object.refer.slug %}"
        onclick="return Iload('{% url course_show object.refer.slug %}');"><< back to course</a>
     <a class="download_but" href="{% url download_file object.id %}">Download</a>
     <div style="float: left; margin-top: 2px"><img src="/static/l_plus.png" id="zp"/>&nbsp;&nbsp;&nbsp;<img src="/static/l_minus.png" id="zm"/></div>&nbsp;
@@ -279,7 +279,7 @@ $(document).ready(function() {
         {% for p in pages %}
             <p>page {{ forloop.counter }}</p>
             <img id="mimg{{ forloop.counter }}" class="page minimg"
-                src="/static/blank.png" 
+                src="/static/blank.png"
                 width="118" height="{% widthratio p.height p.width 118 %}"><br>
         {% endfor %}</center>
     </div>
@@ -311,7 +311,7 @@ $(document).ready(function() {
             {% for p in pages %}
                 <div id="bpa{{ forloop.counter }}" class="bigpage" style="width: {{ p.width|add:2 }}">
                     <img id="bimg{{ forloop.counter }}"
-                        class="page bigimg" src="/static/blank.png" 
+                        class="page bigimg" src="/static/blank.png"
                         width="{{ p.width }}" height="{{ p.height }}">
 
                     <div class="comment_front"><div id="comfront{{ p.id }}" class="cominside">
