@@ -102,3 +102,8 @@ class Document(models.Model):
 
     def all_pages(self):
         return self.pages.all().order_by('id')
+
+class PendingDocument(models.Model):
+    doc = models.ForeignKey(Document)
+    state = models.CharField(max_length=30)
+    url = models.CharField(max_length=255)
