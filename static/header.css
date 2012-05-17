@@ -117,10 +117,19 @@
 	padding-right: 15px;
 }
 
+.menu li:hover {
+	background-color: #3375c5;
+}
+
 .menu .light {
 	background-color: #3375c5;
 }
 
+.menu .light:hover {
+	background-color: #5790d4;
+}
+
 .menu span {
 	cursor: pointer;
+
 }
