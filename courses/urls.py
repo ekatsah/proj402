@@ -1,6 +1,6 @@
 from django.conf.urls.defaults import patterns, url
 from django.contrib.auth.decorators import login_required
-from django.views.generic.list_detail import object_detail
+from django.views.generic.list_detail import object_detail, object_list
 from documents.models import UploadFileForm, UploadHttpForm
 from courses.models import Course
 from messages.models import NewThreadForm
@@ -31,4 +31,9 @@ urlpatterns = patterns('courses.views',
                            'hform': UploadHttpForm(),
                            'tform': NewThreadForm()}},
         name='course_show'),
+
+    url(r'^view_all', AR(login_required(object_list)),
+        {'queryset': Course.objects.exclude(slug__startswith="402"), 
+         'template_name': 'course_all.tpl'},
+        name='course_view_all'),
 )

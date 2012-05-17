@@ -75,6 +75,9 @@ function submit_courses() {
 {{ guess }}</p>
 {% endif %}
 
+<p><a href="{% url course_view_all %}" onclick="return Iload('{% url course_view_all %}');">
+   View all courses</a></p>
+
 <p><strong>You can add a course by mnemonic : </strong>
 <input id="mnemo" type="text" size="5" onkeypress="course_search(event);"/></p>
 

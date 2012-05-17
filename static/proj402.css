@@ -314,6 +314,24 @@ ul {
 	font-size: 11px;
 }
 
+/* COURSE LIST */
+
+.a_course_div {
+	cursor: pointer;
+	display: inline;
+	border-radius: 3px;
+}
+
+.followed_course_li {
+	margin-top: 7px;
+	margin-bottom: 7px;
+}
+
+.followed_course_div {
+	border: 1px #a1c0ff solid;
+	background-color: #c3d7ff;
+	padding: 1px 6px 1px 6px;
+}
 /* ADMIN */
 
 #tree input {
