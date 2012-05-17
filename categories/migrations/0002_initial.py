@@ -1,40 +1,18 @@
 # -*- coding: utf-8 -*-
 import datetime
 from south.db import db
-from south.v2 import SchemaMigration
-from django.db import models
-from courses.models import Category as old_cat
-from categories.models import Category as new_cat
+from south.v2 import DataMigration
+from django.db import models as modelsd
 
-class Migration(SchemaMigration):
+class Migration(DataMigration):
 
     def forwards(self, orm):
-        holds, contains = dict(), dict()
-        
-        for cat in old_cat.objects.all():
-            ncat = new_cat.objects.create(id=cat.id, name=cat.name, 
-                                          description=cat.description)
-        for cat in old_cat.objects.all():
-            try:
-                ncat = new_cat.objects.get(pk=cat.id)
-                for h in cat.holds.all():
-                    hcat = new_cat.objects.get(pk=h.id)
-                    ncat.holds.add(hcat)
-                for c in cat.contains.all():
-                    ccat = new_cat.objects.get(pk=c.id)
-                    ncat.contains.add(ccat)
-            except:
-                print "echec import for %s" % cat.name
+        root = orm["categories.category"].objects.create(id="1", name='ROOT', description='Zoidberg root tree of life');
+        zoidberg = orm["categories.category"].objects.create(id="2", name='Project 402', description='Zoidberg release');
 
     def backwards(self, orm):
-        # Deleting model 'Category'
-        db.delete_table('categories_category')
-
-        # Removing M2M table for field contains on 'Category'
-        db.delete_table('categories_category_contains')
-
-        # Removing M2M table for field holds on 'Category'
-        db.delete_table('categories_category_holds')
+        # should delete these two default categories FIXME
+        pass
 
     models = {
         'auth.group': {
