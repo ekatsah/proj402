@@ -50,7 +50,6 @@ class Document(models.Model):
     refer = models.ForeignKey('courses.Course', related_name="back_course")
     size = models.IntegerField(null=True)
     words = models.IntegerField(null=True, default=0)
-    ready = models.BooleanField(default=False)
     pages = models.ManyToManyField(Page)
     threads = models.ManyToManyField('messages.Thread')
     done = models.IntegerField(null=False)
