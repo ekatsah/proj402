@@ -266,7 +266,7 @@ setTimeout(function () { load_min(1); }, 10);
 <div id="pmenu">
   <form action="#" id="zf">
     <a class="back_but" href="{% url course_show object.refer.slug %}"
-       onclick="return Iload('{% url course_show object.refer.slug %}');"><< back to course</a>
+       onclick="return Iload('{% url course_show object.refer.slug %}');">&lt;&lt; back to course</a>
     <a class="download_but" href="{% url download_file object.id %}">Download</a>
     <div style="float: left; margin-top: 2px"><img src="/static/l_plus.png" id="zp"/>&nbsp;&nbsp;&nbsp;<img src="/static/l_minus.png" id="zm"/></div>&nbsp;
     &nbsp;&nbsp;<input class="shadow" style="width: 50px" id="zv" value="100%"/>
