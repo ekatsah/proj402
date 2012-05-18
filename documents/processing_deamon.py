@@ -5,14 +5,21 @@
 # the Free Software Foundation, either version 3 of the License, or (at 
 # your option) any later version.
 
+# export DJANGO_SETTINGS_MODULE='settings'
+# export PYTHONPATH=$PYTHONPATH:.
+# python documents/processing_deamon.py
+
 from re import sub
+from sys import exit
+from time import sleep
+from signal import signal, SIGTERM
 from os import system, path, makedirs
-from settings import UPLOAD_DIR, UPLOAD_LOG
+from settings import UPLOAD_DIR, UPLOAD_LOG, PARSING_WORKERS
 from multiprocessing import Process
 from django.db import models, connection, close_connection, transaction
 from pyPdf import PdfFileReader, PdfFileWriter
 from urllib2 import urlopen
-from documents.models import Document
+from documents.models import Document, PendingDocument as Task
 
 import logging
 logger = logging.getLogger('das_logger')
@@ -22,7 +29,7 @@ hdlr.setFormatter(formatter)
 logger.addHandler(hdlr)
 logger.setLevel(logging.INFO)
 
-def parse_words(doc, content):
+def extract_words(doc, content):
     # split and keep the words
     words = [x.lower() for x in sub(r'\W', ' ', content).split() if len(x) > 2]
 
@@ -31,122 +38,117 @@ def parse_words(doc, content):
         terms_count[word] = terms_count.get(word, 0) + 1
 
     cursor = connection.cursor()
-    cursor.execute('select max(id) from search_wordentry;')
-    id = cursor.fetchone()[0];
-    if not id:
-        id = 0
-
     for word, count in terms_count.iteritems():
         # too slow : 
         # WordEntry.objects.create(word=word, document=doc, count=count)
-        id += 1
-        cursor.execute("insert into search_wordentry values(%d, '%s', %d, %d);" %
-                       (id, word, doc.id, count))
+        try:
+            cursor.execute("insert into search_wordentry %s values('%s', %d, %d);" %
+                           ('(word, document_id, count)', word, doc.id, count))
+        except:
+            pass
     connection.commit_unless_managed()
     cursor.close()
 
     return len(words)
 
-@transaction.commit_manually
-def process_page(doc, page, num, convert):
-    tmp = PdfFileWriter()
-    tmp.addPage(page)
-    out = file("/tmp/%d_cur.pdf" % doc.pk, 'w')
-    tmp.write(out)
-    out.close()
-    pagename = "%s/%s/%04d_%04d.jpg" % (UPLOAD_DIR, doc.refer.slug, doc.pk, num)
-    mininame = "%s/%s/%04d_%04d_m.jpg" % (UPLOAD_DIR, doc.refer.slug, doc.pk, num)
+def convert_page(doc, page, filename, num):
+    # extract a normal size page and a thumbnail with graphicsmagick
+    pname = "%s/%s/%04d_%04d.jpg" % (UPLOAD_DIR, doc.refer.slug, doc.pk, num)
+    mname = "%s/%s/%04d_%04d_m.jpg" % (UPLOAD_DIR, doc.refer.slug, doc.pk, num)
     w, h = page.bleedBox.getWidth(), page.bleedBox.getHeight()
-    if convert:
-        system("gm convert -resize %dx%d -quality 90 -density 350 /tmp/%d_cur.pdf %s" %
-               (w, h, doc.pk, pagename))
-        system("gm convert -resize 118x1000 -quality 90 -density 100 /tmp/%d_cur.pdf %s" % 
-               (doc.pk, mininame))
-    doc.add_page(num, pagename, mininame, w, h)
-    transaction.commit()
-    system("rm /tmp/%d_cur.pdf" % doc.pk)
 
-@transaction.commit_manually
-def process_file_safe(docid, upfile, convert=True):
-    close_connection()
-    doc = Document.objects.get(pk=docid)
+    system('gm convert -resize %dx%d -quality 90 %s "%s[%d]" %s' %
+           (w, h, ' -density 350', filename, num, pname))
+    system('gm convert -resize 118x1000 %s "%s[%d]" %s' % 
+           ('-quality 90 -density 100', filename, num, mname))
+    doc.add_page(num + 1, pname, mname, w, h)
+
+def parse_file(doc, upfile):
     logger.info('Starting processing of doc %d (from %s) : %s' % 
-                (docid, doc.owner.username, doc.name))
-    filename = "%s/%s/%04d.pdf" % (UPLOAD_DIR, doc.refer.slug, docid)
+                (doc.id, doc.owner.username, doc.name))
+    filename = "%s/%s/%04d.pdf" % (UPLOAD_DIR, doc.refer.slug, doc.id)
 
     # check if course subdirectory exist
     if not path.exists(UPLOAD_DIR + '/' + doc.refer.slug):
         makedirs(UPLOAD_DIR + '/' + doc.refer.slug)
 
-    # sauvegarde du document original
+    # original file saving
     fd = open(filename, 'w')
     fd.write(upfile.read())
     fd.close()
 
     # sauvegarde du nombre de page
-    fd = open(filename, 'r')
-    pdf = PdfFileReader(fd)
+    pdf = PdfFileReader(file(filename, 'r'))
     doc.set_npages(pdf.numPages)
-    transaction.commit()
 
     # activate the search system
     system("pdftotext " + filename)
-    words = open("%s/%s/%04d.txt" % (UPLOAD_DIR, doc.refer.slug, docid), 'r') 
-    doc.set_wsize(parse_words(doc, words.read()))
+    words = open("%s/%s/%04d.txt" % (UPLOAD_DIR, doc.refer.slug, doc.id), 'r')
+    doc.set_wsize(extract_words(doc, words.read()))
     words.close()
-    transaction.commit()
 
     # iteration page a page, transform en png + get page size
-    num = 1
-    for page in pdf.pages:
-        process_page(doc, page, num, convert)
-        num += 1
+    for num, page in zip(xrange(pdf.numPages), pdf.pages):
+        convert_page(doc, page, filename, num)
 
-    fd.close()
-    logger.info('End of processing of doc %d' % docid)
+    logger.info('End of processing of doc %d' % doc.id)
 
-@transaction.commit_manually
-def process_file(docid, upfile, convert=True):
+def download_file(doc, url):
+    logger.info('Starting download of doc %d : %s' % (doc.id, url))
+    return urlopen(url)
+
+def process_file(pending_id):
+    close_connection()
+    pending = Task.objects.get(pk=pending_id)
     try:
-        process_file_safe(docid, upfile, convert)
+        pending.state = 'download'
+        pending.save()
+        raw = download_file(pending.doc, pending.url)
+        pending.state = 'process'
+        pending.save()
+        parse_file(pending.doc, raw)
+        pending.state = 'done'
+        pending.save()
+
+        # may fail if download url, don't really care
+        system("rm /tmp/TMP402_%d.pdf" % pending.doc.id)
 
     except Exception as e:
-        close_connection()
-        doc = Document.objects.get(pk=docid)
-        logger.error('process file error for doc %d (from %s) : %s' % 
-                     (docid, doc.owner.username, str(e)))
-        doc.delete()
-        transaction.commit()
+        logger.error('Process file error of doc %d (from %s) : %s' % 
+                     (pending.doc.id, pending.doc.owner.username, str(e)))
+        pending.doc.delete()
 
-@transaction.commit_manually
-def download_file(docid, url, convert=True):
-    logger.info('Starting download of doc %d : %s' % (docid, url))
-    try:
-        raw_doc = urlopen(url)
+# drop here when the deamon is killed
+def terminate(a, b):
+    for worker, pending in workers:
+        try:
+            worker.terminate()
+            pending.doc.done = 0
+            pending.doc.save()
+            pending.state = 'queued'
+            pending.save()
+        # fail quietly, not a good idea, but hey, we've got already been kill,
+        # so what the hell?
+        except:
+            pass
+    exit(0)
 
-    except Exception as e:
-        close_connection()
-        doc = Document.objects.get(pk=docid)
-        logger.error('download error for doc %d (from %s), url %s : %s' % 
-                     (docid, doc.owner.username, url, str(e)))
-        doc.delete()
-        transaction.commit()
+if __name__ == "__main__":
+    workers = list()
 
-    else:
-        process_file(docid, raw_doc, convert)
+    signal(SIGTERM, terminate)
 
-# convert used for testing purpose
-def run_process_file(docid, file, convert=True):
-    if convert:
-        p = Process(target=process_file, args=(docid, file))
-        p.start()
-    else:
-        process_file(doc, file, False)
-
-# convert used for testing purpose
-def run_download_file(docid, url, convert=True):
-    if convert:
-        p = Process(target=download_file, args=(docid, url, convert))
-        p.start()
-    else:
-        download_file(docid, url, False)
+    while True:
+        sleep(10)
+        workers = [ (w,p) for w, p in workers if w.is_alive() ]
+        # Avoid useless SQL queries
+        if len(workers) >= PARSING_WORKERS:
+            continue
+        
+        # Pool seem less flexible
+        pendings = list(Task.objects.filter(state='queued').order_by('id'))
+        while len(workers) < PARSING_WORKERS and len(pendings) > 0:
+            pending = pendings.pop(0)
+            process = Process(target=process_file, args=(pending.id,))
+            process.start()
+            workers.append((process, pending))

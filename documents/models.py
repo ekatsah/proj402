@@ -18,7 +18,7 @@ class UploadFileForm(forms.Form):
 
 class UploadHttpForm(forms.Form):
     category = forms.ChoiceField(choices=CAT_DOCUMENTS)
-    url = forms.CharField()
+    url = forms.RegexField(r'.*\.[pP][dD][fF]$')
 
 class EditForm(forms.Form):
     name = forms.CharField(max_length=150)

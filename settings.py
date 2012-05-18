@@ -33,6 +33,7 @@ except:
 
 USER_CHECK = 'http://www.ulb.ac.be/commons/check?_type=normal&_sid=%s&_uid=%s'
 UPLOAD_DIR =  '%s/documents/r' % PROJECT_PATH
+PARSING_WORKERS = 7
 AUTH_PROFILE_MODULE = 'users.UserProfile'
 LOGIN_REDIRECT_URL = '/user/'
 LOGIN_URL = '/user/login/'
