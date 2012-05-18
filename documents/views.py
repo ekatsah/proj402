@@ -1,15 +1,15 @@
 # Copyright 2011, hast. All rights reserved.
 #
-# This program is free software: you can redistribute it and/or modify it 
-# under the terms of the GNU Affero General Public License as published by 
-# the Free Software Foundation, either version 3 of the License, or (at 
+# This program is free software: you can redistribute it and/or modify it
+# under the terms of the GNU Affero General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or (at
 # your option) any later version.
 
 # Copyright 2011, hast. All rights reserved.
 #
-# This program is free software: you can redistribute it and/or modify it 
-# under the terms of the GNU Affero General Public License as published by 
-# the Free Software Foundation, either version 3 of the License, or (at 
+# This program is free software: you can redistribute it and/or modify it
+# under the terms of the GNU Affero General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or (at
 # your option) any later version.
 
 from django.http import HttpResponseRedirect, HttpResponse
@@ -27,7 +27,7 @@ def upload_file(request, slug):
     form = UploadFileForm(request.POST, request.FILES)
     if form.is_valid():
         course = get_object_or_404(Course, slug=slug)
-        d = Document.new(request.user, course, request.FILES['file'].name, 
+        d = Document.new(request.user, course, request.FILES['file'].name,
                          form.cleaned_data['category'])
         course.add_document(d)
         transaction.commit()
@@ -45,7 +45,7 @@ def upload_http(request, slug):
         name = match(r'.*/([^/]+)$', url).group(1)
         if len(name) < 4:
             return HttpResponse('name invalid', 'text/html')
-        d = Document.new(request.user, course, name, 
+        d = Document.new(request.user, course, name,
                          form.cleaned_data['category'])
         course.add_document(d)
         transaction.commit()
@@ -77,7 +77,7 @@ def edit_post(request, id):
         return HttpResponse('ok', 'text/html')
     else:
         return HttpResponse('form invalid', 'text/html')
-    
+
 def remove(request, id):
     doc = get_object_or_404(Document, pk=id)
     doc.delete()
