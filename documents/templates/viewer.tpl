@@ -228,36 +228,36 @@ $(document).ready(function() {
 
 {% if user.get_profile.moderate %}
   $('#edit_but').click(function(event) {
-	overlay_reset();
-	overlay_title("Edit Document");
-	var form = document.createElement('form');
-	form.id = 'edit_form';
-	form.method = 'post';
-	form.action = '{% url document_edit object.id %}';
-	$(form).append('<input type="hidden" value="{{ csrf_token }} name="csrfmiddlewaretoken"/>');
-	$(form).append('<table class="vtop">{{ eform.as_table|escapejs }}</table>');
-	$(form).append('<center><input type="submit" value="edit" id="edit_button"/></center>');
-	$('#overlay_content').html(form);
-	overlay_show();
-	overlay_refresh();
-	$(form).submit(function() {
-		Pload('edit_form', '{% url document_edit object.id %}', function(data) {
-			$.getJSON('{% url document_desc object.id %}', function(doc) {
-				$('#doc_name').html(doc.name);
-				$('#doc_desc').html(doc.description);
-			});
-		});
-		return false;
-	});
+          overlay_reset();
+          overlay_title("Edit Document");
+          var form = document.createElement('form');
+          form.id = 'edit_form';
+          form.method = 'post';
+          form.action = '{% url document_edit object.id %}';
+          $(form).append('<input type="hidden" value="{{ csrf_token }} name="csrfmiddlewaretoken"/>');
+          $(form).append('<table class="vtop">{{ eform.as_table|escapejs }}</table>');
+          $(form).append('<center><input type="submit" value="edit" id="edit_button"/></center>');
+          $('#overlay_content').html(form);
+          overlay_show();
+          overlay_refresh();
+          $(form).submit(function() {
+              Pload('edit_form', '{% url document_edit object.id %}', function(data) {
+                  $.getJSON('{% url document_desc object.id %}', function(doc) {
+                      $('#doc_name').html(doc.name);
+                      $('#doc_desc').html(doc.description);
+                      });
+                  });
+              return false;
+              });
   });
 {% endif %}
 
-  function load_min(i) {
-  	$('#mimg'+i).attr('src', mini_urlz['mimg'+i]);
-  	if (i < {{ object.size }})
-  		setTimeout(function() { load_min(i+1); }, 10);
-  }
-  setTimeout(function () { load_min(1); }, 10);
+function load_min(i) {
+    $('#mimg'+i).attr('src', mini_urlz['mimg'+i]);
+    if (i < {{ object.size }})
+        setTimeout(function() { load_min(i+1); }, 10);
+}
+setTimeout(function () { load_min(1); }, 10);
 
 });
 
@@ -266,7 +266,7 @@ $(document).ready(function() {
 <div id="pmenu">
   <form action="#" id="zf">
     <a class="back_but" href="{% url course_show object.refer.slug %}"
-       onclick="return Iload('{% url course_show object.refer.slug %}');"><< back to course</a>
+       onclick="return Iload('{% url course_show object.refer.slug %}');">&lt;&lt; back to course</a>
     <a class="download_but" href="{% url download_file object.id %}">Download</a>
     <div style="float: left; margin-top: 2px"><img src="/static/l_plus.png" id="zp"/>&nbsp;&nbsp;&nbsp;<img src="/static/l_minus.png" id="zm"/></div>&nbsp;
     &nbsp;&nbsp;<input class="shadow" style="width: 50px" id="zv" value="100%"/>

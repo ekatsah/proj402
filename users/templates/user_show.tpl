@@ -8,6 +8,7 @@
 # your option) any later version.
 
 {% endcomment %}
+{% load i18n %}
 <script type="text/javascript">
 
 function join_course(slug) {
@@ -61,7 +62,7 @@ If you want to mask this message,
 </div>
 {% endif %}
 
-<h2>Courses followed</h2>
+<h2>{% trans "Courses followed" %}</h2>
 {% with courses=user.profile.courses.all %}
 {% if courses %}
 

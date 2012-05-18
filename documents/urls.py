@@ -6,10 +6,9 @@
 # your option) any later version.
 
 from django.conf.urls.defaults import patterns, url
-from django.views.generic.simple import direct_to_template
 from django.views.generic.list_detail import object_detail
 from django.contrib.auth.decorators import login_required
-from documents.models import UploadFileForm, EditForm, Document
+from documents.models import EditForm, Document
 from documents.views import upload_file, upload_http, download_file, description
 from documents.views import download_page, download_mpage, edit_post, remove
 from utils.decorators import AR, moderate, enforce_post
