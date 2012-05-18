@@ -18,7 +18,7 @@ class UploadFileForm(forms.Form):
 
 class UploadHttpForm(forms.Form):
     category = forms.ChoiceField(choices=CAT_DOCUMENTS)
-    url = forms.CharField()
+    url = forms.RegexField(r'.*\.[pP][dD][fF]$')
 
 class EditForm(forms.Form):
     name = forms.CharField(max_length=150)
@@ -50,7 +50,6 @@ class Document(models.Model):
     refer = models.ForeignKey('courses.Course', related_name="back_course")
     size = models.IntegerField(null=True)
     words = models.IntegerField(null=True, default=0)
-    ready = models.BooleanField(default=False)
     pages = models.ManyToManyField(Page)
     threads = models.ManyToManyField('messages.Thread')
     done = models.IntegerField(null=False)
@@ -102,3 +101,8 @@ class Document(models.Model):
 
     def all_pages(self):
         return self.pages.all().order_by('id')
+
+class PendingDocument(models.Model):
+    doc = models.ForeignKey(Document)
+    state = models.CharField(max_length=30)
+    url = models.CharField(max_length=255)
