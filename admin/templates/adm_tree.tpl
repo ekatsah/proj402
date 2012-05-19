@@ -35,19 +35,13 @@ function add_click(node, pnode) {
 function course_new(node) {
 	overlay_reset();
 	overlay_title("Create course");
-	var form = document.createElement('form');
-	form.id = 'course_new_form';
-	form.method = 'post';
-	form.action = '{% url course_new %}';
-	$(form).append('<input type="hidden" value="{{ csrf_token }} name="csrfmiddlewaretoken"/>');
-	$(form).append('<table class="vtop">{{ nform.as_table|escapejs }}</table>');
-	$(form).append('<center><input type="submit" value="create" id="fcreate_course"/></center>');
-	$('#overlay_content').html(form);
+	overlay_form({"id": "course_new", "url": "{% url course_new %}",
+	              "content": '{{ nform.as_table|escapejs }}', "submit": "create"});
 	overlay_show();
 	overlay_refresh();
-	$(form).submit(function() {
+	$('#course_new').submit(function() {
 		var slug = $('#id_slug').val().toLowerCase();
-		Pload('course_new_form', '{% url course_new %}', function() {
+		Pload('course_new', '{% url course_new %}', function() {
 			course_attach(node, slug);
 		});
 		return false;
@@ -58,19 +52,13 @@ function cat_new(node) {
 	var cname = $('#new_cat_name').val();
 	overlay_reset();
 	overlay_title("Create category");
-	var form = document.createElement('form');
-	form.id = 'category_new_form';
-	form.method = 'post';
-	form.action = '{% url category_new %}';
-	$(form).append('<input type="hidden" value="{{ csrf_token }} name="csrfmiddlewaretoken"/>');
-	$(form).append('<table class="vtop">{{ cform.as_table|escapejs }}</table>');
-	$(form).append('<center><input type="submit" value="create" id="fcreate_category"/></center>');
-	$('#overlay_content').html(form);
+	overlay_form({"id": "category_new", "url": "{% url category_new %}",
+	              "content": '{{ cform.as_table|escapejs }}', "submit": "create"});
 	$('#id_name').val(cname);
 	overlay_show();
 	overlay_refresh();
-	$(form).submit(function() {
-		Pload('category_new_form', '{% url category_new %}', function(data) {
+	$('#category_new').submit(function() {
+		Pload('category_new', '{% url category_new %}', function(data) {
 			cat_id = data.substr(3);
 			Gload('{% url category_attach "'+node+'" "'+cat_id" %}, load_cc);
 		});
