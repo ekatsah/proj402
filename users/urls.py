@@ -12,7 +12,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 from utils.decorators import AR, moderate, enforce_post
 from users.views import mask_welcome, get_courses, follow, unset_modo, set_modo
-from users.views import new_user
+from users.views import new_user, unfollow
 
 urlpatterns = patterns('users.views',
     url(r'^$', 
@@ -31,6 +31,10 @@ urlpatterns = patterns('users.views',
     url(r'^follow$',
         require_POST(login_required(follow)),
         name="user_follow"),
+
+    url(r'^unfollow$',
+        require_POST(login_required(unfollow)),
+        name="user_unfollow"),
 
     url(r'^login/$', login, {'template_name': 'user_login.tpl'}, name="user_login"),
     url(r'^logout/$', logout, {'next_page': '/'}, name="user_logout"),

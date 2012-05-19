@@ -43,6 +43,9 @@ class UserProfile(models.Model):
 
     def real_name(self):
         return self.user.first_name + " " + self.user.last_name
+    
+    def get_follow(self):
+        return [ cf.course for cf in self.courses.all() ]
 
 User.profile = property(lambda u: UserProfile.objects.get_or_create(user=u)[0])
 

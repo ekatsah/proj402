@@ -192,6 +192,24 @@ $(document).ready(function() {
 
 	document_show();
 	thread_show();
+	
+{% if object in user.get_profile.get_follow %}
+	follow_state = 0;
+{% else %}
+	follow_state = 1;
+{% endif %}
+
+	$('#follow').click(function() {
+		var url = ['{% url user_unfollow %}', '{% url user_follow %}'];
+		var text = ['follow', 'unfollow'];
+		$.post(url[follow_state], {'courses': '{{ object.slug }}'}, function(data) {
+			if (data == 'ok') {
+				$('#follow').html(text[follow_state]);
+				follow_state = (follow_state + 1) % 2;
+			} else
+				alert(data);
+		});
+	});
 });
 
 </script>

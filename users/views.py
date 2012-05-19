@@ -43,6 +43,16 @@ def follow(request):
     
     return HttpResponse('ok', 'text/html')
 
+def unfollow(request):
+    courses = request.POST.get('courses', '')
+    if len(courses) == 0:
+        return HttpResponse('invalid request is invalid', 'text/html')
+    course = get_object_or_404(Course, slug=courses)
+    up = request.user.profile
+    cf = up.courses.get(course=course)
+    cf.delete()
+    return HttpResponse('ok', 'text/html')
+
 def modo(uid, flag):
     u = get_object_or_404(User, pk=uid)
     up = u.get_profile()

@@ -11,6 +11,14 @@
 
 {% include "course_show.js" %}
 
+<span id="follow" class="download_but" style="float: right">
+{% if object in user.get_profile.get_follow %}
+  unfollow
+{% else %}
+  follow
+{% endif %}
+</span>
+
 <h1>{{ object.name }}</h1>
 
 <h2>Available documents</h2>

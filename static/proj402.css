@@ -133,6 +133,7 @@ ul {
 	padding-left: 7px;
 	padding-right: 7px;
 	padding-bottom: 3px;
+	cursor: pointer;
 }
 
 .back_but {
