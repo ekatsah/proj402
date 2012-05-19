@@ -41,6 +41,9 @@ class UserProfile(models.Model):
     moderate = models.BooleanField(default=False)
     comment = models.TextField(null=True)
 
+    def real_name(self):
+        return self.user.first_name + " " + self.user.last_name
+
 User.profile = property(lambda u: UserProfile.objects.get_or_create(user=u)[0])
 
 def create_admin(app, created_models, verbosity, **kwargs):

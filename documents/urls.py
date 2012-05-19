@@ -10,29 +10,35 @@ from django.views.generic.list_detail import object_detail
 from django.contrib.auth.decorators import login_required
 from documents.models import EditForm, Document
 from documents.views import upload_file, upload_http, download_file, description
-from documents.views import download_page, download_mpage, edit_post, remove
+from documents.views import download_page, download_mpage, edit_post, remove 
+from documents.views import doc_by_course, doc_pending
 from utils.decorators import AR, moderate, enforce_post
+from utils.json import json_sublist
 from messages.models import NewThreadForm
 
 urlpatterns = patterns('documents.views',
-    url(r'^preview/(?P<object_id>[^/]+)$',
-        AR(login_required(object_detail)),
-        {'queryset': Document.objects.all(),
-         'template_name': 'document_prev.tpl'},
-        name="document_preview"),
-
     url(r'^remove/(?P<id>[^/]+)$',
         moderate(login_required(remove)),
         name="document_remove"),
 
-    url(r'^row/(?P<object_id>[^/]+)$',
-        login_required(object_detail),
-        {'queryset': Document.objects.all(),
-         'template_name': 'document_row.tpl'},
-        name="row_info"),
+    url(r'^all$',
+        login_required(json_sublist),
+        {'queryset': Document.objects.all,
+         'fields': ['id', 'name', 'description', 'size', 'done', 'refer.name', 
+                    'refer.id', 'date', 'points.score', 'owner.get_profile.real_name', 
+                         'points.full_category', 'points.category']},
+        name="document_all"),
+
+    url(r'^all/(?P<slug>[^/]+)$',
+        login_required(doc_by_course),
+        name="document_by_course"),
+
+    url(r'^pending/(?P<slug>[^/]+)$',
+        login_required(doc_pending),
+        name="document_pending"),
 
     url(r'^description/(?P<id>[^/]+)$',
-        moderate(login_required(description)),
+        login_required(description),
         name="document_desc"),
 
     url(r'^edit/(?P<id>[^/]+)$',
@@ -59,7 +65,7 @@ urlpatterns = patterns('documents.views',
         login_required(download_mpage), 
         name="download_mpage"),
 
-    url(r'^v/(?P<object_id>\d+)/$', 
+    url(r'^v/(?P<object_id>[^/]+)/$', 
         AR(login_required(object_detail)), 
         {'queryset': Document.objects.all(), 
          'template_name': 'viewer.tpl',
