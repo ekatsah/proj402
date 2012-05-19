@@ -23,8 +23,9 @@
       <th>Poster</th>
       <th>Type</th>
       <th>Pages</th>
-      <th>Score</th>
+      <th class="sorting_desc">Score</th>
       <th style="display: none">RealScore</th>
+      <th style="display: none">RealSize</th>
     </tr>
   </thead>
 

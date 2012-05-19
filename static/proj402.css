@@ -249,7 +249,7 @@ ul {
 
 .sortable th {
 	border-bottom: 2px #003060 solid;
-	padding: 3px 10px 3px 10px;
+	padding: 3px 22px 3px 10px;
 }
 
 .sortable {
@@ -278,6 +278,26 @@ ul {
 	text-align: center;
 	padding: 10px;
 }
+
+.sortable .sorting_asc {
+	background-image: url('/static/sort_asc.png');
+	background-repeat: no-repeat;
+	background-position: right;
+}
+
+.sortable .sorting_desc {
+	background-image: url('/static/sort_desc.png');
+	background-repeat: no-repeat;
+	background-position: right;
+}
+
+.sortable .sorting {
+	background-image: url('/static/sort_both.png');
+	background-repeat: no-repeat;
+	background-position: right;
+}
+
+
 /* Thread view */
 
 #op_info {

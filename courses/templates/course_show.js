@@ -64,7 +64,7 @@ function document_row(obj) {
 	
 	return {"done": (obj.size == obj.done), "value" : [status, name, 
 	        obj['owner.get_profile.real_name'], obj['points.full_category'], 
-			size, points, obj['points.score']]};
+			size, points, obj['points.score'], obj['size']]};
 }
 
 function document_refresh() {
@@ -177,10 +177,11 @@ $(document).ready(function() {
 	$('#documents').dataTable({
 		"bPaginate": false,
 		"bFilter": false,
-		"aaSorting": [[ 6, "desc" ]],
+		"aaSorting": [[ 5, "desc" ]],
 		"bAutoWidth" : false,
-		"aoColumns": [ null, null, null, null, {"sType": 'numeric'}, 
-					   {"iDataSort": 6}, {"sType":'numeric', "bVisible":false}]
+		"aoColumns": [ {"bSortable": false}, null, null, null, {"iDataSort": 7}, 
+					   {"iDataSort": 6}, {"sType":'numeric', "bVisible":false},
+					   {"sType":'numeric', "bVisible":false}]
 	});
 
 	$('#threads').dataTable({
