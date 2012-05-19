@@ -80,5 +80,6 @@ def remove(request, id):
 def description(request, id):
     doc = get_object_or_404(Document, pk=id)
     return HttpResponse('{"id": %d, "name":"%s", "description":"%s"}' %
-                        (doc.id, doc.name, doc.description),
+                        (doc.id, doc.name.replace('"', '\"'), 
+                         doc.description.replace('"', '\"')),
                         'application/json')
