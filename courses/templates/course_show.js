@@ -48,7 +48,7 @@ function document_row(obj) {
 		name = obj.name;
 		if (obj.size <= 1) {
 			status = 'waiting';
-			obj.size = '';
+			size = '';
 		} else {
 			status = '<img src="/static/loading.gif"/>&nbsp';
 			status += '<small>' + Math.round(100*obj.done/obj.size) + '%</small>'
@@ -64,13 +64,17 @@ function document_row(obj) {
 	
 	return {"done": (obj.size == obj.done), "value" : [status, name, 
 	        obj['owner.get_profile.real_name'], obj['points.full_category'], 
-			size, points, obj['points.score'], obj['size']]};
+			size, points, obj['points.score'], obj.size]};
 }
 
 function document_refresh() {
 	$.getJSON('{% url document_pending object.slug %}', function(data) {
+		$.each(documents, function(key, obj) {
+			obj.done = obj.size;
+		});
 		$.each(data, function(key, obj) {
 			documents[obj.id]["done"] = obj.done;
+			documents[obj.id]["size"] = obj.size;
 		});
 		document_build();
 	});

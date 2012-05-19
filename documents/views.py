@@ -95,4 +95,4 @@ def doc_by_course(request, slug):
 def doc_pending(request, slug):
     course = get_object_or_404(Course, slug=slug)
     pending = PendingDocument.objects.filter(doc__refer=course).exclude(state__exact="done")
-    return json_sublist(request, [ task.doc for task in pending ], ['id', 'done'])
+    return json_sublist(request, [ task.doc for task in pending ], ['id', 'done', 'size'])
