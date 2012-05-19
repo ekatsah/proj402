@@ -59,6 +59,13 @@ jQuery(document).ajaxSend(function(event, xhr, settings) {
 	URL_CAT_SUB = '{% url category_sub 0 %}';
 	URL_COURSES_CAT = '{% url courses_by_cat 0 %}';
 
+	function dump(obj) {
+		var txt = '{';
+		for (idx in obj)
+			txt += '"' + idx.toString() + '": "' + obj[idx].toString() + '",\n';
+		return txt + '}';
+	}
+	
 	function Iload(url) {
 		$('#content').html('loading..');
 		$.get(url, function(resp) {
