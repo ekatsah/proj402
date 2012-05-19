@@ -15,37 +15,23 @@
 function upload_file() {
 	overlay_reset();
 	overlay_title("New Document");
-
-	var uform = document.createElement('form');
-	uform.id = 'upload_file_form';
-	uform.method = 'post';
-	uform.enctype = 'multipart/form-data';
-	uform.action = '{% url upload_file object.slug %}';
-	$(uform).append('<input type="hidden" value="{{ csrf_token }}" name="csrfmiddlewaretoken"/>');
-	$(uform).append('<table class="vtop">{{ uform.as_table|escapejs }}</table>');
-	$(uform).append('<center><input type="submit" value="upload file" id="upload_file"/></center>');
-
-	var hform = document.createElement('form');
-	hform.id = 'upload_http_form';
-	hform.method = 'post';
-	hform.action = '{% url upload_http_file object.slug %}';
-	$(hform).append('<input type="hidden" value="{{ csrf_token }}" name="csrfmiddlewaretoken"/>');
-	$(hform).append('<table class="vtop">{{ hform.as_table|escapejs }}</table>');
-	$(hform).append('<center><input type="submit" value="upload url" id="upload_file"/></center>');
-
-	$('#overlay_content').html("<h1>Upload File</h1>").append(uform);
-	$('#overlay_content').append('<hr><h1>Upload From URL</h1>').append(hform);
+	overlay_form({"id": "upload_file", "url": "{% url upload_file object.slug %}",
+	              "enctype": "multipart/form-data", "content": '{{ uform.as_table|escapejs }}',
+	              "submit": "upload file"},
+	             {"id": "upload_http", "url": "{% url upload_http_file object.slug %}",
+	              "content": '{{ hform.as_table|escapejs }}', "submit": "upload url"});
+	$('#upload_file_pre').html('<h1>Upload File</h1>');
+	$('#upload_file_app').html('<hr/>');
+	$('#upload_http_pre').html('<h1>Upload From URL</h1>');
 	overlay_show();
 	overlay_refresh();
-
-	$(hform).submit(function() {
-		Pload('upload_http_form', '{% url upload_http_file object.slug%}', function(data) {
+	$('#upload_http').submit(function() {
+		Pload('upload_http', '{% url upload_http_file object.slug %}', function(data) {
 			Iload('{% url course_show object.slug %}');
 		});
 		return false;
 	});
 }
-
 
 function preview_doc(id, place) {
 	if ($('#dprev' + id).length > 0)
