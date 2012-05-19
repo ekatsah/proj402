@@ -107,13 +107,22 @@ function doc_show_thread() {
 	$('#com_content').html('<strong>Loading..</strong>');
 	$('#com_content').css('display', 'block');
 	$.getJSON('{% url thread_list object.refer.id object.id 0 %}', function(data) {
-		$('#com_content').html('<h1>Threads about this document : </h1><table id="comtabledoc" class="thread_list"><tr><th>Subject</th><th>Poster</th><th>#post</th><th>Last Activity</th></tr></table>');
+		$('#com_content').html('<h1>Threads about this document : </h1>');
+		$('#com_content').append('<table id="comtabledoc" class="sortable"><thead><tr><th>Subject</th><th>Poster</th><th>#post</th><th>Last Activity</th></tr></thead></table>');
+		$('#comtabledoc').dataTable({
+			"bPaginate": false,
+			"bFilter": false,
+			"bAutoWidth" : false,
+		});
 		$.each(data, function(key, obj) {
-			var td = '<tr><td><a href="{% url thread_view "'+obj.id+'" %}"';
-			td += ' onclick="return Iload(\'{% url thread_view "'+obj.id+'" %}\');">';
-			td += obj.subject + '</a></td><td>' + obj.owner_name + '</td><td><center>';
-			td += obj.length + '</center></td><td>' + obj.date_max + '</td></tr>';
-			$('#comtabledoc').append(td);
+			$('#comtabledoc').dataTable().fnAddData([
+			    '<a href="{% url thread_view "'+obj.id+'" %}"' +
+				' onclick="return Iload(\'{% url thread_view "'+obj.id+'" %}\');">' + 
+				obj.subject + '</a>',
+				obj.owner_name, 
+				'<center>' + obj.length + '</center>',
+				obj.date_max
+			]);
 		});
 	});
 }	
@@ -124,13 +133,12 @@ function page_thread(pid) {
 	overlay_form({"id": "new_thread", "url": "{% url thread_post %}",
 				  "content": '{{ tform.as_table|escapejs }}', "submit": "post"});
 	$('new_thread_app').append('<p>This thread is about the page : <br><center><img src="{% url download_page "'+pid+'" %}" style="max-height: 400px;"/></center></p>');
-	$('#overlay_content').html(form);
 	$('#id_course').val({{ object.refer.id }});
 	$('#id_document').val({{ object.id }});
 	$('#id_page').val(pid);
 	overlay_show();
 	overlay_refresh();
-	$(form).submit(function() {
+	$('#new_thread').submit(function() {
 		Pload('new_thread', '{% url thread_post %}', function() {
 			var jq = $('#cntr' + pid);
 			var jq2 = $('#cntk' + pid);
@@ -151,13 +159,22 @@ function page_show(pid) {
 	$('#comfront' + pid).html('<strong>Loading..</strong>');
 	$('#comfront' + pid).css('display', 'block');
 	$.getJSON('{% url thread_list object.refer.id object.id "'+pid" %}, function(data) {
-		$('#comfront' + pid).html('<table id="comtable'+pid+'" class="thread_list"><tr><th>Subject</th><th>Poster</th><th>#post</th><th>Last Activity</th></tr></table>');
+		$('#comfront' + pid).html('<table id="comtable'+pid+'" class="sortable"><thead><tr><th>Subject</th><th>Poster</th><th>#post</th><th>Last Activity</th></tr></thead></table>');
+		$('#comtable'+pid).dataTable({
+			"bPaginate": false,
+			"bFilter": false,
+			"bAutoWidth" : false,
+			"aoColumns": [ {"sWidth": "40%"}, null, null, null ]
+		});
 		$.each(data, function(key, obj) {
-			var td = '<tr><td><a href="{% url thread_view "'+obj.id+'" %}"';
-			td += ' onclick="return Iload(\'{% url thread_view "'+obj.id+'" %}\');">';
-			td += obj.subject + '</a></td><td>' + obj.owner_name + '</td><td><center>';
-			td += obj.length + '</center></td><td>' + obj.date_max + '</td></tr>';
-			$('#comtable' + pid).append(td);
+			$('#comtable'+pid).dataTable().fnAddData([
+			    '<a href="{% url thread_view "'+obj.id+'" %}"' +
+				' onclick="return Iload(\'{% url thread_view "'+obj.id+'" %}\');">' + 
+				obj.subject + '</a>',
+				obj.owner_name, 
+				'<center>' + obj.length + '</center>',
+				obj.date_max
+			]);
 		});
 	});
 }
