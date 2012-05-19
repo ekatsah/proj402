@@ -39,12 +39,31 @@ function overlay_close() {
 }
 
 function overlay_reset() {
-	$('#overlay_title').html(' ');
-	$('#overlay_content').html('loading..');
+	$('#overlay_title').html('');
+	$('#overlay_content').html('');
 	$('#grey').css('width', '100%');
 	$('#grey').css('height', '100%');
 }
 
-function overlay_title(title) {
-	$('#overlay_title').html(title);
+function overlay_title(title) {	$('#overlay_title').html(title); }
+function overlay_content(thing) { $('#overlay_content').html(thing); }
+function overlay_append(thing) { $('#overlay_content').append(thing); }
+function overlay_prepend(thing) { $('#overlay_content').prepend(thing); }
+
+function overlay_form() {
+	$(arguments).each(function (idx, form) {
+		var hform = document.createElement('form');
+		hform.id = form["id"];
+		hform.method = 'post';
+		if (form['enctype'])
+			hform.enctype = form['enctype'];
+		hform.action = form['url'];
+		$(hform).append('<input type="hidden" value="{{ csrf_token }}" name="csrfmiddlewaretoken"/>');
+		$(hform).append('<table class="vtop">'+ form['content'] +'</table>');
+		$(hform).append('<center><input type="submit" value="' + form['submit'] + '" id="' +
+		               form['id'] + '_submit"/></center>');
+		overlay_append('<div id="' + form["id"] + '_pre">');
+		overlay_append(hform);
+		overlay_append('<div id="' + form["id"] + '_app">');
+	});
 }
