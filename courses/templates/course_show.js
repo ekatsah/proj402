@@ -64,7 +64,7 @@ function document_row(obj) {
 	
 	return {"done": (obj.size == obj.done), "value" : [status, name, 
 	        obj['owner.get_profile.real_name'], obj['points.full_category'], 
-			size, points]};
+			size, points, obj['points.score']]};
 }
 
 function document_refresh() {
@@ -174,10 +174,18 @@ function thread_new() {
 }
 
 $(document).ready(function() {
-	$('.sortable').dataTable({
+	$('#documents').dataTable({
 		"bPaginate": false,
 		"bFilter": false,
-		"bAutoWidth" : false, 
+		"aaSorting": [[ 6, "desc" ]],
+		"bAutoWidth" : false,
+		"aoColumns": [ null, null, null, null, {"sType": 'numeric'}, 
+					   {"iDataSort": 6}, {"sType":'numeric', "bVisible":false}]
+	});
+
+	$('#threads').dataTable({
+		"bFilter": false,
+		"bAutoWidth" : false,
 	});
 
 	document_show();

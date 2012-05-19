@@ -24,6 +24,7 @@
       <th>Type</th>
       <th>Pages</th>
       <th>Score</th>
+      <th style="display: none">RealScore</th>
     </tr>
   </thead>
 
