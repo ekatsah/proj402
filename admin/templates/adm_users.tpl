@@ -38,22 +38,47 @@ function create_user() {
 	});
 }
 
+$(document).ready(function() {
+	$('#users').dataTable({
+		"bPaginate": false,
+		"bFilter": false,
+		"aaSorting": [[ 0, "asc" ]],
+		"bAutoWidth" : false,
+		"aoColumns": [ {"sType":'numeric'}, null, null, null, null ]
+	});
+});
 </script>
 
 <h1>Users</h1>
 
-<table class="thread_list">
-<tr><th>#id</th><th>username</th><th>name</th><th>last visit</th><th>moderator</th></tr>
+<table id="users" class="sortable">
+  <thead>
+    <tr>
+      <th>#id</th>
+      <th>username</th>
+      <th>name</th>
+      <th>last visit</th>
+      <th>moderator</th>
+    </tr>
+  </thead>
+ 
+  <tbody>
 {% for u in object_list %}
-<tr><td><center>{{ u.id }}</center></td><td>{{ u.username }}</td><td>{{ u.first_name }} 
-        {{ u.last_name }}</td><td>{{ u.last_login }}</td>
-    <td><center id="pu{{u.id}}">{% if u.get_profile.moderate %}
-    MODO <span class="action_link" onclick="unset_modo({{u.id}});">unset</span>
-    {% else %}
-    <span class="action_link" onclick="set_modo({{u.id}});">set</span>
-    {% endif %}</center></td>
+    <tr>
+        <td>{{ u.id }}</td>
+        <td>{{ u.username }}</td>
+        <td>{{ u.first_name }} {{ u.last_name }}</td>
+        <td>{{ u.last_login }}</td>
+        <td><center id="pu{{u.id}}">
+          {% if u.get_profile.moderate %}
+            MODO <span class="action_link" onclick="unset_modo({{u.id}});">unset</span>
+          {% else %}
+            <span class="action_link" onclick="set_modo({{u.id}});">set</span>
+          {% endif %}</center>
+      </td>
     </tr>
 {% endfor %}
+  </tbody>
 </table>
 
 <input type="button" value="create user" onclick="create_user();"/>
