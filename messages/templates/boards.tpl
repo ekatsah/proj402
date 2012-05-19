@@ -41,21 +41,15 @@ function board_thread_show(id) {
 function board_thread(id) {
 	overlay_reset();
 	overlay_title("New Thread");
-	var form = document.createElement('form');
-	form.id = 'new_thread_form';
-	form.method = 'post';
-	form.action = '{% url thread_post %}';
-	$(form).append('<input type="hidden" value="{{ csrf_token }} name="csrfmiddlewaretoken"/>');
-	$(form).append('<table class="vtop">{{ tform.as_table|escapejs }}</table>');
-	$(form).append('<center><input type="submit" value="post" id="fnew_thread"/></center>');
-	$('#overlay_content').html(form);
+	overlay_form({"id": "new_thread", "url": "{% url thread_post %}",
+				  "content": '{{ tform.as_table|escapejs }}', "submit": "post"});
 	$('#id_course').val(id);
 	$('#id_document').val(0);
 	$('#id_page').val(0);
 	overlay_show();
 	overlay_refresh();
-	$(form).submit(function() {
-		Pload('new_thread_form', '{% url thread_post %}', function() {
+	$('#new_thread').submit(function() {
+		Pload('new_thread', '{% url thread_post %}', function() {
 			$('#board'+id).html('reloading..');
 			board_thread_show(id);
 		});
