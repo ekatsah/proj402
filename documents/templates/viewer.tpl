@@ -82,26 +82,20 @@ function refresh_mpage() {
 function doc_thread() {
 	overlay_reset();
 	overlay_title("New Thread");
-	var form = document.createElement('form');
-	form.id = 'new_thread_form';
-	form.method = 'post';
-	form.action = '{% url thread_post %}';
-	$(form).append('<input type="hidden" value="{{ csrf_token }} name="csrfmiddlewaretoken"/>');
-	$(form).append('<table class="vtop">{{ tform.as_table|escapejs }}</table>');
-	$(form).append('<center><input type="submit" value="post" id="fnew_thread"/></center>');
-	$(form).append('<p>This thread is about the document : <strong>{{ object.name }}</strong></p>');
-	$('#overlay_content').html(form);
+	overlay_form({"id": "new_thread", "url": "{% url thread_post %}",
+				  "content": '{{ tform.as_table|escapejs }}', "submit": "post"});
+	$('#new_thread_app').append('<p>This thread is about the document : <strong>{{ object.name }}</strong></p>');
 	$('#id_course').val({{ object.refer.id }});
 	$('#id_document').val({{ object.id }});
 	$('#id_page').val(0);
 	overlay_show();
 	overlay_refresh();
-	$(form).submit(function() {
-		Pload('new_thread_form', '{% url thread_post %}', function() {
+	$('#new_thread').submit(function() {
+		Pload('new_thread', '{% url thread_post %}', function() {
 			if ($('#doc_cfront').length == 0)
-				$('doc_comment').html('<div id="doc_cfront" class="doc_com" onclick="doc_show_thread();">Read the comment</div>');
+				$('#doc_comment').html('<div id="doc_cfront" class="doc_com" onclick="doc_show_thread();">Read the comment</div>');
 			else if ($('#doc_comCTR').length == 0)
-				$('doc_comment').html('<div id="doc_cfront" class="doc_com" onclick="doc_show_thread();">Read the <span id="doc_comCTR">2</span>comments</div>');
+				$('#doc_comment').html('<div id="doc_cfront" class="doc_com" onclick="doc_show_thread();">Read the <span id="doc_comCTR">2</span>comments</div>');
 			else
 				$('#doc_comCTR').html(parseInt($('#doc_comCTR').html()) + 1);
 		});
@@ -127,14 +121,9 @@ function doc_show_thread() {
 function page_thread(pid) {
 	overlay_reset();
 	overlay_title("New Thread");
-	var form = document.createElement('form');
-	form.id = 'new_thread_form';
-	form.method = 'post';
-	form.action = '{% url thread_post %}';
-	$(form).append('<input type="hidden" value="{{ csrf_token }} name="csrfmiddlewaretoken"/>');
-	$(form).append('<table class="vtop">{{ tform.as_table|escapejs }}</table>');
-	$(form).append('<center><input type="submit" value="post" id="fnew_thread"/></center>');
-	$(form).append('<p>This thread is about the page : <br><center><img src="{% url download_page "'+pid+'" %}" style="max-height: 400px;"/></center></p>');
+	overlay_form({"id": "new_thread", "url": "{% url thread_post %}",
+				  "content": '{{ tform.as_table|escapejs }}', "submit": "post"});
+	$('new_thread_app').append('<p>This thread is about the page : <br><center><img src="{% url download_page "'+pid+'" %}" style="max-height: 400px;"/></center></p>');
 	$('#overlay_content').html(form);
 	$('#id_course').val({{ object.refer.id }});
 	$('#id_document').val({{ object.id }});
@@ -142,7 +131,7 @@ function page_thread(pid) {
 	overlay_show();
 	overlay_refresh();
 	$(form).submit(function() {
-		Pload('new_thread_form', '{% url thread_post %}', function() {
+		Pload('new_thread', '{% url thread_post %}', function() {
 			var jq = $('#cntr' + pid);
 			var jq2 = $('#cntk' + pid);
 			if (jq.length)
