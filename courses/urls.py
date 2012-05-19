@@ -25,12 +25,6 @@ urlpatterns = patterns('courses.views',
          'fields': ['id', 'slug', 'name', 'description']},
         name='courses_all'),
 
-    url(r'^get/(?P<slug>[^/]+)',
-        login_required(object_detail),
-        {'queryset': Course.objects.all(), 
-         'template_name': 'course_get.tpl'},
-        name="course_get"),
-
     url(r'^s/(?P<slug>[^/]+)', AR(login_required(object_detail)),
         {'queryset': Course.objects.all(), 
          'template_name': 'course_show.tpl',
