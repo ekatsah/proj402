@@ -8,6 +8,7 @@
 # your option) any later version.
 
 {% endcomment %}
+{% load markup %}
 {% with first=object.msgs.all|first %}
 
 <div>
@@ -35,7 +36,7 @@
 
     {% if object.referp %}
     	<div id="left_post">
-    	  <div id="inner_post">{{ first.text }}</div>
+    	  <div id="inner_post">{{ first.text|markdown }}</div>
     	</div>
     	
     	<div id="right_post">
@@ -43,7 +44,7 @@
 	  <img id="page_image" src="{% url download_mpage object.referp.id %}"/> 
 	</div>
     {% else %}
-	<div id="inner_post" class="real_inner_post">{{ first.text }}</div>
+	<div id="inner_post" class="real_inner_post">{{ first.text|markdown }}</div>
     {% endif %}
   </div>
 </div>
@@ -64,7 +65,7 @@ messages = {
 {% for m in object.msgs.all %}
 "{{ m.id }}": {"user": "{{ m.owner.first_name }} {{ m.owner.last_name }}",
                "date": "{{ m.date|date:"d/m/y H:i" }}",
-               "content": "{{ m.text|escapejs }}"},
+               "content": "{{ m.text|markdown|escapejs }}"},
 {% endfor %}
 };
 
@@ -103,7 +104,7 @@ function reply(id) {
 {% for m in object.msgs.all %}{% if not forloop.first %}
 <div class="forums_reply">
 <p class="forums_reply_header">On {{ m.date|date:"d/m/y H:i" }}, {{ m.owner.first_name }} {{ m.owner.last_name }} wrote :</p>
-<p class="forums_reply_p">{{ m.text }}</p>
+<p class="forums_reply_p">{{ m.text|markdown }}</p>
 </div>
 {% endif %}{% endfor %}
 
