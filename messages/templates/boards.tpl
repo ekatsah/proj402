@@ -21,20 +21,22 @@
 
 function board_thread_show(id) {
 	$.getJSON('{% url thread_list "'+id+'" 0 0 %}', function(data) {
-		$('#board'+id).html('<table id="comtable'+id+'" class="thread_list"><tr><th>Subject</th><th>Poster</th><th>#post</th><th>Last Activity</th></tr></table>');
-		var found = 0;
-
-		$.each(data, function(key, obj) {
-			found = 1;
-			var td = '<tr><td><a href="{% url thread_view "'+obj.id+'" %}"';
-			td += ' onclick="return Iload(\'{% url thread_view "'+obj.id+'" %}\');">';
-			td += obj.subject + '</a></td><td>' + obj.owner_name + '</td><td><center>';
-			td += obj.length + '</center></td><td>' + obj.date_max + '</td></tr>';
-			$('#comtable'+id).append(td);
+		$('#board'+id).html('<table id="comtable'+id+'" class="sortable"><thead><tr><th>Subject</th><th>Poster</th><th>#post</th><th>Last Activity</th></tr></thead></table>');
+		$('#comtable'+id).dataTable({
+			"bPaginate": false,
+			"bFilter": false,
+			"bAutoWidth" : false,
 		});
-
-		if (found == 0)
-			 $('#board'+id).html('No thread found');
+		$.each(data, function(key, obj) {
+			$('#comtable'+id).dataTable().fnAddData([
+			    '<a href="{% url thread_view "'+obj.id+'" %}"' +
+				' onclick="return Iload(\'{% url thread_view "'+obj.id+'" %}\');">' + 
+				obj.subject + '</a>',
+				obj.owner_name, 
+				'<center>' + obj.length + '</center>',
+				obj.date_max
+			]);
+		});
 	});
 }
 
