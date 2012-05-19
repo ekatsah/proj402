@@ -46,7 +46,7 @@ function document_row(obj) {
 	if (obj.size != obj.done) {
 		all_done = 0;
 		name = obj.name;
-		if (obj.size < 1) {
+		if (obj.size <= 1) {
 			status = 'waiting';
 			obj.size = '';
 		} else {
