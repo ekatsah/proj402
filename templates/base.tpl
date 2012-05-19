@@ -11,10 +11,15 @@
 {% endcomment %}
 
 {% block header %}
-<script src="/static/overlay.js"></script>
+
+<script type="text/javascript">
+{% include "overlay.js" %}
+</script>
+
 <script src="/static/menu.js"></script>
 
 <script src="/static/jquery.address-1.4.min.js"></script>
+<script src="/static/datatable-1.9.js"></script>
 
 <script type="text/javascript">
 
