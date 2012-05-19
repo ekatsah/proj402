@@ -1,9 +1,14 @@
 from django.conf.urls.defaults import patterns, include, url
 from django.views.generic.simple import direct_to_template
 from django.contrib.auth.decorators import login_required
+from django.shortcuts import redirect, render
 from utils.decorators import AR
 from utils.authentification import intra_auth
-from utils.home import home
+
+def home(request):
+    if request.user.is_authenticated():
+        return redirect('profile')
+    return render(request, "layout.tpl")
 
 urlpatterns = patterns('',
     url(r'^user/', include('users.urls'), name='users'),
@@ -17,11 +22,13 @@ urlpatterns = patterns('',
 
     url(r'^$', home, name='index'),
 
-    (r'^favicon\.ico$', 'django.views.generic.simple.redirect_to', {'url': '/static/favicon.ico'}),
+    (r'^favicon\.ico$', 
+     'django.views.generic.simple.redirect_to', 
+     {'url': '/static/favicon.ico'}),
 
     # entry point
     url(r'^zoidberg$', login_required(direct_to_template),
-        {'template': 'base.tpl'}, name='index'),
+        {'template': 'base.tpl'}, name='z-index'),
 
     url('^help$', AR(direct_to_template), {'template': 'help.tpl'}, name='help'),
 
