@@ -32,7 +32,6 @@ def upload_file(request, slug):
         return HttpResponseRedirect(reverse('course_show', args=[slug]))
     return HttpResponse('form invalid', 'text/html')
 
-@transaction.commit_manually
 def upload_http(request, slug):
     form = UploadHttpForm(request.POST)
     if form.is_valid():
@@ -44,8 +43,7 @@ def upload_http(request, slug):
         doc = Document.new(request.user, course, name, 
                            form.cleaned_data['category'])
         course.add_document(doc)
-        PendingDocument.objects.create(doc, "queued", url)
-        transaction.commit()
+        PendingDocument.objects.create(doc=doc, state="queued", url=url)
         return HttpResponse('ok', 'text/html')
     return HttpResponse('form invalid', 'text/html')
 
