@@ -147,43 +147,6 @@ ul {
 	padding-bottom: 3px;
 }
 
-.thread_list {
-	border-collapse: collapse;
-}
-
-.thread_list th {
-	border-bottom: 2px #003060 solid;
-}
-
-.thread_list td {
-	min-width: 100px;
-	padding-left: 10px;
-	padding-top: 4px;
-	padding-right: 8px;
-	padding-bottom: 4px;
-	border-bottom: 1px #3070f0 solid;
-	border-right: 1px #3070f0 solid;
-
-}
-
-.thread_list tr:last-child td {
-	border-bottom: none;
-}
-
-.thread_list td:last-child {
-	border-right: none;
-}
-
-.thread_list .min {
-	border-right: none;
-	min-width: 10px;
-}
-
-.thread_list .min2 {
-	border-right: 2px #3070f0 solid;
-	min-width: 10px;
-}
-
 .comments {
 	height: 37px;
 	background-image: url('/static/com-back.png');
