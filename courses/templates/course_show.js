@@ -185,6 +185,7 @@ $(document).ready(function() {
 	});
 
 	$('#threads').dataTable({
+		"bPaginate": false,
 		"bFilter": false,
 		"bAutoWidth" : false,
 	});
