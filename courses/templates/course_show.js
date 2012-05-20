@@ -55,9 +55,9 @@ function document_row(obj) {
 		}
 	} else {
 		if (can_vote[obj.id] == "True")
-			points = '<img src="/static/up.png" onclick="Dupvote(' + obj.id + ',\'' + obj.category + '\');"/>'
+			points = '<img src="/static/up.png" onclick="Dupvote(' + obj.id + ',\'' + obj['points.category'] + '\');"/>'
 		           + ' <span id="points_' + obj.id + '">'  + obj['points.score'] + '</span> '
-		       	   + '<img src="/static/down.png" onclick="Ddownvote(' + obj.id + ',\'' + obj.category + '\');"/>';
+		       	   + '<img src="/static/down.png" onclick="Ddownvote(' + obj.id + ',\'' + obj['points.category'] + '\');"/>';
 		else
 			points = '<center>' + obj['points.score'] + '</center>';
 	}
@@ -123,11 +123,12 @@ function Dvote(id, cat, score, rscore, title) {
 	var foo  = '<input type="hidden" id="v_id" value="' + id + '">';
 	foo += '<select id="v_category">';
 	for (var k in Dcategories)
-		if (k == cat) 
+		if (k == cat)
 			foo += '<option value="' + k + '" selected>' + Dcategories[k] + '</option>';
 		else
 			foo += '<option value="' + k + '">' + Dcategories[k] + '</option>';
 	foo += '</select>';
+
 	bar = '<center><div><input type="button" value="confirm '+score+'" onclick="send_vote('+rscore+', \'doc\');"></div></center>'; 
 	overlay_reset();
 	overlay_title(title);

@@ -86,7 +86,7 @@ def description(request, id):
 def doc_by_course(request, slug):
     course = get_object_or_404(Course, slug=slug)
     return json_sublist_send(request, course.documents.all, 
-                        ['id', 'name', 'description', 'size', 'done', 'points.category'
+                        ['id', 'name', 'description', 'size', 'done', 'points.category',
                          'refer.name', 'refer.id', 'date', 'points.score', 
                          'owner.get_profile.real_name', 'points.full_category'])
 
