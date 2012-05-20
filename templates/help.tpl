@@ -27,7 +27,7 @@
   Want to help?<br>
   <ol>
     <li>Use this application, upload files and do stuff</li>
-    <li>When you see a bug or have a great feature idea, <a href="http://wiki.urlab.be/urlab:p402">go there</a></li>
+    <li>When you see a bug or have a great feature idea, <a href="http://wiki.urlab.be/urlab:p402">go there</a> or <a href="https://github.com/ekatsah/proj402/issues">on github</a></li>
     <li>Want to moderate? Create new categories or courses? <a href="mailto:p402@cerkinfo.be">write us an email</a></li>
     <li>Want to help the developement? Join us on <a href="irc://chat.freenode.net/urlab">#urlab irc channel</a> or meet us AFK</li>
   </ol>
