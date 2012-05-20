@@ -14,6 +14,7 @@
 
 img_urlz = { {% for p in pages %}"#bimg{{ forloop.counter }}":"{%url download_page p.id %}",{% endfor %} '0': '0'};
 mini_urlz = { {% for p in pages %}"mimg{{ forloop.counter }}":"{%url download_mpage p.id %}",{% endfor %} '0': '0'};
+pages_width = { {% for p in pages %}{{p.id}}:{{p.width}},{% endfor %} '0': '0'};
 
 function load_image(id) {
 	elem = '#bimg' + id;
@@ -145,17 +146,17 @@ function page_thread(pid) {
 			if (jq.length)
 				jq.html(parseInt(jq.html()) + 1);
 			else if (jq2.length)
-				jq2.html('<div class="white" onclick="page_show('+pid+');" id="cntk'+pid+'">Read the <span id="cntk'+pid+'">2</span> comments</div>');
+				jq2.html('<div class="white" onclick="page_show('+pid+','+pages_width[pid]+');" id="cntk'+pid+'">Read the <span id="cntk'+pid+'">2</span> comments</div>');
 			else {
 				$('#read'+pid).append('<img style="margin-bottom: -12px; margin-top: -8px;" src="/static/com-middle.png"/>');
-				$('#read'+pid).append('<div class="white" onclick="page_show('+pid+');" id="cntk'+pid+'">Read the comment</div>');
+				$('#read'+pid).append('<div class="white" onclick="page_show('+pid+','+pages_width[pid]+');" id="cntk'+pid+'">Read the comment</div>');
 			}
 		});
 		return false;
 	});
 }
 
-function page_show(pid) {
+function page_show(pid, w) {
 	$('#comfront' + pid).html('<strong>Loading..</strong>');
 	$('#comfront' + pid).css('display', 'block');
 	$.getJSON('{% url thread_list object.refer.id object.id "'+pid" %}, function(data) {
@@ -166,15 +167,18 @@ function page_show(pid) {
 			"bAutoWidth" : false,
 			"aoColumns": [ {"sWidth": "40%"}, null, null, null ]
 		});
+		$('#comtable'+pid).css('font-size', '11px');
 		$.each(data, function(key, obj) {
 			$('#comtable'+pid).dataTable().fnAddData([
-			    '<a href="{% url thread_view "'+obj.id+'" %}"' +
+			    '<div id="subject' + obj.id + '"><a href="{% url thread_view "'+obj.id+'" %}"' +
 				' onclick="return Iload(\'{% url thread_view "'+obj.id+'" %}\');">' + 
-				obj.subject + '</a>',
+				obj.subject + '</a></div>',
 				obj.owner_name, 
 				'<center>' + obj.length + '</center>',
 				obj.date_max
 			]);
+			$('#subject' + obj.id).css('word-wrap', 'break-word');
+			$('#subject' + obj.id).width(2*w/5);
 		});
 	});
 }
@@ -331,9 +335,9 @@ setTimeout(function () { load_min(1); }, 10);
                          <img style="margin-bottom: -12px; margin-top: -8px;" src="/static/com-middle.png"/>
                          {% with c=p.threads.all|length %}
                          {% if c == 1 %}
-                         <div class="white" onclick="page_show({{p.id}});" id="cntk{{p.id}}">Read the comment</div>
+                         <div class="white" onclick="page_show({{p.id}}, {{p.width}});" id="cntk{{p.id}}">Read the comment</div>
                          {% else %}
-                         <div class="white" onclick="page_show({{p.id}});">Read the <span id="cntr{{p.id}}">{{ c }}</span> comments</div>
+                         <div class="white" onclick="page_show({{p.id}}, {{p.width}});">Read the <span id="cntr{{p.id}}">{{ c }}</span> comments</div>
                          {% endif %}
                          {% endwith %}
                          {% endif %}
