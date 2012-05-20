@@ -274,12 +274,11 @@ ul {
 #op_info {
 	margin: 10px;
 	float: left;
-	min-width: 100px;
+	width: 150px;
 }
 
 #outer_post {
-	float: left;
-	margin-left: 10px;
+	margin-left: 160px;
 }
 
 #outer_post h2 {
