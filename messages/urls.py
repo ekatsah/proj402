@@ -9,9 +9,10 @@ from django.conf.urls.defaults import patterns, url
 from django.contrib.auth.decorators import login_required
 from django.views.generic.simple import direct_to_template
 from django.views.generic.list_detail import object_detail
-from utils.decorators import AR, enforce_post
+from utils.decorators import AR, enforce_post, moderate
 from messages.models import Thread, Message, NewPostForm, NewThreadForm
-from messages.views import post_thread, list_thread, post_msg
+from messages.views import post_thread, list_thread, post_msg, edit_msg
+from messages.views import remove_msg
 from categories.models import Category
 
 urlpatterns = patterns('notes.views',
@@ -40,4 +41,12 @@ urlpatterns = patterns('notes.views',
     url(r'^post_msg$', 
         enforce_post(login_required(post_msg)), 
         name="message_post"),
+    
+    url(r'^edit$',
+        moderate(enforce_post(login_required(edit_msg))),
+        name="message_edit"),
+    
+    url(r'^remove',
+        moderate(enforce_post(login_required(remove_msg))),
+        name="message_remove"),
 )

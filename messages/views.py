@@ -84,3 +84,11 @@ def post_msg(request):
         thread.msgs.add(msg)
         return HttpResponse("ok")
     return HttpResponse("Error: Invalid form")
+
+def edit_msg(request):
+    form = NewPostForm(request.POST)
+    if form.is_valid():
+        pass
+
+def remove_msg(request):
+    pass
