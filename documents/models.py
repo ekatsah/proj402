@@ -10,7 +10,7 @@ from django import forms
 from django.contrib.auth.models import User
 from settings import UPLOAD_DIR
 from upvotes.models import VoteDocument, CAT_DOCUMENTS
-
+from re import sub
 
 class UploadFileForm(forms.Form):
     category = forms.ChoiceField(choices=CAT_DOCUMENTS)
@@ -94,7 +94,7 @@ class Document(models.Model):
                                  'description': self.description})
 
     def pretty_name(self):
-        name = self.name.lower().replace(' ', '_')
+        name = sub(r'[^-_a-z]', '', self.name.lower().replace(' ', '_'))
         if not name.endswith('.pdf'):
             name += '.pdf'
         return name
