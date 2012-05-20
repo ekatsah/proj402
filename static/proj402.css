@@ -54,6 +54,11 @@ ul {
     list-style-type: none;
 }
 
+.forums_reply ul {
+    margin-left: 20px;
+    list-style-type: disc;
+}
+
 .course_add_but {
 	background-color: #e5e5e5;
 	margin-right: 5px;
