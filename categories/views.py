@@ -47,7 +47,7 @@ def del_category(request, category):
         cat.delete()
         return HttpResponse('ok', 'text/html')
     else:
-        return HttpResponse('not empty object', 'text/html')
+        return HttpResponse('This category is not empty, please empty it first', 'text/html')
 
 def attach_course(request, category, slug):
     cat = get_object_or_404(Category, pk=category)
