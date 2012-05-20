@@ -58,7 +58,7 @@ def json_object(obj, fields):
 
 def json_sublist(queryset, fields):
     queryset = queryset() if callable(queryset) else queryset
-    objects = [ json_object(obj, fileds) for obj in queryset ]
+    objects = [ json_object(obj, fields) for obj in queryset ]
     return "[" + ",".join(objects) + "]"
 
 def json_object_send(request, obj, fields):
