@@ -15,9 +15,9 @@ from courses.models import Course
 def new_category(request):
     form = NewCategoryForm(request.POST)
     if form.is_valid():
-        data = { k: escape(v) for k, v in form.cleaned_data.iteritems() }
-        cat = Category.objects.create(name=data['name'], 
-                                      description=data['description'])
+        data = form.cleaned_data
+        cat = Category.objects.create(name=escape(data['name']), 
+                                      description=escape(data['description']))
         return HttpResponse("ok " + str(cat.id))
     return HttpResponse("Error: Invalid form")
 

@@ -18,11 +18,11 @@ from utils.json import json_string
 def post_thread(request):
     form = NewThreadForm(request.POST)
     if form.is_valid():
-        data = { k:escape(v) for k, v in form.cleaned_data.iteritems() }
-        thread = Thread.objects.create(subject=data['subject'], 
+        data = form.cleaned_data
+        thread = Thread.objects.create(subject=escape(data['subject']), 
                                        poster=request.user)
         msg = Message.objects.create(owner=request.user, thread=thread, 
-                                     text=data['message'])
+                                     text=escape(data['message']))
         thread.msgs.add(msg)
 
         # FIXME check coherence between course, doc, page before create
@@ -76,11 +76,12 @@ def list_thread(request, courseid, docid, pageid):
 def post_msg(request):
     form = NewPostForm(request.POST)
     if form.is_valid():
-        data = { k:escape(v) for k, v in form.cleaned_data.iteritems() }
+        data = form.cleaned_data
         thread = get_object_or_404(Thread, pk=data['thread'])
         reference = get_object_or_404(Message, pk=data['reference'])
         msg = Message.objects.create(owner=request.user, thread=thread, 
-                                     text=data['message'], reference=reference)
+                                     text=escape(data['message']),
+                                     reference=reference)
         thread.msgs.add(msg)
         return HttpResponse("ok")
     return HttpResponse("Error: Invalid form")

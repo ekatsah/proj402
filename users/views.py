@@ -70,19 +70,20 @@ def unset_modo(request, uid):
 def new_user(request):
     form = CreateUserForm(request.POST)
     if form.is_valid():
-        data = { k: escape(v) for k, v in form.cleaned_data.iteritems() }
+        data = form.cleaned_data
         try:
-            user = User.objects.create_user(data['username'], data['email'],
+            user = User.objects.create_user(escape(data['username']),
+                                            escape(data['email']), 
                                             data['password'])
         except Exception as e:
             return HttpResponse("Error: username not unique")
-        user.last_name = data['last_name']
-        user.first_name = data['first_name']
+        user.last_name = escape(data['last_name'])
+        user.first_name = escape(data['first_name'])
         user.save()
         user_profile = user.profile
-        user_profile.registration = data['registration']
-        user_profile.section = data['fac_id'] + ':' + data['section']
-        user_profile.comment = data['comment']
+        user_profile.registration = escape(data['registration'])
+        user_profile.section = escape(data['fac_id'] + ':' + data['section'])
+        user_profile.comment = escape(data['comment'])
         user_profile.save()
         user.save()
         return HttpResponse("ok")

@@ -12,11 +12,11 @@ from django.utils.html import escape
 def new_course(request):
     form = NewCourseForm(request.POST)
     if form.is_valid():
-        data = { k: escape(v) for k, v in form.cleaned_data.iteritems() }
+        data = form.cleaned_data
         try:
             slug = data['slug'].lower()
-            course = Course.objects.create(slug=slug, name=data['name'],
-                                           description=data['description'])
+            course = Course.objects.create(slug=slug, escape(name=data['name']),
+                                        description=escape(data['description']))
             return HttpResponse("ok")
         except:
             HttpResponse("Error: Invalid slug")
