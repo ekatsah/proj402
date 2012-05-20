@@ -135,7 +135,7 @@ function grow_tree(node, depth, pnode) {
 
 function links(id) {
 	if (id > 2)
-		return '<small>[<span class="action_link onclick="cat_edit(' + 
+		return '<small>[<span class="action_link" onclick="cat_edit(' + 
 		       id + ');">edit</span>, <span class="action_link" \
 		       onclick="cat_rm(' + id + ');">remove</span>]</small> ';
 	else
