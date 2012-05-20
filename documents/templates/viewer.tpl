@@ -241,17 +241,13 @@ $(document).ready(function() {
   $('#edit_but').click(function(event) {
           overlay_reset();
           overlay_title("Edit Document");
-          var form = document.createElement('form');
-          form.id = 'edit_form';
-          form.method = 'post';
-          form.action = '{% url document_edit object.id %}';
-          $(form).append('<input type="hidden" value="{{ csrf_token }} name="csrfmiddlewaretoken"/>');
-          $(form).append('<table class="vtop">{{ eform.as_table|escapejs }}</table>');
-          $(form).append('<center><input type="submit" value="edit" id="edit_button"/></center>');
-          $('#overlay_content').html(form);
+          overlay_form({"id": "edit_form", "url": "{% url document_edit object.id %}",
+                        "content": '{{ eform.as_table|escapejs }}', "submit": "edit"});
+          $('#id_name').val($('#doc_name').html());
+          $('#id_description').val($('#doc_desc').html());
           overlay_show();
           overlay_refresh();
-          $(form).submit(function() {
+          $('#edit_form').submit(function() {
               Pload('edit_form', '{% url document_edit object.id %}', function(data) {
                   $.getJSON('{% url document_desc object.id %}', function(doc) {
                       $('#doc_name').html(doc.name);
