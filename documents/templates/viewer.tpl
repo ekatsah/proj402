@@ -232,6 +232,7 @@ $(document).ready(function() {
   	if (zoom < 10)
   		zoom = 10;
   	pzoom();
+  	return false;
   });
 
   $('#pright').scroll(refresh_mpage);
