@@ -32,7 +32,7 @@
       {% endif %}
     </small>
 
-    <h2>{{ object.subject }}</h2>
+    <h2>{{ object.subject|safe }}</h2>
 
     {% if object.referp %}
     	<div id="left_post">
