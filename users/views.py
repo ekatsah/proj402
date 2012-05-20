@@ -9,6 +9,7 @@ from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
+from django.utils.html import escape
 from django.shortcuts import render
 from courses.models import Course
 from users.models import CourseFollow, CreateUserForm
@@ -69,7 +70,7 @@ def unset_modo(request, uid):
 def new_user(request):
     form = CreateUserForm(request.POST)
     if form.is_valid():
-        data = form.cleaned_data
+        data = { k: escape(v) for k, v in form.cleaned_data.iteritems() }
         try:
             user = User.objects.create_user(data['username'], data['email'],
                                             data['password'])

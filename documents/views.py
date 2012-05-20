@@ -9,6 +9,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import get_object_or_404
 from django.core.urlresolvers import reverse
 from django.db import transaction
+from django.utils.html import escape
 from documents.models import UploadFileForm, UploadHttpForm, EditForm
 from documents.models import Document, Page, PendingDocument
 from courses.models import Course
@@ -21,8 +22,8 @@ def upload_file(request, slug):
     if form.is_valid() and match(r'.*\.[pP][dD][fF]$', 
                                  request.FILES['file'].name):
         course = get_object_or_404(Course, slug=slug)
-        doc = Document.new(request.user, course, request.FILES['file'].name, 
-                           form.cleaned_data['category'])
+        doc = Document.new(request.user, course, escape(request.FILES['file'].name), 
+                           escape(form.cleaned_data['category']))
         course.add_document(doc)
         
         url = '/tmp/TMP402_%d.pdf' % doc.id
@@ -37,12 +38,12 @@ def upload_http(request, slug):
     form = UploadHttpForm(request.POST)
     if form.is_valid():
         course = get_object_or_404(Course, slug=slug)
-        url = form.cleaned_data['url']
+        url = escape(form.cleaned_data['url'])
         name = match(r'.*/([^/]+)$', url).group(1)
         if len(name) < 4:
             return HttpResponse('name invalid', 'text/html')
         doc = Document.new(request.user, course, name, 
-                           form.cleaned_data['category'])
+                           escape(form.cleaned_data['category']))
         course.add_document(doc)
         PendingDocument.objects.create(doc=doc, state="queued", url=url)
         return HttpResponse('ok', 'text/html')
@@ -66,8 +67,8 @@ def edit_post(request, id):
     doc = get_object_or_404(Document, pk=id)
     form = EditForm(request.POST)
     if form.is_valid():
-        doc.name = form.cleaned_data['name']
-        doc.description = form.cleaned_data['description']
+        doc.name = escape(form.cleaned_data['name'])
+        doc.description = escape(form.cleaned_data['description'])
         doc.save()
         return HttpResponse('ok', 'text/html')
     else:

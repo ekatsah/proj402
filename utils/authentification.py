@@ -11,6 +11,7 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
 from django.template import RequestContext
 from django.contrib.auth import login
+from django.utils.html import escape
 from xml.dom.minidom import parseString
 from string import printable
 from random import choice
@@ -26,7 +27,7 @@ def get_value(dom, name):
     node = dom.getElementsByTagName(name)
     if len(node) != 1:
         raise Exception("xml document not conform - please contact the admin")
-    return get_text(node[0].childNodes)
+    return escape(get_text(node[0].childNodes))
 
 def intra_auth(request):
     sid, uid = request.GET.get("_sid", False), request.GET.get("_uid", False)

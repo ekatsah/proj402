@@ -7,11 +7,12 @@
 
 from courses.models import Course, NewCourseForm
 from django.http import HttpResponse
+from django.utils.html import escape
 
 def new_course(request):
     form = NewCourseForm(request.POST)
     if form.is_valid():
-        data = form.cleaned_data;
+        data = { k: escape(v) for k, v in form.cleaned_data.iteritems() }
         try:
             slug = data['slug'].lower()
             course = Course.objects.create(slug=slug, name=data['name'],

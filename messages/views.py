@@ -8,6 +8,7 @@
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import get_object_or_404, render_to_response
 from django.template import RequestContext
+from django.utils.html import escape
 from django.core.urlresolvers import reverse
 from messages.models import NewThreadForm, NewPostForm, Thread, Message
 from documents.models import Page, Document
@@ -16,7 +17,7 @@ from courses.models import Course
 def post_thread(request):
     form = NewThreadForm(request.POST)
     if form.is_valid():
-        data = form.cleaned_data;
+        data = { k:escape(v) for k, v in form.cleaned_data.iteritems() }
         thread = Thread.objects.create(subject=data['subject'], 
                                        poster=request.user)
         msg = Message.objects.create(owner=request.user, thread=thread, 
@@ -74,7 +75,7 @@ def list_thread(request, courseid, docid, pageid):
 def post_msg(request):
     form = NewPostForm(request.POST)
     if form.is_valid():
-        data = form.cleaned_data;
+        data = { k:escape(v) for k, v in form.cleaned_data.iteritems() }
         thread = get_object_or_404(Thread, pk=data['thread'])
         reference = get_object_or_404(Message, pk=data['reference'])
         msg = Message.objects.create(owner=request.user, thread=thread, 

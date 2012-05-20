@@ -8,13 +8,14 @@
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
 from categories.models import NewCategoryForm, Category
+from django.utils.html import escape
 from utils.json import json_sublist
 from courses.models import Course
 
 def new_category(request):
     form = NewCategoryForm(request.POST)
     if form.is_valid():
-        data = form.cleaned_data;
+        data = { k: escape(v) for k, v in form.cleaned_data.iteritems() }
         cat = Category.objects.create(name=data['name'], 
                                       description=data['description'])
         return HttpResponse("ok " + str(cat.id))
