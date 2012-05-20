@@ -21,7 +21,7 @@ $(document).ready(function() {
 		"bFilter": false,
 		"aaSorting": [[ 0, "asc" ]],
 		"bAutoWidth" : false,
-		"aoColumns": [ {"sType":'numeric'}, null, null, null, null ]
+		"aoColumns": [ {"sType":'numeric'}, null, null, null, null, null ]
 	});
 });
 
@@ -37,6 +37,7 @@ $(document).ready(function() {
       <th>document</th>
       <th>owner</th>
       <th>actions</th>
+      <th>status</th>
     </tr>
   </thead>
 
@@ -48,6 +49,7 @@ $(document).ready(function() {
       <td><a href="{% url view_file d.id %}" onclick="return Iload('{% url view_file d.id %}');">{{ d.name }}</a></td>
       <td>{{ d.owner.username }}</td>
       <td><span class="action_link" onclick="remove({{d.id}});">rm</span></td>
+      <td>{{ d.done }} / {{ d.size }}</td>
     </tr>
 {% endfor %}
   </tbody>
