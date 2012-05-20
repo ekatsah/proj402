@@ -1,38 +1,43 @@
 #!/usr/bin/env python
 
-from sys import argv, exit
-from os import path
-from re import search
+# Copyright 2011, hast. All rights reserved.
+#
+# This program is free software: you can redistribute it and/or modify it
+# under the terms of the GNU Affero General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or (at
+# your option) any later version.
+
+from sys import argv
+from os.path import abspath, basename, exists
 # don't forget to export DJANGO_SETTINGS_MODULE='settings' in bash
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import User
 from courses.models import Course
-from documents.models import Document
+from documents.models import Document, PendingDocument
 
-if len(argv) < 3:
-    print "Usage : add_doc <course> <file> [<file..>]"
+if len(argv) < 5:
+    print "Usage : add_doc <username> <course> <category> <file> [<file..>]"
     exit(1)
 
 try:
-    course = get_object_or_404(Course, slug=argv[1])
-    adm = get_object_or_404(User, id=1)    # get the adminz
+    course = get_object_or_404(Course, slug=argv[2])
+    user = get_object_or_404(User, username=argv[1])
 except Exception as e:
     print "Err, " + str(e)
     exit(1)
 
-for filename in argv[2:]:
+for filename in argv[4:]:
+    filename = abspath(filename)
+    name = basename(filename)
+
     print "File " + filename + "..",
-    
-    try:
-        file = open(filename, 'rb')
-    except Exception:
-        print "fail"
+
+    if not exists(filename):
+        print "not found"
         continue
 
-    if not search(r'\.pdf$', filename):
-        print "no pdf"
-        continue
-
-    d = Document.new(adm, course, file, 'R', False)
-    course.add_document(d)
+    doc = Document.new(user, course, name, argv[3])
+    course.add_document(doc)
+    PendingDocument.objects.create(doc=doc, state="queued",
+                                   url='file://' + filename)
     print "ok"
