@@ -120,6 +120,7 @@ def process_file(pending_id):
 
 # drop here when the deamon is killed
 def terminate(a, b):
+    close_connection()
     for worker, pending in workers:
         try:
             worker.terminate()
@@ -140,6 +141,7 @@ if __name__ == "__main__":
 
     while True:
         sleep(10)
+        close_connection()
         workers = [ (w,p) for w, p in workers if w.is_alive() ]
         # Avoid useless SQL queries
         if len(workers) >= PARSING_WORKERS:
