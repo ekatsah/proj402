@@ -15,7 +15,7 @@ def new_course(request):
         data = form.cleaned_data
         try:
             slug = data['slug'].lower()
-            course = Course.objects.create(slug=slug, escape(name=data['name']),
+            course = Course.objects.create(slug=slug, name=escape(data['name']),
                                         description=escape(data['description']))
             return HttpResponse("ok")
         except:
