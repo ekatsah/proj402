@@ -11,7 +11,7 @@ from django.views.generic.list_detail import object_detail, object_list
 from documents.models import UploadFileForm, UploadHttpForm
 from courses.models import Course
 from messages.models import NewThreadForm
-from utils.json import json_sublist
+from utils.json import json_sublist_send
 from courses.views import new_course
 from utils.decorators import AR, enforce_post, moderate
 
@@ -20,7 +20,7 @@ urlpatterns = patterns('courses.views',
         moderate(enforce_post(login_required(new_course))),
         name="course_new"),
 
-    url(r'^all$', login_required(json_sublist), 
+    url(r'^all$', login_required(json_sublist_send), 
         {'queryset': Course.objects.all,
          'fields': ['id', 'slug', 'name', 'description']},
         name='courses_all'),

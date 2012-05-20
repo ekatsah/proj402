@@ -12,7 +12,7 @@ from categories.views import del_category, new_category, attach_course
 from categories.views import detach_course, sub_courses
 from categories.models import Category
 from utils.decorators import enforce_post, moderate
-from utils.json import json_sublist
+from utils.json import json_sublist_send
 
 urlpatterns = patterns('categories.views',
     url(r'^new',
@@ -45,7 +45,7 @@ urlpatterns = patterns('categories.views',
     url(r'^sub_courses/(?P<catid>[^/]+)$', 
         login_required(sub_courses), name='courses_by_cat'),
 
-    url(r'^all$', login_required(json_sublist), 
+    url(r'^all$', login_required(json_sublist_send), 
         {'queryset': Category.objects.all, 
          'fields': ['id', 'name', 'description', 'contains', 'holds']},
         name='categories_all'),

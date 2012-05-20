@@ -14,7 +14,12 @@ def json_list(request, queryset):
     data = serializers.serialize('json', queryset)
     return HttpResponse(data, 'application/javascript')
 
-def json_sublist(request, queryset, fields):
+def json_string(value):
+    table = {'\\': '\\u005C', '"': '\\u0022', '/': '\\u002F', '\b': '\\u0008',
+             '\f': '\\u000C', '\n': '\\u000A', '\r': '\\u000D', '\t': '\\u009'}
+    return ''.join([ table.get(v, v) for v in value ])
+
+def json_object(obj, fields):
     def get_recur_attr(obj, attrs):
         attr = attrs.pop(0)
         val = getattr(obj, attr, None)
@@ -25,27 +30,39 @@ def json_sublist(request, queryset, fields):
         else:
             return val
 
-    objects = []
-    qs = queryset() if callable(queryset) else queryset
-    for obj in qs:
-        object_str = []
-        for field in fields:
-            value = get_recur_attr(obj, field.split('.'))
+    object_str = []
+    for field in fields:
+        value = get_recur_attr(obj, field.split('.'))
 
-            if type(value) == unicode or type(value) == str:
-                object_str.append('"%s": "%s"' % 
-                                  (field, value.replace('"', '\\"')))
+        if value is None:
+            object_str.append('"%s": null' % field)
 
-            elif type(value) == int:
-                object_str.append('"%s": "%d"' % (field, value))
+        elif type(value) == bool:
+            object_str.append('"%s": %s' % (field, str(value).lower()))
 
-            elif isinstance(value, datetime):
-                object_str.append('"%s": "%s"' % 
-                                  (field, value.strftime("%d/%m/%y %H:%M")))
+        elif type(value) == unicode or type(value) == str:
+            object_str.append('"%s": "%s"' % (field, json_string(value)))
 
-            elif value.__class__.__name__ == 'ManyRelatedManager':
-                ids = [ str(x.id) for x in value.all() ]
-                object_str.append('"%s": [%s]' % (field, ",".join(ids)))
+        elif type(value) == int:
+            object_str.append('"%s": "%d"' % (field, value))
 
-        objects.append("{" + ",".join(object_str) + "}")
-    return HttpResponse("[" + ",".join(objects) + "]", 'application/javascript')
+        elif isinstance(value, datetime):
+            object_str.append('"%s": "%s"' % 
+                              (field, value.strftime("%d/%m/%y %H:%M")))
+
+        elif value.__class__.__name__ == 'ManyRelatedManager':
+            ids = [ str(x.id) for x in value.all() ]
+            object_str.append('"%s": [%s]' % (field, ",".join(ids)))
+
+    return "{" + ",".join(object_str) + "}"
+
+def json_sublist(queryset, fields):
+    queryset = queryset() if callable(queryset) else queryset
+    objects = [ json_object(obj) for obj in queryset ]
+    return "[" + ",".join(objects) + "]"
+
+def json_object_send(request, obj, fields):
+    return HttpResponse(json_object(obj, fields), 'application/javascript')
+
+def json_sublist_send(request, queryset, fields):
+    return HttpResponse(json_sublist(queryset, fields), 'application/javascript')

@@ -13,7 +13,7 @@ from documents.views import upload_file, upload_http, download_file, description
 from documents.views import download_page, download_mpage, edit_post, remove 
 from documents.views import doc_by_course, doc_pending
 from utils.decorators import AR, moderate, enforce_post
-from utils.json import json_sublist
+from utils.json import json_sublist_send
 from messages.models import NewThreadForm
 
 urlpatterns = patterns('documents.views',
@@ -22,7 +22,7 @@ urlpatterns = patterns('documents.views',
         name="document_remove"),
 
     url(r'^all$',
-        login_required(json_sublist),
+        login_required(json_sublist_send),
         {'queryset': Document.objects.all,
          'fields': ['id', 'name', 'description', 'size', 'done', 'refer.name', 
                     'refer.id', 'date', 'points.score', 'owner.get_profile.real_name', 

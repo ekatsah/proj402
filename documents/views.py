@@ -13,7 +13,7 @@ from django.utils.html import escape
 from documents.models import UploadFileForm, UploadHttpForm, EditForm
 from documents.models import Document, Page, PendingDocument
 from courses.models import Course
-from utils.json import json_sublist
+from utils.json import json_sublist_send, json_object_send
 from re import match
 
 def upload_file(request, slug):
@@ -81,19 +81,16 @@ def remove(request, id):
 
 def description(request, id):
     doc = get_object_or_404(Document, pk=id)
-    return HttpResponse('{"id": %d, "name":"%s", "description":"%s"}' %
-                        (doc.id, doc.name.replace('"', '\"'), 
-                         doc.description.replace('"', '\"')),
-                        'application/json')
+    return json_object_send(request, doc, ['id', 'name', 'description'])
 
 def doc_by_course(request, slug):
     course = get_object_or_404(Course, slug=slug)
-    return json_sublist(request, course.documents.all, 
+    return json_sublist_send(request, course.documents.all, 
                         ['id', 'name', 'description', 'size', 'done', 'points.category'
                          'refer.name', 'refer.id', 'date', 'points.score', 
                          'owner.get_profile.real_name', 'points.full_category'])
 
 def doc_pending(request, slug):
     course = get_object_or_404(Course, slug=slug)
-    pending = PendingDocument.objects.filter(doc__refer=course).exclude(state__exact="done")
-    return json_sublist(request, [ task.doc for task in pending ], ['id', 'done', 'size'])
+    qs = PendingDocument.objects.filter(doc__refer=course).exclude(state__exact="done")
+    return json_sublist_send(request, [task.doc for task in qs], ['id', 'done', 'size'])

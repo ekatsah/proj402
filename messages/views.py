@@ -13,6 +13,7 @@ from django.core.urlresolvers import reverse
 from messages.models import NewThreadForm, NewPostForm, Thread, Message
 from documents.models import Page, Document
 from courses.models import Course
+from utils.json import json_string
 
 def post_thread(request):
     form = NewThreadForm(request.POST)
@@ -66,7 +67,7 @@ def list_thread(request, courseid, docid, pageid):
         orig, last = thread.msgs.all()[0], thread.msgs.all()[count - 1]
         threads.append("""{"id": %d, "subject": "%s", "length": %d, "date_min":
             "%s", "owner_id": %d, "date_max": "%s", "owner_name": "%s %s"}""" % 
-            (thread.id, thread.subject.replace('"', '\\"'), count,
+            (thread.id, json_string(thread.subject), count,
              orig.date.strftime("%d/%m/%y %H:%M"), thread.poster.id, 
              last.date.strftime("%d/%m/%y %H:%M"), thread.poster.first_name, 
              thread.poster.last_name))
