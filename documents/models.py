@@ -60,6 +60,7 @@ class Document(models.Model):
     @classmethod
     def new(cls, owner, course, name, category, convert=True):
         vd = VoteDocument.objects.create(category=category)
+        name = sub(r'\.[Pp][Dd][Ff]$', '', name)
         doc = cls(name=name, owner=owner, refer=course, done=0, size=1,
                   points=vd)
         doc.save()
