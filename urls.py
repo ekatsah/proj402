@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 from utils.decorators import AR
 from utils.authentification import intra_auth
+from settings import VERSION
 
 def home(request):
     if request.user.is_authenticated():
@@ -30,7 +31,11 @@ urlpatterns = patterns('',
     url(r'^zoidberg$', login_required(direct_to_template),
         {'template': 'base.tpl'}, name='z-index'),
 
-    url('^help$', AR(direct_to_template), {'template': 'help.tpl'}, name='help'),
+    url('^help$', 
+        AR(direct_to_template), 
+        {'template': 'help.tpl',
+         'extra_context': {'VERSION' : VERSION}},
+        name='help'),
 
     url(r'^auth$', intra_auth, name="auth"),
 )

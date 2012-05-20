@@ -39,3 +39,7 @@
     <li>The developement is made under firefox, no effort to test/port to anything else was attempted.</li>
   </ul>
 </p>
+
+<p>
+  Version : {{ VERSION }}
+</p>

@@ -144,3 +144,8 @@ try:
     from production import *
 except ImportError:
     pass
+
+try:
+    from version import VERSION
+except ImportError:
+    VERSION = "dev"
