@@ -1,0 +1,294 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-05-22 00:07+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1)\n"
+
+#: templates/base.tpl:75 templates/base.tpl.py:91
+msgid "Error!"
+msgstr ""
+
+#: templates/base.tpl:168
+msgid "searching for"
+msgstr ""
+
+#: templates/base.tpl:176
+msgid "Home"
+msgstr ""
+
+#: templates/base.tpl:180
+#, fuzzy
+msgid "Courses"
+msgstr "Cours suivis"
+
+#: templates/base.tpl:182
+msgid "General Forums"
+msgstr ""
+
+#: templates/base.tpl:183
+msgid "Walls"
+msgstr ""
+
+#: templates/base.tpl:184 templates/help.tpl:12
+msgid "Help"
+msgstr ""
+
+#: templates/base.tpl:185
+msgid "Developpement"
+msgstr ""
+
+#: templates/error.tpl:15
+msgid "A wild error appears!"
+msgstr ""
+
+#: templates/error.tpl:18
+msgid ""
+"\n"
+"We are sorry for the inconvenience. Please send an email to \n"
+"<a href=\"mailto:p402@cerkinfo.be\">p402@cerkinfo.be</a> describing \n"
+"your error. <br>\n"
+"Don't forget to add your broswer information, the url of the \n"
+"error page and all useful informations. Thx!<br><br>\n"
+msgstr ""
+
+#: templates/error.tpl:26
+msgid "Would you be kind and append this text to your email?"
+msgstr ""
+
+#: templates/help.tpl:14
+msgid ""
+"\n"
+"  Features, so far: <br>\n"
+"  <ul style=\"list-style-type: disc; margin-left: 30px;\">\n"
+"    <li>Categories, courses selection</li>\n"
+"    <li>Pdf uploading, parsing, viewing & downloading</li>\n"
+"    <li>In document view, there is a mini image tracking & clicking and a "
+"zoom</li>\n"
+"    <li>In document view, an user can add a thread for a page or a document</"
+"li>\n"
+"    <li>The user can view the threads and it's reply</li>\n"
+"    <li>Admins : users, documents & categories management</li>\n"
+"    <li>User profile and followed courses</li>\n"
+"    <li>This help \\o/</li>\n"
+"  </ul>\n"
+msgstr ""
+
+#: templates/help.tpl:30
+msgid ""
+"\n"
+"  Want to help?<br>\n"
+"  <ol>\n"
+"    <li>Use this application, upload files and do stuff</li>\n"
+"    <li>When you see a bug or have a great feature idea, <a href=\"http://"
+"wiki.urlab.be/urlab:p402\">go there</a> or <a href=\"https://github.com/"
+"ekatsah/proj402/issues\">on github</a></li>\n"
+"    <li>Want to moderate? Create new categories or courses? <a href=\"mailto:"
+"p402@cerkinfo.be\">write us an email</a></li>\n"
+"    <li>Want to help the developement? Join us on <a href=\"irc://chat."
+"freenode.net/urlab\">#urlab irc channel</a> or meet us AFK</li>\n"
+"  </ol>\n"
+msgstr ""
+
+#: templates/help.tpl:42
+msgid "Notes"
+msgstr ""
+
+#: templates/help.tpl:44
+msgid ""
+"The developement is made under firefox, no effort to test/port to anything "
+"else was attempted."
+msgstr ""
+
+#: templates/layout.tpl:31
+msgid ""
+"\n"
+"            <p>Project-402 is an attempt to make the next-gen student "
+"application\n"
+"            for the (applied) sciences faculty.<br>\n"
+"            You should <a href=\"https://www.ulb.ac.be/intranet/"
+"p402\">login</a></p>\n"
+"        "
+msgstr ""
+
+#: users/templates/user_courses.tpl:18
+msgid "searching.."
+msgstr ""
+
+#: users/templates/user_courses.tpl:21
+msgid "add"
+msgstr ""
+
+#: users/templates/user_courses.tpl:29
+#, fuzzy
+msgid "Course not found"
+msgstr "Cours suivis"
+
+#: users/templates/user_courses.tpl:80
+msgid "error"
+msgstr ""
+
+#: users/templates/user_courses.tpl:88
+msgid "Your fellows in"
+msgstr ""
+
+#: users/templates/user_courses.tpl:88
+msgid "have chosen"
+msgstr ""
+
+#: users/templates/user_courses.tpl:93
+msgid "View all courses"
+msgstr ""
+
+#: users/templates/user_courses.tpl:95
+msgid "You can add a course by mnemonic"
+msgstr ""
+
+#: users/templates/user_courses.tpl:100
+msgid "Selected courses"
+msgstr ""
+
+#: users/templates/user_courses.tpl:101
+msgid "follow courses"
+msgstr ""
+
+#: users/templates/user_login.tpl:18
+msgid "Your username and password didn't match. Please try again."
+msgstr ""
+
+#: users/templates/user_login.tpl:20
+msgid ""
+"\n"
+"<h1>This form is only for <underline>system accounts</underline></h1>\n"
+"<p>You <strong>must</strong> use the <strong><a href=\"https://www.ulb.ac.be/"
+"intranet/p402/\">NetID</a></strong> system if your are an ULB student.\n"
+"<br><br><br><br>\n"
+"\n"
+"If you are an administrator (if not, <a href=\"https://www.ulb.ac.be/"
+"intranet/p402/\">click here</a>) :\n"
+msgstr ""
+
+#: users/templates/user_show.tpl:23
+msgid "Add course"
+msgstr ""
+
+#: users/templates/user_show.tpl:40
+msgid "Hello"
+msgstr ""
+
+#: users/templates/user_show.tpl:44
+msgid ""
+"\n"
+"<h2>First time, right? </h2>\n"
+"<p>First, welcome on p402, the next-gen student platform!</p>\n"
+"<p>Basic rules : \n"
+"<ol><li>Don't panic.</li>\n"
+"    <li>This project is still in beta</li></ol>\n"
+"\n"
+"\n"
+"This website is a mean for student to exchange documents and messages. You "
+"can \n"
+"see a course with the menu in the top left corner. By clicking on it you "
+"will\n"
+"load some sub categories and courses and by repeting the process you will\n"
+"eventually find something interesting. You can come back on this page with "
+"the\n"
+"<i>home</i> button (the head of the menu).<br><br>\n"
+msgstr ""
+
+#: users/templates/user_show.tpl:59
+msgid ""
+"You should join the courses you want to follow on a daily basis with the "
+"application below."
+msgstr ""
+
+#: users/templates/user_show.tpl:59
+msgid "If you want more information, you would probably want to read"
+msgstr ""
+
+#: users/templates/user_show.tpl:60
+msgid "help"
+msgstr ""
+
+#: users/templates/user_show.tpl:62
+msgid ""
+"If you want to help, please upload every single pdf you have. You can also "
+"report bugs and suggestions"
+msgstr ""
+
+#: users/templates/user_show.tpl:62
+msgid "on the forum"
+msgstr ""
+
+#: users/templates/user_show.tpl:63
+msgid "or"
+msgstr ""
+
+#: users/templates/user_show.tpl:63
+msgid "on facebook"
+msgstr ""
+
+#: users/templates/user_show.tpl:63
+msgid "Thanks"
+msgstr ""
+
+#: users/templates/user_show.tpl:64
+msgid "If you want to mask this message"
+msgstr ""
+
+#: users/templates/user_show.tpl:65 users/templates/user_show.tpl.py:86
+msgid "click here"
+msgstr ""
+
+#: users/templates/user_show.tpl:70
+msgid "Courses followed"
+msgstr "Cours suivis"
+
+#: users/templates/user_show.tpl:75
+msgid "Course"
+msgstr ""
+
+#: users/templates/user_show.tpl:75
+msgid "Activity"
+msgstr ""
+
+#: users/templates/user_show.tpl:86
+msgid "Want to follow some new courses?"
+msgstr ""
+
+#: users/templates/user_show.tpl:88
+msgid "You don't follow any courses yet. You sould"
+msgstr ""
+
+#: users/templates/user_show.tpl:89
+msgid "add some"
+msgstr ""
+
+#: users/templates/user_show.tpl:93
+msgid "Profile"
+msgstr ""
+
+#: users/templates/user_show.tpl:94
+msgid "User"
+msgstr ""
+
+#: users/templates/user_show.tpl:95
+msgid "You are in"
+msgstr ""
+
+#: users/templates/user_show.tpl:95
+msgid "w/ reg"
+msgstr ""
