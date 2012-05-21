@@ -180,7 +180,8 @@ jQuery(document).ajaxSend(function(event, xhr, settings) {
       <li onclick="mmake(1, 1);"><span>{% trans "Courses" %}</span></li>
       <li><a href="{% url general_boards %}" 
              onclick="return Iload('{% url general_boards %}');">{% trans "General Forums" %}</a></li>
-      <!-- <li><span>{% trans "Walls" %}</span></li> -->
+      <li><a href="{% url wall %}" 
+             onclick="return Iload('{% url wall %}');">{% trans "Wall" %}</a></li>
       <li><a href="{% url help %}" onclick="return Iload('{% url help %}');">{% trans "Help" %}</a></li>
       <li><a href="https://github.com/ekatsah/proj402">{% trans "Developpement" %}</a></li>
     </ul>

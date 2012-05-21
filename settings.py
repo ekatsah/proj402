@@ -107,6 +107,7 @@ INSTALLED_APPS = (
     'categories',
     'documents',
     'messages',
+    'notifications',
     'search',
     'south',
     'upvotes',
