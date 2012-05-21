@@ -6,10 +6,9 @@
 # your option) any later version.
 
 from django.utils import unittest
-from pyPdf import PdfFileReader
 from django.test import Client
-from search.construct import parse_words
-from courses.models import Course, Category
+from courses.models import Course
+from categories.models import Category
 from os import system
 
 class SimpleTest(unittest.TestCase):
