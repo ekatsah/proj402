@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-05-22 00:07+0200\n"
+"POT-Creation-Date: 2012-05-22 01:00+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,8 +17,256 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
+#: admin/templates/adm_documents.tpl:36 admin/templates/adm_users.tpl:58
+msgid "#id"
+msgstr ""
+
+#: admin/templates/adm_documents.tpl:37
+msgid "course"
+msgstr ""
+
+#: admin/templates/adm_documents.tpl:38
+msgid "document"
+msgstr ""
+
+#: admin/templates/adm_documents.tpl:39
+msgid "owner"
+msgstr ""
+
+#: admin/templates/adm_documents.tpl:40
+msgid "actions"
+msgstr ""
+
+#: admin/templates/adm_documents.tpl:41
+msgid "status"
+msgstr ""
+
+#: admin/templates/adm_tree.tpl:221
+msgid "Category Tree"
+msgstr ""
+
+#: admin/templates/adm_tree.tpl:224
+msgid "All categories"
+msgstr ""
+
+#: admin/templates/adm_tree.tpl:227
+msgid "All courses"
+msgstr ""
+
+#: admin/templates/adm_users.tpl:53
+msgid "Users"
+msgstr ""
+
+#: admin/templates/adm_users.tpl:59
+msgid "username"
+msgstr ""
+
+#: admin/templates/adm_users.tpl:60
+msgid "name"
+msgstr ""
+
+#: admin/templates/adm_users.tpl:61
+msgid "last visit"
+msgstr ""
+
+#: admin/templates/adm_users.tpl:62
+msgid "moderator"
+msgstr ""
+
+#: admin/templates/adm_users.tpl:75
+msgid "unset"
+msgstr ""
+
+#: admin/templates/adm_users.tpl:77
+msgid "set"
+msgstr ""
+
+#: admin/templates/admin.tpl:15
+#, python-format
+msgid ""
+"<a href=\"#%(category_tree)s\" onclick=\"return Iload('{{ category_tree }');"
+"\">\n"
+"        Category Tree</a> Place to define all the category and the relation\n"
+"        between them"
+msgstr ""
+
+#: admin/templates/admin.tpl:20
+#, python-format
+msgid ""
+"<a href=\"#%(admin_users)s\" onclick=\"return Iload('{{ admin_users }');\">\n"
+"        User Manager</a> Place to see every users, edit some properties.. "
+"heck,\n"
+"        it's the fuck'ng LART!"
+msgstr ""
+
+#: admin/templates/admin.tpl:25
+#, python-format
+msgid ""
+"<a href=\"#%(admin_documents)s\" onclick=\"return Iload"
+"('{{ admin_documents }');\">\n"
+"        Document Manager</a> list of documents"
+msgstr ""
+
+#: courses/templates/course_all.tpl:12
+msgid "Courses list"
+msgstr ""
+
+#: courses/templates/course_all.tpl:26
+msgid "No courses available yet."
+msgstr ""
+
+#: courses/templates/course_show.tpl:25
+msgid "Available documents"
+msgstr ""
+
+#: courses/templates/course_show.tpl:31
+msgid "Name"
+msgstr ""
+
+#: courses/templates/course_show.tpl:32 courses/templates/course_show.tpl:55
+msgid "Poster"
+msgstr ""
+
+#: courses/templates/course_show.tpl:33
+msgid "Type"
+msgstr ""
+
+#: courses/templates/course_show.tpl:34
+msgid "Pages"
+msgstr ""
+
+#: courses/templates/course_show.tpl:35
+msgid "Score"
+msgstr ""
+
+#: courses/templates/course_show.tpl:36
+msgid "RealScore"
+msgstr ""
+
+#: courses/templates/course_show.tpl:37
+msgid "RealSize"
+msgstr ""
+
+#: courses/templates/course_show.tpl:46
+msgid "upload file"
+msgstr ""
+
+#: courses/templates/course_show.tpl:49
+msgid "Discussions"
+msgstr ""
+
+#: courses/templates/course_show.tpl:54
+msgid "Subject"
+msgstr ""
+
+#: courses/templates/course_show.tpl:56
+msgid "#post"
+msgstr ""
+
+#: courses/templates/course_show.tpl:57
+msgid "Last Activity"
+msgstr ""
+
+#: courses/templates/course_show.tpl:66 messages/templates/boards.tpl:17
+msgid "new thread"
+msgstr ""
+
+#: documents/templates/viewer.tpl:277
+msgid "&lt;&lt; back to course"
+msgstr ""
+
+#: documents/templates/viewer.tpl:278
+msgid "Download"
+msgstr ""
+
+#: documents/templates/viewer.tpl:302
+#, python-format
+msgid ""
+"Document uploaded by %(object.owner.username)s on "
+"%(object.date|date:\"d/m/y H:i\")s<br>\n"
+"            This document is classed in %(object.points.full_category)s"
+msgstr ""
+
+#: documents/templates/viewer.tpl:306
+msgid "Add comment on the whole document"
+msgstr ""
+
+#: documents/templates/viewer.tpl:310 documents/templates/viewer.tpl.py:336
+msgid "Read the comment"
+msgstr ""
+
+#: documents/templates/viewer.tpl:312
+#, python-format
+msgid "Read the <span id=\"doc_comCTR\">%(c)s</span> comments"
+msgstr ""
+
+#: documents/templates/viewer.tpl:330
+msgid "Add comment"
+msgstr ""
+
+#: documents/templates/viewer.tpl:338
+#, python-format
+msgid "Read the <span id=\"cntr%(p.id)s\">%(c)s</span> comments"
+msgstr ""
+
+#: messages/templates/boards.tpl:16 templates/base.tpl:206
+msgid "loading.."
+msgstr ""
+
+#: messages/templates/thread_view.tpl:20
+msgid "Other stats."
+msgstr ""
+
+#: messages/templates/thread_view.tpl:21
+msgid "reply"
+msgstr ""
+
+#: messages/templates/thread_view.tpl:23
+msgid "edit"
+msgstr ""
+
+#: messages/templates/thread_view.tpl:24
+msgid "remove"
+msgstr ""
+
+#: messages/templates/thread_view.tpl:52
+msgid "About page"
+msgstr ""
+
+#: search/templates/search.tpl:12
+msgid "This feature is not yet functionnal!"
+msgstr ""
+
+#: search/templates/search.tpl:20
+msgid "Rejected"
+msgstr ""
+
+#: search/templates/search.tpl:24
+msgid "Word"
+msgstr ""
+
+#: search/templates/search.tpl:24
+msgid "Present in"
+msgstr ""
+
 #: templates/base.tpl:75 templates/base.tpl.py:91
 msgid "Error!"
+msgstr ""
+
+#: templates/base.tpl:145
+msgid "Logout"
+msgstr ""
+
+#: templates/base.tpl:150
+msgid "Admin"
+msgstr ""
+
+#: templates/base.tpl:155
+msgid "search"
+msgstr ""
+
+#: templates/base.tpl:156
+msgid "go"
 msgstr ""
 
 #: templates/base.tpl:168
@@ -49,6 +297,15 @@ msgstr ""
 msgid "Developpement"
 msgstr ""
 
+#: templates/base.tpl:193
+msgid "Why not zoidberg?"
+msgstr ""
+
+#: templates/base.tpl:194
+msgid ""
+"If nothing happens, it's probably because you didn't activate javascript."
+msgstr ""
+
 #: templates/error.tpl:15
 msgid "A wild error appears!"
 msgstr ""
@@ -73,13 +330,13 @@ msgid ""
 "  Features, so far: <br>\n"
 "  <ul style=\"list-style-type: disc; margin-left: 30px;\">\n"
 "    <li>Categories, courses selection</li>\n"
-"    <li>Pdf uploading, parsing, viewing & downloading</li>\n"
-"    <li>In document view, there is a mini image tracking & clicking and a "
-"zoom</li>\n"
+"    <li>Pdf uploading, parsing, viewing &amp; downloading</li>\n"
+"    <li>In document view, there is a mini image tracking &amp; clicking and "
+"a zoom</li>\n"
 "    <li>In document view, an user can add a thread for a page or a document</"
 "li>\n"
 "    <li>The user can view the threads and it's reply</li>\n"
-"    <li>Admins : users, documents & categories management</li>\n"
+"    <li>Admins : users, documents &amp; categories management</li>\n"
 "    <li>User profile and followed courses</li>\n"
 "    <li>This help \\o/</li>\n"
 "  </ul>\n"
@@ -109,6 +366,15 @@ msgstr ""
 msgid ""
 "The developement is made under firefox, no effort to test/port to anything "
 "else was attempted."
+msgstr ""
+
+#: templates/help.tpl:49
+#, python-format
+msgid "Version : %(VERSION)s"
+msgstr ""
+
+#: templates/layout.tpl:24
+msgid "Bring back real collaboration between students!"
 msgstr ""
 
 #: templates/layout.tpl:31
@@ -176,6 +442,10 @@ msgid ""
 "\n"
 "If you are an administrator (if not, <a href=\"https://www.ulb.ac.be/"
 "intranet/p402/\">click here</a>) :\n"
+msgstr ""
+
+#: users/templates/user_login.tpl:40
+msgid "login"
 msgstr ""
 
 #: users/templates/user_show.tpl:23
