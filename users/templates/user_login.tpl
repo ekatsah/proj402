@@ -1,4 +1,5 @@
 {% extends "layout.tpl" %}
+{% load i18n %}
 {% comment %}
 
 # Copyright 2011, hast. All rights reserved.
@@ -14,14 +15,15 @@
 {% block content %}
 
 {% if form.errors %}
-<p>Your username and password didn't match. Please try again.</p>
+<p>{% trans "Your username and password didn't match. Please try again." %}</p>
 {% endif %}
-
+{% blocktrans %}
 <h1>This form is only for <underline>system accounts</underline></h1>
 <p>You <strong>must</strong> use the <strong><a href="https://www.ulb.ac.be/intranet/p402/">NetID</a></strong> system if your are an ULB student.
 <br><br><br><br>
 
-If you are an administrator (if not, <a href="https://www.ulb.ac.be/intranet/p402/">click here</a>) : 
+If you are an administrator (if not, <a href="https://www.ulb.ac.be/intranet/p402/">click here</a>) :
+{% endblocktrans %}
 <form method="post" action="{% url 'django.contrib.auth.views.login' %}">
 {% csrf_token %}
 <table>
