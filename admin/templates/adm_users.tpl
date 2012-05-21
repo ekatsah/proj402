@@ -82,4 +82,4 @@ $(document).ready(function() {
   </tbody>
 </table>
 
-<input type="button" value="create user" onclick="create_user();"/>
+<input type="button" value="{% trans "create user" %}" onclick="create_user();"/>

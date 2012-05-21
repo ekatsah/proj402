@@ -9,7 +9,7 @@
 # your option) any later version.
 
 {% endcomment %}
-<h1>Admin</h1>
+<h1>{% trans "Admin" %}</h1>
 <ul>
     {% url category_tree as category_tree %}
     <li>{% blocktrans %}<a href="#{{ category_tree }}" onclick="return Iload('{{ category_tree }');">
