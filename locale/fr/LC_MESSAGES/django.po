@@ -1,7 +1,7 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# 
+#
 # Translators:
 #   <alter.sedrik@gmail.com>, 2012.
 #   <nikita.marchant@gmail.com>, 2012.
@@ -11,15 +11,21 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Proj 402\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-05-22 01:00+0200\n"
+"POT-Creation-Date: 2012-05-22 01:07+0200\n"
 "PO-Revision-Date: 2012-05-21 22:27+0000\n"
 "Last-Translator: Pierre Penninckx <ibizapeanut@gmail.com>\n"
-"Language-Team: French (http://www.transifex.net/projects/p/proj402/language/fr/)\n"
+"Language-Team: French (http://www.transifex.net/projects/p/proj402/language/"
+"fr/)\n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: fr\n"
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
+
+#: admin/templates/adm_documents.tpl:31
+#, fuzzy
+msgid "Documents"
+msgstr "document"
 
 #: admin/templates/adm_documents.tpl:36 admin/templates/adm_users.tpl:58
 msgid "#id"
@@ -85,28 +91,48 @@ msgstr "unset"
 msgid "set"
 msgstr "set"
 
+#: admin/templates/adm_users.tpl:85
+msgid "create user"
+msgstr ""
+
+#: admin/templates/admin.tpl:12 templates/base.tpl:150
+msgid "Admin"
+msgstr "Admin"
+
 #: admin/templates/admin.tpl:15
 #, python-format
 msgid ""
-"<a href=\"#%(category_tree)s\" onclick=\"return Iload('{{ category_tree }');\">\n"
+"<a href=\"#%(category_tree)s\" onclick=\"return Iload('{{ category_tree }');"
+"\">\n"
 "        Category Tree</a> Place to define all the category and the relation\n"
 "        between them"
-msgstr "<a href=\"#%(category_tree)s\" onclick=\"return Iload('{{ category_tree }');\">\n        Arbre des catégories</a> Définir les catégories et leurs relations."
+msgstr ""
+"<a href=\"#%(category_tree)s\" onclick=\"return Iload('{{ category_tree }');"
+"\">\n"
+"        Arbre des catégories</a> Définir les catégories et leurs relations."
 
 #: admin/templates/admin.tpl:20
 #, python-format
 msgid ""
 "<a href=\"#%(admin_users)s\" onclick=\"return Iload('{{ admin_users }');\">\n"
-"        User Manager</a> Place to see every users, edit some properties.. heck,\n"
+"        User Manager</a> Place to see every users, edit some properties.. "
+"heck,\n"
 "        it's the fuck'ng LART!"
-msgstr "<a href=\"#%(admin_users)s\" onclick=\"return Iload('{{ admin_users }');\">\n        Gestion des utilisateurs</a> Voir tous les utilisateurs et modifier leurs propriétés... it's the fuck'ng LART!"
+msgstr ""
+"<a href=\"#%(admin_users)s\" onclick=\"return Iload('{{ admin_users }');\">\n"
+"        Gestion des utilisateurs</a> Voir tous les utilisateurs et modifier "
+"leurs propriétés... it's the fuck'ng LART!"
 
 #: admin/templates/admin.tpl:25
 #, python-format
 msgid ""
-"<a href=\"#%(admin_documents)s\" onclick=\"return Iload('{{ admin_documents }');\">\n"
+"<a href=\"#%(admin_documents)s\" onclick=\"return Iload"
+"('{{ admin_documents }');\">\n"
 "        Document Manager</a> list of documents"
-msgstr "<a href=\"#%(admin_documents)s\" onclick=\"return Iload('{{ admin_documents }');\">\n        Document Manager</a> list of documents"
+msgstr ""
+"<a href=\"#%(admin_documents)s\" onclick=\"return Iload"
+"('{{ admin_documents }');\">\n"
+"        Document Manager</a> list of documents"
 
 #: courses/templates/course_all.tpl:12
 msgid "Courses list"
@@ -183,9 +209,13 @@ msgstr "Téléchargement"
 #: documents/templates/viewer.tpl:302
 #, python-format
 msgid ""
-"Document uploaded by %(object.owner.username)s on %(object.date|date:\"d/m/y H:i\")s<br>\n"
+"Document uploaded by %(object.owner.username)s on "
+"%(object.date|date:\"d/m/y H:i\")s<br>\n"
 "            This document is classed in %(object.points.full_category)s"
-msgstr "Document uploadé par %(object.owner.username)s le %(object.date|date:\"d/m/y H:i\")s<br>\n            Ce document est classé en %(object.points.full_category)s"
+msgstr ""
+"Document uploadé par %(object.owner.username)s le "
+"%(object.date|date:\"d/m/y H:i\")s<br>\n"
+"            Ce document est classé en %(object.points.full_category)s"
 
 #: documents/templates/viewer.tpl:306
 msgid "Add comment on the whole document"
@@ -209,7 +239,7 @@ msgstr "Ajouter un commentaire"
 msgid "Read the <span id=\"cntr%(p.id)s\">%(c)s</span> comments"
 msgstr "Lire les <span id=\"cntr%(p.id)s\">%(c)s</span> commentaires"
 
-#: messages/templates/boards.tpl:16 templates/base.tpl:206
+#: messages/templates/boards.tpl:16 templates/base.tpl:207
 msgid "loading.."
 msgstr "chargement..."
 
@@ -232,6 +262,10 @@ msgstr "supprimer"
 #: messages/templates/thread_view.tpl:52
 msgid "About page"
 msgstr "A propos de la page"
+
+#: notifications/templates/wall.tpl:12
+msgid "All events"
+msgstr ""
 
 #: search/templates/search.tpl:12
 msgid "This feature is not yet functionnal!"
@@ -257,10 +291,6 @@ msgstr "Erreur!"
 msgid "Logout"
 msgstr "Déconnexion"
 
-#: templates/base.tpl:150
-msgid "Admin"
-msgstr "Admin"
-
 #: templates/base.tpl:155
 msgid "search"
 msgstr "recherche"
@@ -285,26 +315,29 @@ msgstr "Cours"
 msgid "General Forums"
 msgstr "Forums généraux"
 
-#: templates/base.tpl:183
-msgid "Walls"
+#: templates/base.tpl:184
+#, fuzzy
+msgid "Wall"
 msgstr "Walls"
 
-#: templates/base.tpl:184 templates/help.tpl:12
+#: templates/base.tpl:185 templates/help.tpl:12
 msgid "Help"
 msgstr "Aide"
 
-#: templates/base.tpl:185
+#: templates/base.tpl:186
 msgid "Developpement"
 msgstr "Développement"
 
-#: templates/base.tpl:193
+#: templates/base.tpl:194
 msgid "Why not zoidberg?"
 msgstr "Et pourquoi pas Zoidberg hein ?"
 
-#: templates/base.tpl:194
+#: templates/base.tpl:195
 msgid ""
 "If nothing happens, it's probably because you didn't activate javascript."
-msgstr "Si rien ne se passe, c'est probablement parce que vous n'avez pas activé javascript."
+msgstr ""
+"Si rien ne se passe, c'est probablement parce que vous n'avez pas activé "
+"javascript."
 
 #: templates/error.tpl:15
 msgid "A wild error appears!"
@@ -318,7 +351,13 @@ msgid ""
 "your error. <br>\n"
 "Don't forget to add your broswer information, the url of the \n"
 "error page and all useful informations. Thx!<br><br>\n"
-msgstr "\nNous sommes désolés du dérangement. Veuillez envoyer un mail à\n<a href=\"mailto:p402@cerkinfo.be\">p402@cerkinfo.be</a> en décrivant l'erreur.<br>\nN'oubliez pas d'y ajouter des informations sur votre navigateur, l'url de la page et toute autre information utile. Merci !<br><br>\n"
+msgstr ""
+"\n"
+"Nous sommes désolés du dérangement. Veuillez envoyer un mail à\n"
+"<a href=\"mailto:p402@cerkinfo.be\">p402@cerkinfo.be</a> en décrivant "
+"l'erreur.<br>\n"
+"N'oubliez pas d'y ajouter des informations sur votre navigateur, l'url de la "
+"page et toute autre information utile. Merci !<br><br>\n"
 
 #: templates/error.tpl:26
 msgid "Would you be kind and append this text to your email?"
@@ -331,14 +370,29 @@ msgid ""
 "  <ul style=\"list-style-type: disc; margin-left: 30px;\">\n"
 "    <li>Categories, courses selection</li>\n"
 "    <li>Pdf uploading, parsing, viewing &amp; downloading</li>\n"
-"    <li>In document view, there is a mini image tracking &amp; clicking and a zoom</li>\n"
-"    <li>In document view, an user can add a thread for a page or a document</li>\n"
+"    <li>In document view, there is a mini image tracking &amp; clicking and "
+"a zoom</li>\n"
+"    <li>In document view, an user can add a thread for a page or a document</"
+"li>\n"
 "    <li>The user can view the threads and it's reply</li>\n"
 "    <li>Admins : users, documents &amp; categories management</li>\n"
 "    <li>User profile and followed courses</li>\n"
 "    <li>This help \\o/</li>\n"
 "  </ul>\n"
-msgstr "\n  Fonctionnalités implémentées: <br>\n  <ul style=\"list-style-type: disc; margin-left: 30px;\">\n    <li>Catégories, sélection de cours</li>\n    <li>Upload, analyse, visualisation &amp; téléchargement de pdf</li>\n    <li>La mini-vue des documents permet de cliquer et zoomer</li>\n    <li>Dans le mode d'affichage par document, l'utilisateur peut ajouter un sujet pour une page ou un document</li>\n    <li>L'utilisateur peut voir les différents threads</li>\n    <li>Admins : utilisateurs, documents &amp; catégories</li>\n    <li>Profil et cours suivis</li>\n    <li>Ce que vous êtes en train de lire \\o/</li>\n  </ul>\n"
+msgstr ""
+"\n"
+"  Fonctionnalités implémentées: <br>\n"
+"  <ul style=\"list-style-type: disc; margin-left: 30px;\">\n"
+"    <li>Catégories, sélection de cours</li>\n"
+"    <li>Upload, analyse, visualisation &amp; téléchargement de pdf</li>\n"
+"    <li>La mini-vue des documents permet de cliquer et zoomer</li>\n"
+"    <li>Dans le mode d'affichage par document, l'utilisateur peut ajouter un "
+"sujet pour une page ou un document</li>\n"
+"    <li>L'utilisateur peut voir les différents threads</li>\n"
+"    <li>Admins : utilisateurs, documents &amp; catégories</li>\n"
+"    <li>Profil et cours suivis</li>\n"
+"    <li>Ce que vous êtes en train de lire \\o/</li>\n"
+"  </ul>\n"
 
 #: templates/help.tpl:30
 msgid ""
@@ -346,11 +400,29 @@ msgid ""
 "  Want to help?<br>\n"
 "  <ol>\n"
 "    <li>Use this application, upload files and do stuff</li>\n"
-"    <li>When you see a bug or have a great feature idea, <a href=\"http://wiki.urlab.be/urlab:p402\">go there</a> or <a href=\"https://github.com/ekatsah/proj402/issues\">on github</a></li>\n"
-"    <li>Want to moderate? Create new categories or courses? <a href=\"mailto:p402@cerkinfo.be\">write us an email</a></li>\n"
-"    <li>Want to help the developement? Join us on <a href=\"irc://chat.freenode.net/urlab\">#urlab irc channel</a> or meet us AFK</li>\n"
+"    <li>When you see a bug or have a great feature idea, <a href=\"http://"
+"wiki.urlab.be/urlab:p402\">go there</a> or <a href=\"https://github.com/"
+"ekatsah/proj402/issues\">on github</a></li>\n"
+"    <li>Want to moderate? Create new categories or courses? <a href=\"mailto:"
+"p402@cerkinfo.be\">write us an email</a></li>\n"
+"    <li>Want to help the developement? Join us on <a href=\"irc://chat."
+"freenode.net/urlab\">#urlab irc channel</a> or meet us AFK</li>\n"
 "  </ol>\n"
-msgstr "\n  Vous voulez aider ?<br>\n  <ol>\n    <li>Utilisez l'application, uploadez des pdf et expérimentez</li>\n    <li>Si vous trouvez un bug ou que vous avez une idée de suggestion géniale, <a href=\"http://wiki.urlab.be/urlab:p402\">postez là bas</a> ou <a href=\"https://github.com/ekatsah/proj402/issues\">sur github</a></li>\n    <li>Vous voulez être modérateur ? Créer des nouvelles catégories et des nouveaux cours ? <a href=\"mailto:p402@cerkinfo.be\">écrivez nous un mail</a></li>\n    <li>Vous voulez aider à développer p402 ? Retrouvez nous sur le <a href=\"irc://chat.freenode.net/urlab\">chan irc #urlab</a> ou rencontrez nous IRL</li>\n  </ol>\n"
+msgstr ""
+"\n"
+"  Vous voulez aider ?<br>\n"
+"  <ol>\n"
+"    <li>Utilisez l'application, uploadez des pdf et expérimentez</li>\n"
+"    <li>Si vous trouvez un bug ou que vous avez une idée de suggestion "
+"géniale, <a href=\"http://wiki.urlab.be/urlab:p402\">postez là bas</a> ou <a "
+"href=\"https://github.com/ekatsah/proj402/issues\">sur github</a></li>\n"
+"    <li>Vous voulez être modérateur ? Créer des nouvelles catégories et des "
+"nouveaux cours ? <a href=\"mailto:p402@cerkinfo.be\">écrivez nous un mail</"
+"a></li>\n"
+"    <li>Vous voulez aider à développer p402 ? Retrouvez nous sur le <a href="
+"\"irc://chat.freenode.net/urlab\">chan irc #urlab</a> ou rencontrez nous "
+"IRL</li>\n"
+"  </ol>\n"
 
 #: templates/help.tpl:42
 msgid "Notes"
@@ -360,7 +432,9 @@ msgstr "Notes"
 msgid ""
 "The developement is made under firefox, no effort to test/port to anything "
 "else was attempted."
-msgstr "Le développement est fait sous firefox, aucun effort de test/portage pour un autre navigateur n'a été effectué."
+msgstr ""
+"Le développement est fait sous firefox, aucun effort de test/portage pour un "
+"autre navigateur n'a été effectué."
 
 #: templates/help.tpl:49
 #, python-format
@@ -374,11 +448,18 @@ msgstr "Retrouvons la vraie collaboration entre étudiants!"
 #: templates/layout.tpl:31
 msgid ""
 "\n"
-"            <p>Project-402 is an attempt to make the next-gen student application\n"
+"            <p>Project-402 is an attempt to make the next-gen student "
+"application\n"
 "            for the (applied) sciences faculty.<br>\n"
-"            You should <a href=\"https://www.ulb.ac.be/intranet/p402\">login</a></p>\n"
+"            You should <a href=\"https://www.ulb.ac.be/intranet/"
+"p402\">login</a></p>\n"
 "        "
-msgstr "\n            <p>p402 est un projet d'une application estudiantine de nouvelle génération pour la faculté des sciences (appliquées).<br>\n           Vous devriez vous <a href=\"https://www.ulb.ac.be/intranet/p402\">connecter</a></p>"
+msgstr ""
+"\n"
+"            <p>p402 est un projet d'une application estudiantine de nouvelle "
+"génération pour la faculté des sciences (appliquées).<br>\n"
+"           Vous devriez vous <a href=\"https://www.ulb.ac.be/intranet/"
+"p402\">connecter</a></p>"
 
 #: users/templates/user_courses.tpl:18
 msgid "searching.."
@@ -397,23 +478,22 @@ msgid "error"
 msgstr "erreur"
 
 #: users/templates/user_courses.tpl:88
-msgid "Your fellows in"
-msgstr "Vos amis en"
-
-#: users/templates/user_courses.tpl:88
-msgid "have chosen"
-msgstr "ont choisis"
+#, python-format
+msgid "Your fellows in <i>%(section)s</i>have chosen : "
+msgstr ""
 
 #: users/templates/user_courses.tpl:93
 msgid "View all courses"
 msgstr "Voir tous les cours"
 
 #: users/templates/user_courses.tpl:95
-msgid "You can add a course by mnemonic"
+#, fuzzy
+msgid "You can add a course by mnemonic : "
 msgstr "Vous pouvez ajouter un cours par son mnémonique"
 
 #: users/templates/user_courses.tpl:100
-msgid "Selected courses"
+#, fuzzy
+msgid "Selected courses : "
 msgstr "Cours choisis"
 
 #: users/templates/user_courses.tpl:101
@@ -422,17 +502,30 @@ msgstr "suivre les cours"
 
 #: users/templates/user_login.tpl:18
 msgid "Your username and password didn't match. Please try again."
-msgstr "Le d'utilisateur et le mot de passe ne concordent pas. Veuillez réessayer"
+msgstr ""
+"Le d'utilisateur et le mot de passe ne concordent pas. Veuillez réessayer"
 
 #: users/templates/user_login.tpl:20
 msgid ""
 "\n"
 "<h1>This form is only for <underline>system accounts</underline></h1>\n"
-"<p>You <strong>must</strong> use the <strong><a href=\"https://www.ulb.ac.be/intranet/p402/\">NetID</a></strong> system if your are an ULB student.\n"
+"<p>You <strong>must</strong> use the <strong><a href=\"https://www.ulb.ac.be/"
+"intranet/p402/\">NetID</a></strong> system if your are an ULB student.\n"
 "<br><br><br><br>\n"
 "\n"
-"If you are an administrator (if not, <a href=\"https://www.ulb.ac.be/intranet/p402/\">click here</a>) :\n"
-msgstr "\n<h1>Ce formulaire n'est destiné qu'aux <underline>administrateurs</underline></h1>\n<p>Vous <strong>devez</strong> utiliser <strong><a href=\"https://www.ulb.ac.be/intranet/p402/\">NetID</a></strong> pour vous connecter en tant qu'étudiant à l'ULB.\n<br><br><br><br>\n\nSi vous êtres un administrateur (sinon, <a href=\"https://www.ulb.ac.be/intranet/p402/\">cliquez ici</a>) :\n"
+"If you are an administrator (if not, <a href=\"https://www.ulb.ac.be/"
+"intranet/p402/\">click here</a>) :\n"
+msgstr ""
+"\n"
+"<h1>Ce formulaire n'est destiné qu'aux <underline>administrateurs</"
+"underline></h1>\n"
+"<p>Vous <strong>devez</strong> utiliser <strong><a href=\"https://www.ulb.ac."
+"be/intranet/p402/\">NetID</a></strong> pour vous connecter en tant "
+"qu'étudiant à l'ULB.\n"
+"<br><br><br><br>\n"
+"\n"
+"Si vous êtres un administrateur (sinon, <a href=\"https://www.ulb.ac.be/"
+"intranet/p402/\">cliquez ici</a>) :\n"
 
 #: users/templates/user_login.tpl:40
 msgid "login"
@@ -456,18 +549,37 @@ msgid ""
 "    <li>This project is still in beta</li></ol>\n"
 "\n"
 "\n"
-"This website is a mean for student to exchange documents and messages. You can \n"
-"see a course with the menu in the top left corner. By clicking on it you will\n"
+"This website is a mean for student to exchange documents and messages. You "
+"can \n"
+"see a course with the menu in the top left corner. By clicking on it you "
+"will\n"
 "load some sub categories and courses and by repeting the process you will\n"
-"eventually find something interesting. You can come back on this page with the\n"
+"eventually find something interesting. You can come back on this page with "
+"the\n"
 "<i>home</i> button (the head of the menu).<br><br>\n"
-msgstr "\n<h2>C'est la première fois que vous venez ici, non ? </h2>\n<p>Bienvenue sur p402, la plate-forme estudiantine de nouvelle génération !</p>\n<p> Quelques règles basiques : \n<ol><li>Ne paniquez pas.</li>\n    <li>Ce projet est toujours en beta.</li></ol>\nCe site web doit permettre aux étudiants d'échanger des documents et des messages.\nVous pouvez regarder le contenu d'un cours grâce au menu en haut à gauche. En cliquant dessus, vous chargerez des sous-catégories et des cours et en répétant cette action, vous trouverez surement quelque chose d'intéressant. Vous pouvez revenir à cette page en cliquant sur le bouton <i>home</i> (dans le menu).<br><br>\n"
+msgstr ""
+"\n"
+"<h2>C'est la première fois que vous venez ici, non ? </h2>\n"
+"<p>Bienvenue sur p402, la plate-forme estudiantine de nouvelle génération !</"
+"p>\n"
+"<p> Quelques règles basiques : \n"
+"<ol><li>Ne paniquez pas.</li>\n"
+"    <li>Ce projet est toujours en beta.</li></ol>\n"
+"Ce site web doit permettre aux étudiants d'échanger des documents et des "
+"messages.\n"
+"Vous pouvez regarder le contenu d'un cours grâce au menu en haut à gauche. "
+"En cliquant dessus, vous chargerez des sous-catégories et des cours et en "
+"répétant cette action, vous trouverez surement quelque chose d'intéressant. "
+"Vous pouvez revenir à cette page en cliquant sur le bouton <i>home</i> (dans "
+"le menu).<br><br>\n"
 
 #: users/templates/user_show.tpl:59
 msgid ""
 "You should join the courses you want to follow on a daily basis with the "
 "application below."
-msgstr "Vous devriez ajouter les cours que vous suivez régulièrement avec l'application ci-dessous"
+msgstr ""
+"Vous devriez ajouter les cours que vous suivez régulièrement avec "
+"l'application ci-dessous"
 
 #: users/templates/user_show.tpl:59
 msgid "If you want more information, you would probably want to read"
@@ -481,7 +593,9 @@ msgstr "aide"
 msgid ""
 "If you want to help, please upload every single pdf you have. You can also "
 "report bugs and suggestions"
-msgstr "Si vous voulez aider, uploadez tous les pdf que vous avez. Vous pouvez aussi rapporter des bugs et faire des suggestions"
+msgstr ""
+"Si vous voulez aider, uploadez tous les pdf que vous avez. Vous pouvez aussi "
+"rapporter des bugs et faire des suggestions"
 
 #: users/templates/user_show.tpl:62
 msgid "on the forum"
@@ -546,3 +660,9 @@ msgstr "Vous êtes dans"
 #: users/templates/user_show.tpl:95
 msgid "w/ reg"
 msgstr "code cours"
+
+#~ msgid "Your fellows in"
+#~ msgstr "Vos amis en"
+
+#~ msgid "have chosen"
+#~ msgstr "ont choisis"
