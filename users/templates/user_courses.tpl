@@ -16,10 +16,13 @@ function course_search(e) {
 		searched = $('#mnemo').val();
 		$('#mn_result').html('searching..');
 
-		// HARD_LINK
-		$.get('/course/get/' + searched, function(data) {
-			but = '<input class="course_add_but" type="button" value="add" onclick="course_add();"/>';
-			$('#mn_result').html(but + data);
+		$.getJSON('{% url course_get "'+searched+'" %}', function(data) {
+			var but = '<input class="course_add_but" type="button" value="add" onclick="course_add(\''+data.slug+'\');"/>';
+			if (data.description != '')
+				var desc = ': ' + data.description;
+			else
+				var desc = '';
+			$('#mn_result').html(but + data.slug + ' ' + data.name + desc);
 			overlay_refresh();
 		}).error(function(obj) {
 			$('#mn_result').html('Course not found');
@@ -48,8 +51,8 @@ function clist_refresh() {
 	overlay_refresh();
 }
 
-function course_add(e) {
-	courses_list[searched] = 1;
+function course_add(c) {
+	courses_list[c] = 1;
 	clist_refresh();
 }
 
@@ -89,7 +92,7 @@ function submit_courses() {
    View all courses</a></p>
 
 <p><strong>You can add a course by mnemonic : </strong>
-<input id="mnemo" type="text" size="5" onkeypress="course_search(event);"/></p>
+<input id="mnemo" type="text" size="10" onkeypress="course_search(event);"/></p>
 
 <p id="mn_result" style="margin-top: 4px; margin-bottom: 4px;"></p>
 

@@ -64,5 +64,17 @@ def json_sublist(queryset, fields):
 def json_object_send(request, obj, fields):
     return HttpResponse(json_object(obj, fields), 'application/javascript')
 
+def json_select_send(request, queryset, fields, **kwargs):
+    queryset = queryset() if callable(queryset) else queryset
+    for k, v in kwargs.iteritems():
+        queryset = queryset.filter(**{k: v})
+
+    if (len(queryset)) == 0:
+        return HttpResponse('{}', 'application/javascript')
+    elif (len(queryset)) == 1:
+        return json_object_send(request, queryset[0], fields)
+    else:
+        return json_sublist_send(request, queryset, fields)
+
 def json_sublist_send(request, queryset, fields):
     return HttpResponse(json_sublist(queryset, fields), 'application/javascript')
