@@ -9,6 +9,11 @@ from django.db import models
 from django.contrib.auth.models import User
 from datetime import datetime
 
+### Magic begins here
+# The goal is to make a single class Event agregating avery event type below.
+# We use metaclass and dynamic models creation to avoid the use of polymorphic
+# models (inheritance in orm sux, see vietnam of computer sciences)
+
 action_fields, output_method = dict(), dict()
 
 def check_field(name, value):
@@ -58,4 +63,38 @@ class BaseEvent(object):
         event.save()
         return event
 
+### Magic ends here.
+# You can declare your models as usual, anything based on BaseEvent
+# will be integrated in the Event model.
+
+class UploadEvent(BaseEvent):
+    __metaclass__ = MetaEvent
+    context = models.ForeignKey('courses.Course', null=True, default=0)
+    user = models.ForeignKey(User, null=True, default=0)
+    document = models.ForeignKey('documents.Document', null=True, default=0)
+
+    def __str__(self):
+        return "%s uploaded a new document %s" % (self.user.username, 
+                                                  self.document.name)
+class ThreadEvent(BaseEvent):
+    __metaclass__ = MetaEvent
+    context = models.ForeignKey('courses.Course', null=True, default=0)
+    user = models.ForeignKey(User, null=True, default=0)
+    thread = models.ForeignKey('messages.Thread', null=True, default=0)
+
+    def __str__(self):
+        return "%s opened a new thread about %s" % (self.user.username,
+                                                    self.thread.subject)
+
+class ReplyEvent(BaseEvent):
+    __metaclass__ = MetaEvent
+    context = models.ForeignKey('courses.Course', null=True, default=0)
+    user = models.ForeignKey(User, null=True, default=0)
+    thread = models.ForeignKey('messages.Thread', null=True, default=0)
+
+    def __str__(self):
+        return "%s replied to the thread about %s" % (self.user.username,
+                                                      self.thread.subject)
+
+# don't touch that
 Event = create_event()
