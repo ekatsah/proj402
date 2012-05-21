@@ -28,9 +28,11 @@
 
         <div id="content">
         {% block content %}
+        {% blocktrans %}
             <p>Project-402 is an attempt to make the next-gen student application
-            for the sciences faculty.<br>
+            for the (applied) sciences faculty.<br>
             You should <a href="https://www.ulb.ac.be/intranet/p402">login</a></p>
+        {% endblocktrans %}
         {% endblock %}
         </div>
 

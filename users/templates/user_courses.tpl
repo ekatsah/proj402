@@ -8,16 +8,17 @@
 # your option) any later version.
 
 {% endcomment %}
+{% load i18n %}
 <script langage="javascript">
 var courses_list = new Object;
 
 function course_search(e) {
 	if ((e.keyCode || e.which) == 13) { // On enter key
 		searched = $('#mnemo').val();
-		$('#mn_result').html('searching..');
+		$('#mn_result').html('{% trans "searching.." %}');
 
 		$.getJSON('{% url course_get "'+searched+'" %}', function(data) {
-			var but = '<input class="course_add_but" type="button" value="add" onclick="course_add(\''+data.slug+'\');"/>';
+			var but = '<input class="course_add_but" type="button" value="{% trans "add" %}" onclick="course_add(\''+data.slug+'\');"/>';
 			if (data.description != '')
 				var desc = ': ' + data.description;
 			else
@@ -25,7 +26,7 @@ function course_search(e) {
 			$('#mn_result').html(but + data.slug + ' ' + data.name + desc);
 			overlay_refresh();
 		}).error(function(obj) {
-			$('#mn_result').html('Course not found');
+			$('#mn_result').html('{% trans "Course not found" %}');
 			overlay_refresh();
 		});
 	}
@@ -76,7 +77,7 @@ function submit_courses() {
 				courses_list = new Object;
 				overlay_close();
 				Iload('{% url profile %}');
-			} else alert('error : ' + data);
+			} else alert('{% trans "error" %} : ' + data);
 		});
 	}
 }
@@ -84,17 +85,17 @@ function submit_courses() {
 </script>
 
 {% if guess %}
-<p><strong>Your fellows in <i>{{ user.profile.section }}</i> have chosen : </strong><br>
+<p><strong>{% trans "Your fellows in" %} <i>{{ user.profile.section }}</i> {% trans "have chosen" %} : </strong><br>
 {{ guess }}</p>
 {% endif %}
 
 <p><a href="{% url course_view_all %}" onclick="return Iload('{% url course_view_all %}');">
-   View all courses</a></p>
+   {% trans "View all courses" %}</a></p>
 
-<p><strong>You can add a course by mnemonic : </strong>
+<p><strong>{% trans "You can add a course by mnemonic" %} : </strong>
 <input id="mnemo" type="text" size="10" onkeypress="course_search(event);"/></p>
 
 <p id="mn_result" style="margin-top: 4px; margin-bottom: 4px;"></p>
 
-<p style="display: none" id="c_list_box"><strong>Selected courses : </strong><br><br>
-<span id="c_list"></span><br><br><input type="button" value="follow courses" onclick="submit_courses();"/></p>
+<p style="display: none" id="c_list_box"><strong>{% trans "Selected courses" %} : </strong><br><br>
+<span id="c_list"></span><br><br><input type="button" value="{% trans "follow courses" %}" onclick="submit_courses();"/></p>

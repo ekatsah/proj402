@@ -8,8 +8,10 @@
 # your option) any later version.
 
 {% endcomment %}
-<h1>Help</h1>
+{% load i18n %}
+<h1>{% trans "Help" %}</h1>
 <p>
+{% blocktrans %}
   Features, so far: <br>
   <ul style="list-style-type: disc; margin-left: 30px;">
     <li>Categories, courses selection</li>
@@ -21,9 +23,11 @@
     <li>User profile and followed courses</li>
     <li>This help \o/</li>
   </ul>
+{% endblocktrans %}
 </p>
 
 <p>
+{% blocktrans %}
   Want to help?<br>
   <ol>
     <li>Use this application, upload files and do stuff</li>
@@ -31,12 +35,13 @@
     <li>Want to moderate? Create new categories or courses? <a href="mailto:p402@cerkinfo.be">write us an email</a></li>
     <li>Want to help the developement? Join us on <a href="irc://chat.freenode.net/urlab">#urlab irc channel</a> or meet us AFK</li>
   </ol>
+{% endblocktrans %}
 </p>
 
 <p>
-  Notes :<br>
+  {% trans "Notes" %} :<br>
   <ul style="list-style-type: disc; margin-left: 30px;">
-    <li>The developement is made under firefox, no effort to test/port to anything else was attempted.</li>
+    <li>{% trans "The developement is made under firefox, no effort to test/port to anything else was attempted." %}</li>
   </ul>
 </p>
 

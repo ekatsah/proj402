@@ -20,7 +20,7 @@ function join_course(slug) {
 
 function add_course_box() {
     overlay_reset();
-    overlay_title("Add course");overlay_refresh();
+    overlay_title("{% trans "Add course" %}");overlay_refresh();
     $.get('{% url user_courses %}', function(data) {
 		$('#overlay_content').html(data);
 		overlay_refresh();
@@ -37,10 +37,11 @@ function mask_welcome() {
 
 </script>
 
-<h1>Hello, {{ user.first_name }} {{ user.last_name }}</h1>
+<h1>{% trans "Hello" %}, {{ user.first_name }} {{ user.last_name }}</h1>
 
 {% if user.profile.welcome %}
 <div id="welcome_msg">
+{% blocktrans %}
 <h2>First time, right? </h2>
 <p>First, welcome on p402, the next-gen student platform!</p>
 <p>Basic rules : 
@@ -53,16 +54,15 @@ see a course with the menu in the top left corner. By clicking on it you will
 load some sub categories and courses and by repeting the process you will
 eventually find something interesting. You can come back on this page with the
 <i>home</i> button (the head of the menu).<br><br>
+{% endblocktrans %}
 
-You should join the courses you want to follow on a daily basis with the
-application below. If you want more information, you would probably want to read
-<a href="{% url help %}" onclick="return Iload('{% url help %}');">help</a><br><br>
+{% trans "You should join the courses you want to follow on a daily basis with the application below." %} {% trans "If you want more information, you would probably want to read" %}
+<a href="{% url help %}" onclick="return Iload('{% url help %}');">{% trans "help" %}</a><br><br>
 
-If you want to help, please upload every single pdf you have.
-You can also report bugs and suggestions <a href="#/msg/boards">on the forum</a>
-or <a href="http://www.facebook.com/Proj402">on facebook</a>. Tanks !<br><br>
-If you want to mask this message, 
-<a href="{% url mask_welcome %}" onclick="return mask_welcome();">click here</a></p>
+{% trans "If you want to help, please upload every single pdf you have. You can also report bugs and suggestions" %} <a href="#/msg/boards">{% trans "on the forum" %}</a>
+{% trans "or" %} <a href="http://www.facebook.com/Proj402">{% trans "on facebook" %}</a>. {% trans "Thanks" %} !<br><br>
+{% trans "If you want to mask this message" %}, 
+<a href="{% url mask_welcome %}" onclick="return mask_welcome();">{% trans "click here" %}</a></p>
 
 </div>
 {% endif %}
@@ -72,7 +72,7 @@ If you want to mask this message,
 {% if courses %}
 
 <table style="border-collapse: collapse;">
-<tr><th style="padding: 5px;">Course</th><th style="padding: 5px;">Activity</th></tr>
+<tr><th style="padding: 5px;">{% trans "Course" %}</th><th style="padding: 5px;">{% trans "Activity" %}</th></tr>
 
 {% for follow in courses %}
 <tr><td style="padding: 5px; text-align: center; border-top: 1px solid black; border-right: 1px solid black">
@@ -83,13 +83,13 @@ If you want to mask this message,
 {% endfor %}
 </table>
  
-<p>Want to follow some new courses? <input type="button" onclick="add_course_box();" value="click here"/></p>
+<p>{% trans "Want to follow some new courses?" %} <input type="button" onclick="add_course_box();" value="{% trans "click here" %}"/></p>
 {% else %}
-<p>You don't follow any courses yet. You sould 
-<input type="button" onclick="add_course_box();" value="add some"/></p>
+<p>{% trans "You don't follow any courses yet. You sould" %} 
+<input type="button" onclick="add_course_box();" value="{% trans "add some" %}"/></p>
 {% endif %}
 {% endwith %}
 <!--
-<h2>Profile</h2>
-<p>User {{ user.username }}.<br>
-You are in {{ user.profile.section }} w/ reg = {{ user.profile.registration }}</p> -->
+<h2>{% trans "Profile" %}</h2>
+<p>{% trans "User" %} {{ user.username }}.<br>
+{% trans "You are in" %} {{ user.profile.section }} {% trans "w/ reg" %} = {{ user.profile.registration }}</p> -->
