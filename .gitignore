@@ -1,0 +1,6 @@
+*.pyc
+*/r/*
+ve/*
+.tx/*
+production.py
+db.sql
