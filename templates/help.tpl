@@ -8,6 +8,7 @@
 # your option) any later version.
 
 {% endcomment %}
+{% load i18n %}
 <h1>{% trans "Help" %}</h1>
 <p>
 {% blocktrans %}

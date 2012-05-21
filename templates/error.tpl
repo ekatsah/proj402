@@ -1,4 +1,5 @@
 {% extends "layout.tpl" %}
+{% load i18n %}
 {% comment %}
 
 # Copyright 2011, hast. All rights reserved.
