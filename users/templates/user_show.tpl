@@ -54,17 +54,16 @@ see a course with the menu in the top left corner. By clicking on it you will
 load some sub categories and courses and by repeting the process you will
 eventually find something interesting. You can come back on this page with the
 <i>home</i> button (the head of the menu).<br><br>
-
-You should join the courses you want to follow on a daily basis with the
-application below. If you want more information, you would probably want to read
-<a href="{% url help %}" onclick="return Iload('{% url help %}');">help</a><br><br>
-
-If you want to help, please upload every single pdf you have.
-You can also report bugs and suggestions <a href="#/msg/boards">on the forum</a>
-or <a href="http://www.facebook.com/Proj402">on facebook</a>. Tanks !<br><br>
-If you want to mask this message, 
-<a href="{% url mask_welcome %}" onclick="return mask_welcome();">click here</a></p>
 {% endblocktrans %}
+
+{% trans "You should join the courses you want to follow on a daily basis with the application below." %} {% trans "If you want more information, you would probably want to read" %}
+<a href="{% url help %}" onclick="return Iload('{% url help %}');">{% trans "help" %}</a><br><br>
+
+{% trans "If you want to help, please upload every single pdf you have. You can also report bugs and suggestions" %} <a href="#/msg/boards">{% trans "on the forum" %}</a>
+{% trans "or" %} <a href="http://www.facebook.com/Proj402">{% trans "on facebook" %}</a>. {% trans "Thanks" %} !<br><br>
+{% trans "If you want to mask this message" %}, 
+<a href="{% url mask_welcome %}" onclick="return mask_welcome();">{% trans "click here" %}</a></p>
+
 </div>
 {% endif %}
 
