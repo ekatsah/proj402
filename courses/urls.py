@@ -11,6 +11,7 @@ from django.views.generic.list_detail import object_detail, object_list
 from documents.models import UploadFileForm, UploadHttpForm
 from courses.models import Course
 from messages.models import NewThreadForm
+from upvotes.models import CAT_DOCUMENTS
 from utils.json import json_sublist_send, json_select_send
 from courses.views import new_course
 from utils.decorators import AR, enforce_post, moderate
@@ -36,7 +37,8 @@ urlpatterns = patterns('courses.views',
          'template_name': 'course_show.tpl',
          'extra_context': {'uform': UploadFileForm(),
                            'hform': UploadHttpForm(),
-                           'tform': NewThreadForm()}},
+                           'tform': NewThreadForm(),
+                           'doc_categories': CAT_DOCUMENTS}},
         name='course_show'),
 
     url(r'^view_all', AR(login_required(object_list)),

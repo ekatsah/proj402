@@ -115,9 +115,7 @@ function send_vote(s, t) {
 	});
 }
 
-Dcategories = {'R': 'Reference', 'O': 'Official Support',
-               'S': 'Summary', 'E': 'Old Exam', 'P': 'Old Project',
-               'L': 'Old Solutions', 'D': 'Others'};
+Dcategories = { {% for code, name in doc_categories %}'{{code}}':'{{name}}',{% endfor %} };
 
 function Dvote(id, cat, score, rscore, title) {
 	var foo  = '<input type="hidden" id="v_id" value="' + id + '">';

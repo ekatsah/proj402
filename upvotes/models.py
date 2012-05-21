@@ -18,18 +18,19 @@ CAT_THREADS = (
 
 # This is duplicated in upvotes.url and course_show JS                                   
 CAT_DOCUMENTS = (
-    ('R', 'Reference'),
     ('O', 'Official Support'),
+    ('R', 'Reference'),
     ('S', 'Summary'),
+    ('T', 'Exercises'),
+    ('L', 'Solutions'),
     ('E', 'Old Exam'),
-    ('P', 'Old Project'),
-    ('L', 'Old Solutions'),
+    ('P', 'Project'),
     ('D', 'Others'),
 )
 
 REF_DOCUMENTS = {'R': 'cat_reference', 'O': 'cat_support', 'S': 'cat_summary', 
                  'E': 'cat_exam', 'P': 'cat_project', 'L': 'cat_solution', 
-                 'D': 'cat_others'}
+                 'D': 'cat_others', 'T': 'cat_exercice'}
 
 RESSOURCES = (
     ('D', 'Document'),
@@ -60,6 +61,7 @@ class VoteDocument(models.Model):
     cat_exam = models.IntegerField(null=False, default=0)
     cat_project = models.IntegerField(null=False, default=0)
     cat_solution = models.IntegerField(null=False, default=0)
+    cat_exercice = models.IntegerField(null=False, default=0)
     cat_others = models.IntegerField(null=False, default=0)
 
     def full_category(self):
