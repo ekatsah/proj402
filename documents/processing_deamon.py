@@ -20,6 +20,7 @@ from django.db import models, connection, close_connection, transaction
 from pyPdf import PdfFileReader, PdfFileWriter
 from urllib2 import urlopen
 from documents.models import Document, PendingDocument as Task
+from notifications.models import UploadEvent
 
 import logging
 logger = logging.getLogger('das_logger')
@@ -109,6 +110,8 @@ def process_file(pending_id):
         parse_file(pending.doc, raw)
         pending.state = 'done'
         pending.save()
+        UploadEvent.throw(user=pending.doc.owner, context=pending.doc.refer,
+                          document=pending.doc)
 
         # may fail if download url, don't really care
         system("rm /tmp/TMP402_%d.pdf" % pending.doc.id)
