@@ -78,13 +78,13 @@ If you want to mask this message,
 {% endfor %}
 </table>
  
-<p>Want to add some courses? <input type="button" onclick="add_course_box();" value="click here"/></p>
+<p>Want to follow some new courses? <input type="button" onclick="add_course_box();" value="click here"/></p>
 {% else %}
 <p>You don't follow any courses yet. You sould 
 <input type="button" onclick="add_course_box();" value="add some"/></p>
 {% endif %}
 {% endwith %}
-
+<!--
 <h2>Profile</h2>
 <p>User {{ user.username }}.<br>
-You are in {{ user.profile.section }} w/ reg = {{ user.profile.registration }}</p>
+You are in {{ user.profile.section }} w/ reg = {{ user.profile.registration }}</p> -->
