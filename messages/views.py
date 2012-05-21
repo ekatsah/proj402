@@ -5,12 +5,11 @@
 # the Free Software Foundation, either version 3 of the License, or (at 
 # your option) any later version.
 
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render_to_response
-from django.template import RequestContext
 from django.utils.html import escape
-from django.core.urlresolvers import reverse
-from messages.models import NewThreadForm, NewPostForm, Thread, Message
+from messages.models import NewThreadForm, NewPostForm, EditPostForm
+from messages.models import Thread, Message
 from documents.models import Page, Document
 from courses.models import Course
 from utils.json import json_string
@@ -83,13 +82,32 @@ def post_msg(request):
                                      text=escape(data['message']),
                                      reference=reference)
         thread.msgs.add(msg)
-        return HttpResponse("ok")
+        return HttpResponse("ok " + str(msg.id))
     return HttpResponse("Error: Invalid form")
 
 def edit_msg(request):
-    form = NewPostForm(request.POST)
+    form = EditPostForm(request.POST)
     if form.is_valid():
-        pass
+        message = get_object_or_404(Message, pk=form.cleaned_data['source'])
+        message.text = escape(form.cleaned_data['message'])
+        message.save()
+        print message
+        return HttpResponse("ok")
+    return HttpResponse("Error: Invalid form")
 
 def remove_msg(request):
-    pass
+    if "id" not in request.POST:
+        return HttpResponse("Error: Invalid form")
+
+    id = request.POST["id"]
+    message = get_object_or_404(Message, pk=id)
+    thread = message.thread
+    if thread.msgs.all()[0] == message:
+        thread.delete()
+    else:
+        message.delete()
+    return HttpResponse("ok")
+
+def markdown(request):
+    return render_to_response('markdown.tpl', 
+                              {'string': request.POST.get('string', None)})

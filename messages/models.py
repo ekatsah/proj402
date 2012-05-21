@@ -22,6 +22,10 @@ class NewPostForm(forms.Form):
     thread = forms.DecimalField(widget=forms.HiddenInput)
     reference = forms.DecimalField(widget=forms.HiddenInput)
 
+class EditPostForm(forms.Form):
+    message = forms.CharField(widget=forms.Textarea)
+    source = forms.DecimalField(widget=forms.HiddenInput)
+
 class Thread(models.Model):
     subject = models.TextField();
     msgs = models.ManyToManyField("Message", related_name="back_thread")
