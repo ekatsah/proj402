@@ -13,6 +13,11 @@ class NewCategoryForm(forms.Form):
     name = forms.CharField()
     description = forms.CharField(widget=forms.Textarea)
 
+class EditCategoryForm(forms.Form):
+    id = forms.DecimalField(widget=forms.HiddenInput)
+    name = forms.CharField()
+    description = forms.CharField(widget=forms.Textarea)
+
 class Category(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField(null=True)

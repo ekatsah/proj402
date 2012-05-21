@@ -86,7 +86,21 @@ function cat_rm(id) {
 }
 
 function cat_edit(id) {
-	alert("NYI");
+	overlay_reset();
+	overlay_title("Edit category");
+	overlay_form({"id": "category_edit", "url": "{% url category_edit %}",
+	              "content": '{{ ceform.as_table|escapejs }}', "submit": "edit"});
+	$('#id_name').val(categories[id].name);
+	$('#id_description').val(categories[id].description);
+	$('#id_id').val(id);
+	overlay_show();
+	overlay_refresh();
+	$('#category_edit').submit(function() {
+		Pload('category_edit', '{% url category_edit %}', function(data) {
+			refresh_categories();
+		});
+		return false;
+	});
 }
 
 function course_detach(id, node) {
@@ -142,13 +156,8 @@ function links(id) {
 		return '';
 }
 
-function load_cc() {
-	$('#tree').html('loading..');
-	$('#list').html('loading..');
-
-	ready_course = 0;
+function refresh_categories() {
 	ready_category = 0;
-
 	$.getJSON('{% url categories_all %}', function(data) {
 		ready_category = 1;
 		$('#list').html('');
@@ -165,7 +174,10 @@ function load_cc() {
 		});
 		build();
 	});
+}
 
+function refresh_courses() {
+	ready_course = 0;
 	$.getJSON('{% url courses_all %}', function(data) {
 		ready_course = 1;
 		$('#courses_list').html('');
@@ -179,9 +191,17 @@ function load_cc() {
 	});
 }
 
-function build() {
+function load_cc() {
+	$('#tree').html('loading..');
+	$('#list').html('loading..');
+
+	refresh_categories();
+	refresh_courses();
+}
+
+function build(force) {
 	// not all data are here
-	if (ready_course == 0 || ready_category == 0)
+	if (force || (ready_course == 0 || ready_category == 0))
 		return;
 	 
 	$('#tree').html('');

@@ -12,7 +12,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from utils.decorators import AR, moderate
 from courses.models import NewCourseForm
-from categories.models import NewCategoryForm
+from categories.models import NewCategoryForm, EditCategoryForm
 from documents.models import Document
 from users.models import CreateUserForm
 
@@ -20,7 +20,8 @@ urlpatterns = patterns('admin.views',
     url(r'^tree$', moderate(AR(login_required(direct_to_template))), 
         {'template': 'adm_tree.tpl',
          'extra_context': {'nform': NewCourseForm(),
-                           'cform': NewCategoryForm()}}, 
+                           'cform': NewCategoryForm(),
+                           'ceform': EditCategoryForm()}}, 
         name="category_tree"),
 
     url(r'^users$', moderate(AR(login_required(object_list))), 

@@ -7,7 +7,7 @@
 
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
-from categories.models import NewCategoryForm, Category
+from categories.models import NewCategoryForm, EditCategoryForm, Category
 from django.utils.html import escape
 from utils.json import json_sublist_send
 from courses.models import Course
@@ -19,6 +19,17 @@ def new_category(request):
         cat = Category.objects.create(name=escape(data['name']), 
                                       description=escape(data['description']))
         return HttpResponse("ok " + str(cat.id))
+    return HttpResponse("Error: Invalid form")
+
+def edit_category(request):
+    form = EditCategoryForm(request.POST)
+    if form.is_valid():
+        data = form.cleaned_data
+        cat = get_object_or_404(Category, pk=data['id'])
+        cat.name = escape(data['name'])
+        cat.description = escape(data['description'])
+        cat.save()
+        return HttpResponse("ok")
     return HttpResponse("Error: Invalid form")
 
 def sub_categories(request, catid):

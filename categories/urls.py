@@ -9,7 +9,7 @@ from django.conf.urls.defaults import patterns, url
 from django.contrib.auth.decorators import login_required
 from categories.views import sub_categories, attach_category, detach_category
 from categories.views import del_category, new_category, attach_course
-from categories.views import detach_course, sub_courses
+from categories.views import detach_course, sub_courses, edit_category
 from categories.models import Category
 from utils.decorators import enforce_post, moderate
 from utils.json import json_sublist_send
@@ -18,6 +18,10 @@ urlpatterns = patterns('categories.views',
     url(r'^new',
         moderate(enforce_post(login_required(new_category))),
         name="category_new"),
+
+    url(r'^edit$',
+        enforce_post(moderate(login_required(edit_category))),
+        name="category_edit"),
 
     url(r'^attach/(?P<category>[^/]+)/(?P<subcategory>[^/]+)$', 
         moderate(login_required(attach_category)),
