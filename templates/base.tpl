@@ -71,7 +71,7 @@ jQuery(document).ajaxSend(function(event, xhr, settings) {
 		$.get(url, function(resp) {
 			$('#content').html(resp);
 		}).error(function(resp) {
-			$('#content').html('<h1>ERROR</h1><pre>'+resp['responseText']+'</pre>');
+			$('#content').html('<h1>{% trans "Error!" %}</h1><pre>'+resp['responseText']+'</pre>');
 		});
 		
 		var exist_url = window.location.toString();
@@ -87,7 +87,7 @@ jQuery(document).ajaxSend(function(event, xhr, settings) {
 			if (data.indexOf("ok") == 0)
 				func(data);
 			else
-				alert("error! " + data);
+				alert("{% trans "Error!" %} " + data);
 		});
 	}
 
@@ -164,7 +164,7 @@ jQuery(document).ajaxSend(function(event, xhr, settings) {
 	});
 	$('#search_go').click(function() {
 		var query =  $('#search_q').val().replace(/ /g, '+');
-		$('#content').html('searching for "' + query + '"..');
+		$('#content').html('{% trans "searching for" %} "' + query + '"..');
 		$('#content').load('{% url search_query %}?q=' + query);
 	});
       </script>
@@ -172,16 +172,16 @@ jQuery(document).ajaxSend(function(event, xhr, settings) {
 
 <dl class="menu" >
   <dt onmouseover="mshow('main_menu')" onmouseout="mhide('main_menu')">
-    <a href="{% url profile %}" onclick="return Iload('{% url profile %}');">Home</a>
+    <a href="{% url profile %}" onclick="return Iload('{% url profile %}');">{% trans "Home" %}</a>
   </dt>
   <dd id="main_menu" onmouseover="mshow2('main_menu')" onmouseout="mhide2('main_menu')">
     <ul>
-      <li onclick="mmake(1, 1);"><span>Courses</span></li>
+      <li onclick="mmake(1, 1);"><span>{% trans "Courses" %}</span></li>
       <li><a href="{% url general_boards %}" 
-             onclick="return Iload('{% url general_boards %}');">General Forums</a></li>
-      <!-- <li><span>Walls</span></li> -->
-      <li><a href="{% url help %}" onclick="return Iload('{% url help %}');">Help</a></li>
-      <li><a href="https://github.com/ekatsah/proj402">Developpement</a></li>
+             onclick="return Iload('{% url general_boards %}');">{% trans "General Forums" %}</a></li>
+      <!-- <li><span>{% trans "Walls" %}</span></li> -->
+      <li><a href="{% url help %}" onclick="return Iload('{% url help %}');">{% trans "Help" %}</a></li>
+      <li><a href="https://github.com/ekatsah/proj402">{% trans "Developpement" %}</a></li>
     </ul>
   </dd>
 </dl>
