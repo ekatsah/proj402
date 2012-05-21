@@ -42,9 +42,10 @@ function mask_welcome() {
 {% if user.profile.welcome %}
 <div id="welcome_msg">
 <h2>First time, right? </h2>
+<p>First, welcome on p402, the next-gen student platform!</p>
 <p>Basic rules : 
 <ol><li>Don't panic.</li>
-    <li>This project is still highly experimental</li></ol>
+    <li>This project is still in beta</li></ol>
 
 
 This website is a mean for student to exchange documents and messages. You can 
@@ -57,8 +58,12 @@ You should join the courses you want to follow on a daily basis with the
 application below. If you want more information, you would probably want to read
 <a href="{% url help %}" onclick="return Iload('{% url help %}');">help</a><br><br>
 
+If you want to help, please upload every single pdf you have.
+You can also report bugs and suggestions <a href="#/msg/boards">on the forum</a>
+or <a href="http://www.facebook.com/Proj402">on facebook</a>. Tanks !<br><br>
 If you want to mask this message, 
 <a href="{% url mask_welcome %}" onclick="return mask_welcome();">click here</a></p>
+
 </div>
 {% endif %}
 
