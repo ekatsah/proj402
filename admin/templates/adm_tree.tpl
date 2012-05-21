@@ -1,3 +1,4 @@
+{% load i18n %}
 {% comment %}
 
 # Copyright 2011, hast. All rights reserved.
@@ -217,11 +218,11 @@ function build(force) {
 $(document).ready(load_cc);
 </script>
 
-<h1>Category Tree</h1>
+<h1>{% trans "Category Tree" %}</h1>
 <p id="tree"></p>
 
-<h1>All categories</h1>
+<h1>{% trans "All categories" %}</h1>
 <ul id="list"></ul>
 
-<h1>All courses</h1>
+<h1>{% trans "All courses" %}</h1>
 <ul id="courses_list"></ul>

@@ -1,3 +1,4 @@
+{% load i18n %}
 {% comment %}
 
 # Copyright 2011, hast. All rights reserved.
@@ -32,12 +33,12 @@ $(document).ready(function() {
 <table id="documents" class="sortable">
   <thead>
     <tr>
-      <th>#id</th>
-      <th>course</th>
-      <th>document</th>
-      <th>owner</th>
-      <th>actions</th>
-      <th>status</th>
+      <th>{% trans "#id" %}</th>
+      <th>{% trans "course" %}</th>
+      <th>{% trans "document" %}</th>
+      <th>{% trans "owner" %}</th>
+      <th>{% trans "actions" %}</th>
+      <th>{% trans "status" %}</th>
     </tr>
   </thead>
 

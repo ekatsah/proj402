@@ -1,3 +1,4 @@
+{% load i18n %}
 {% comment %}
 
 # Copyright 2011, hast. All rights reserved.
@@ -8,9 +9,9 @@
 # your option) any later version.
 
 {% endcomment %}
-<h1>Courses list</h1>
-<p>List of all courses. The blue ones are the courses you follow.<br>
-   Click on the others to follow new one</p>
+<h1>{% trans "Courses list" %}</h1>
+<p>{% trans "List of all courses. The blue ones are the courses you follow.<br>
+   Click on the others to follow new one" %}</p>
 
 {% if object_list %}
 <ul>
@@ -22,7 +23,7 @@
   {% endfor %}
 </ul>
 {% else %}
-<p><i>No courses available yet.</i></p>
+<p><i>{% trans "No courses available yet." %}</i></p>
 {% endif %}
 
 <script langage="javascript">

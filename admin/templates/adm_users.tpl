@@ -1,3 +1,4 @@
+{% load i18n %}
 {% comment %}
 
 # Copyright 2011, hast. All rights reserved.
@@ -49,16 +50,16 @@ $(document).ready(function() {
 });
 </script>
 
-<h1>Users</h1>
+<h1>{% trans "Users" %}</h1>
 
 <table id="users" class="sortable">
   <thead>
     <tr>
-      <th>#id</th>
-      <th>username</th>
-      <th>name</th>
-      <th>last visit</th>
-      <th>moderator</th>
+      <th>{% trans "#id" %}</th>
+      <th>{% trans "username" %}</th>
+      <th>{% trans "name" %}</th>
+      <th>{% trans "last visit" %}</th>
+      <th>{% trans "moderator" %}</th>
     </tr>
   </thead>
  
@@ -71,9 +72,9 @@ $(document).ready(function() {
         <td>{{ u.last_login }}</td>
         <td><center id="pu{{u.id}}">
           {% if u.get_profile.moderate %}
-            MODO <span class="action_link" onclick="unset_modo({{u.id}});">unset</span>
+            MODO <span class="action_link" onclick="unset_modo({{u.id}});">{% trans "unset" %}</span>
           {% else %}
-            <span class="action_link" onclick="set_modo({{u.id}});">set</span>
+            <span class="action_link" onclick="set_modo({{u.id}});">{% trans "set" %}</span>
           {% endif %}</center>
       </td>
     </tr>

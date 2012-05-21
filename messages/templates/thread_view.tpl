@@ -1,3 +1,4 @@
+{% load i18n %}
 {% comment %}
 
 # Copyright 2011, hast. All rights reserved.
@@ -16,11 +17,11 @@
 <div>
   <div id="op_info">
     <strong>{{ first.owner.first_name }} {{ first.owner.last_name }}</strong><br>
-    Other stats.<br><br>
-    <input type="button" value="reply" onclick="reply({{ first.id }});"/>
+    {% trans "Other stats." %}<br><br>
+    <input type="button" value="{% trans "reply" %}" onclick="reply({{ first.id }});"/>
     {% if user.get_profile.moderate %}<br>
-    <input type="button" value="edit" onclick="edit({{ first.id }});"/><br>
-    <input type="button" value="remove" onclick="remove({{ first.id }});"/>
+    <input type="button" value="{% trans "edit" %}" onclick="edit({{ first.id }});"/><br>
+    <input type="button" value="{% trans "remove" %}" onclick="remove({{ first.id }});"/>
     {% endif %}
   </div>
 
@@ -48,7 +49,7 @@
     	</div>
     	
     	<div id="right_post">
-			About page<br>
+			{% trans "About page" %}<br>
 			<a href="{% url view_file object.referd.id %}"
 			   onclick="return Iload('{% url view_file object.referd.id %}');">
 				<img id="page_image" src="{% url download_mpage object.referp.id %}"/>

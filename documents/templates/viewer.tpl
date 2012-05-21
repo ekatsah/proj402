@@ -1,3 +1,4 @@
+{% load i18n %}
 {% comment %}
 
 # Copyright 2011, hast. All rights reserved.
@@ -273,8 +274,8 @@ setTimeout(function () { load_min(1); }, 10);
 <div id="pmenu">
   <form action="#" id="zf">
     <a class="back_but" href="{% url course_show object.refer.slug %}"
-       onclick="return Iload('{% url course_show object.refer.slug %}');">&lt;&lt; back to course</a>
-    <a class="download_but" href="{% url download_file object.id %}">Download</a>
+       onclick="return Iload('{% url course_show object.refer.slug %}');">{% trans "&lt;&lt; back to course" %}</a>
+    <a class="download_but" href="{% url download_file object.id %}">{% trans "Download" %}</a>
     <div style="float: left; margin-top: 2px"><img src="/static/l_plus.png" id="zp"/>&nbsp;&nbsp;&nbsp;<img src="/static/l_minus.png" id="zm"/></div>&nbsp;
     &nbsp;&nbsp;<input class="shadow" style="width: 50px" id="zv" value="100%"/>
     <input type="submit" style="display: none"/>&nbsp;&nbsp;&nbsp;
@@ -298,17 +299,17 @@ setTimeout(function () { load_min(1); }, 10);
                 src="/static/edit.png" id="edit_but"/>
         {% endif %}
             <h1 id="doc_name">{{ object.name }}</h1>
-            <p>Document uploaded by {{ object.owner.username }} on {{ object.date|date:"d/m/y H:i" }}<br>
-            This document is classed in {{ object.points.full_category }}<br><br>
+            <p>{% blocktrans %}Document uploaded by {{ object.owner.username }} on {{ object.date|date:"d/m/y H:i" }}<br>
+            This document is classed in {{ object.points.full_category }}{% endblocktrans %}<br><br>
             <span id="doc_desc">{{ object.description }}</span></p>
 
-            <div id="doc_comadd" class="doc_com" onclick="doc_thread();">Add comment on the whole document</div>
+            <div id="doc_comadd" class="doc_com" onclick="doc_thread();">{% trans "Add comment on the whole document" %}</div>
             <div id="doc_comment">
             {% with c=object.threads.all|length %}
             {% if c == 1 %}
-            <div id="doc_cfront" class="doc_com" onclick="doc_show_thread();">Read the comment</div>
+            <div id="doc_cfront" class="doc_com" onclick="doc_show_thread();">{% trans "Read the comment" %}</div>
             {% endif %}{% if c > 1 %}
-            <div id="doc_cfront" class="doc_com" onclick="doc_show_thread();">Read the <span id="doc_comCTR">{{ c }}</span> comments</div>
+            <div id="doc_cfront" class="doc_com" onclick="doc_show_thread();">{% blocktrans %}Read the <span id="doc_comCTR">{{ c }}</span> comments{% endblocktrans %}</div>
             {% endif %}
             {% endwith %}
             </div>
@@ -326,15 +327,15 @@ setTimeout(function () { load_min(1); }, 10);
                     </div></div>
                     <div class="comments">
                          <img style="float: left; margin-top: -8px" src="/static/com-left.png"/>
-                         <div class="white" onclick="page_thread({{p.id}});">Add comment</div>
+                         <div class="white" onclick="page_thread({{p.id}});">{% trans "Add comment" %}</div>
                          <div id="read{{p.id}}" style="display: inline">
                          {% if p.threads.all %}
                          <img style="margin-bottom: -12px; margin-top: -8px;" src="/static/com-middle.png"/>
                          {% with c=p.threads.all|length %}
                          {% if c == 1 %}
-                         <div class="white" onclick="page_show({{p.id}}, {{p.width}});" id="cntk{{p.id}}">Read the comment</div>
+                         <div class="white" onclick="page_show({{p.id}}, {{p.width}});" id="cntk{{p.id}}">{% trans "Read the comment" %}</div>
                          {% else %}
-                         <div class="white" onclick="page_show({{p.id}}, {{p.width}});">Read the <span id="cntr{{p.id}}">{{ c }}</span> comments</div>
+                         <div class="white" onclick="page_show({{p.id}}, {{p.width}});">{% blocktrans %}Read the <span id="cntr{{p.id}}">{{ c }}</span> comments{% endblocktrans %}</div>
                          {% endif %}
                          {% endwith %}
                          {% endif %}

@@ -1,3 +1,4 @@
+{% load i18n %}
 {% comment %}
 
 # Copyright 2011, hast. All rights reserved.
@@ -12,8 +13,8 @@
 {% for s in params.set.contains.all %}
 
 <h2>{{ s.name }}</h2>
-<div id="board{{s.id}}" style="margin-bottom: 10px;">loading..</div>
-<div><input type="button" onclick="board_thread({{s.id}})" value="new thread"></div>
+<div id="board{{s.id}}" style="margin-bottom: 10px;">{% trans "loading.." %}</div>
+<div><input type="button" onclick="board_thread({{s.id}})" value="{% trans "new thread" %}"></div>
 
 {% endfor %}
 

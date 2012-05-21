@@ -15,11 +15,11 @@
   Features, so far: <br>
   <ul style="list-style-type: disc; margin-left: 30px;">
     <li>Categories, courses selection</li>
-    <li>Pdf uploading, parsing, viewing & downloading</li>
-    <li>In document view, there is a mini image tracking & clicking and a zoom</li>
+    <li>Pdf uploading, parsing, viewing &amp; downloading</li>
+    <li>In document view, there is a mini image tracking &amp; clicking and a zoom</li>
     <li>In document view, an user can add a thread for a page or a document</li>
     <li>The user can view the threads and it's reply</li>
-    <li>Admins : users, documents & categories management</li>
+    <li>Admins : users, documents &amp; categories management</li>
     <li>User profile and followed courses</li>
     <li>This help \o/</li>
   </ul>
@@ -46,5 +46,5 @@
 </p>
 
 <p>
-  Version : {{ VERSION }}
+  {% blocktrans %}Version : {{ VERSION }}{% endblocktrans %}
 </p>

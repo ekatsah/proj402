@@ -37,7 +37,7 @@ If you are an administrator (if not, <a href="https://www.ulb.ac.be/intranet/p40
 </tr>
 </table>
 
-<input type="submit" value="login" />
+<input type="submit" value="{% trans "login" %}" />
 <input type="hidden" name="next" value="{{ next }}" />
 </form>
 

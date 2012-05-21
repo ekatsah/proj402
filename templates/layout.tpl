@@ -21,7 +21,7 @@
 
     <body>
         <div id="top">
-            <h1 id="big_title">p402 <small>beta</small><span id="slogan">Bring back real collaboration between students !</span></h1>
+            <h1 id="big_title">p402 <small>beta</small><span id="slogan">{% trans "Bring back real collaboration between students!" %}</span></h1>
             {% block links %}
             {% endblock %}
         </div>

@@ -142,18 +142,18 @@ jQuery(document).ajaxSend(function(event, xhr, settings) {
 {% block links %}
   <div id="links">
     <div class="dright">
-      <a href="{% url user_logout %}">Logout</a>
+      <a href="{% url user_logout %}">{% trans "Logout" %}</a>
     </div>
 
 {% if user.get_profile.moderate %}
     <div class="dright">
-      <a href="{% url admin_index %}" onclick="return Iload('{% url admin_index %}');">Admin</a>
+      <a href="{% url admin_index %}" onclick="return Iload('{% url admin_index %}');">{% trans "Admin" %}</a>
     </div>
 {% endif %}
 
     <div class="dright">
-      <input class="search" type="text" value="search" name="q" id="search_q">
-      <input class="search" type="submit" value="go" id="search_go">
+      <input class="search" type="text" value="{% trans "search" %}" name="q" id="search_q">
+      <input class="search" type="submit" value="{% trans "go" %}" id="search_go">
       <script type="text/javascript">
 	var search_clicked = 0; 
 	$('#search_q').focus(function() {
@@ -190,8 +190,8 @@ jQuery(document).ajaxSend(function(event, xhr, settings) {
 {% endblock %}
 
 {% block content %}
-<p><strong>Why not zoidberg?</strong></p>
-<p>If nothing happens, it's probably because you didn't activate javascript.</p>
+<p><strong>{% trans "Why not zoidberg?" %}</strong></p>
+<p>{% trans "If nothing happens, it's probably because you didn't activate javascript." %}</p>
 {% endblock %}
 
 {% block overlay %}
@@ -203,7 +203,7 @@ jQuery(document).ajaxSend(function(event, xhr, settings) {
 		<script type="text/javascript">
 		  $('#overlay_closeb').click(overlay_close);
 		</script>
-		<p id="overlay_content">loading..</p>
+		<p id="overlay_content">{% trans "loading.." %}</p>
 	</div>
 </div>
 {% endblock %}

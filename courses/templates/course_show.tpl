@@ -1,3 +1,4 @@
+{% load i18n %}
 {% comment %}
 
 # Copyright 2011, hast. All rights reserved.
@@ -21,19 +22,19 @@
 
 <h1>{{ object.name }}</h1>
 
-<h2>Available documents</h2>
+<h2>{% trans "Available documents" %}</h2>
 
 <table id="documents" class="sortable">
   <thead>
     <tr>
       <th></th>
-      <th style="min-width: 200px">Name</th>
-      <th>Poster</th>
-      <th>Type</th>
-      <th>Pages</th>
-      <th class="sorting_desc">Score</th>
-      <th style="display: none">RealScore</th>
-      <th style="display: none">RealSize</th>
+      <th style="min-width: 200px">{% trans "Name" %}</th>
+      <th>{% trans "Poster" %}</th>
+      <th>{% trans "Type" %}</th>
+      <th>{% trans "Pages" %}</th>
+      <th class="sorting_desc">{% trans "Score" %}</th>
+      <th style="display: none">{% trans "RealScore" %}</th>
+      <th style="display: none">{% trans "RealSize" %}</th>
     </tr>
   </thead>
 
@@ -42,18 +43,18 @@
 </table>
 
 <p>
-  <input type="button" onclick="upload_file();" value="upload file"/>
+  <input type="button" onclick="upload_file();" value="{% trans "upload file" %}"/>
 </p>
 
-<h2>Discussions</h2>
+<h2>{% trans "Discussions" %}</h2>
 
 <table id="threads" class="sortable">
   <thead>
     <tr>
-      <th style="min-width: 200px">Subject</th>
-      <th>Poster</th>
-      <th>#post</th>
-      <th>Last Activity</th>
+      <th style="min-width: 200px">{% trans "Subject" %}</th>
+      <th>{% trans "Poster" %}</th>
+      <th>{% trans "#post" %}</th>
+      <th>{% trans "Last Activity" %}</th>
     </tr>
   </thead>
 
@@ -62,5 +63,5 @@
 </table>
 
 <p>
-  <input type="button" onclick="thread_new();" value="new thread">
+  <input type="button" onclick="thread_new();" value="{% trans "new thread" %}">
 </p>
