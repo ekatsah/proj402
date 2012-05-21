@@ -24,9 +24,9 @@ function upload_file() {
 	              "submit": "upload file"},
 	             {"id": "upload_http", "url": "{% url upload_http_file object.slug %}",
 	              "content": '{{ hform.as_table|escapejs }}', "submit": "upload url"});
-	$('#upload_file_pre').html('<h1>Upload File</h1>');
+	$('#upload_file_pre').html('<h1>Upload File <small>(Only .pdf for now)</small></h1>');
 	$('#upload_file_app').html('<hr/>');
-	$('#upload_http_pre').html('<h1>Upload From URL</h1>');
+	$('#upload_http_pre').html('<h1>Upload From URL <small>(Only .pdf for now)</small></h1>');
 	overlay_show();
 	overlay_refresh();
 	$('#upload_http').submit(function() {
