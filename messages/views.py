@@ -9,10 +9,12 @@ from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render_to_response
 from django.utils.html import escape
 from messages.models import NewThreadForm, NewPostForm, EditPostForm
+from notifications.models import ThreadEvent, ReplyEvent
 from messages.models import Thread, Message
 from documents.models import Page, Document
 from courses.models import Course
 from utils.json import json_string
+import traceback
 
 def post_thread(request):
     form = NewThreadForm(request.POST)
@@ -40,6 +42,7 @@ def post_thread(request):
         thread.referd = doc
         thread.referc = course
         thread.save()
+        ThreadEvent.throw(user=request.user, thread=thread, context=course)
         return HttpResponse("ok")
     return HttpResponse("Error: Invalid form")
 
@@ -82,6 +85,7 @@ def post_msg(request):
                                      text=escape(data['message']),
                                      reference=reference)
         thread.msgs.add(msg)
+        ReplyEvent.throw(user=request.user, context=thread.referc, thread=thread)
         return HttpResponse("ok " + str(msg.id))
     return HttpResponse("Error: Invalid form")
 

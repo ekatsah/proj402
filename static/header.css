@@ -9,20 +9,23 @@
 
 #top h1 {
     height: 31px;
-    padding-top: 10px;
+    padding-top: 6px;
     padding-bottom: 7px;
     padding-left: 15px;
     padding-right: 15px;
     margin: 0px;
-    font-size: 24px;
+    font-size: 26px;
 }
 
 #top #slogan {
     font-size: 0.5em;
     padding-left: 20px;
+    float: right;
+    display: inline;
 }
 
 #links {
+	clear: both;
 	padding: 0px;
 	margin-top: 0px;
 	margin-bottom: 0px;
