@@ -5,6 +5,8 @@
     padding: 0px;
     background-color: #004090;
     color: white;
+    background-image: url('/static/header_back1.png'), url('/static/header_back2.png');
+    background-repeat: no-repeat, repeat-x;
 }
 
 #top h1 {
@@ -44,13 +46,14 @@
 	background-color: #004595;
 	border: 1px solid #0055a0;
 	border-radius: 3px;
-	padding-top: 4px;
+	padding-top: 6px;
 	padding-bottom: 4px;
 	padding-left: 12px;
 	padding-right: 12px;
 	font-weight: bold;
-	height: 17px;
+	height: 15px;
 	overflow: hidden;
+	font-size: 11px;
 }
 
 .dright .search {

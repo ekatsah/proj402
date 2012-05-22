@@ -33,6 +33,14 @@ input[type=text], input[type=password], textarea {
     overflow: auto;
 }
 
+#content h1 {
+	margin-left: 20px;
+}
+
+#content h2 {
+	margin-left: 10px;
+}
+
 a {
     color: blue;
     text-decoration: none;
@@ -54,7 +62,7 @@ ul {
     list-style-type: none;
 }
 
-.forums_reply ul {
+#content ul {
     margin-left: 20px;
     list-style-type: disc;
 }

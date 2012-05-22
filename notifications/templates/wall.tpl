@@ -9,6 +9,8 @@
 
 {% endcomment %}
 
+{% load i18n %}
+
 <h1>{% trans "All events" %}</h1>
 
 {% for event in object_list %}
