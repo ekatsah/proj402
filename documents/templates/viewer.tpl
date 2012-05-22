@@ -299,8 +299,8 @@ setTimeout(function () { load_min(1); }, 10);
                 src="/static/edit.png" id="edit_but"/>
         {% endif %}
             <h1 id="doc_name">{{ object.name }}</h1>
-            <p>{% blocktrans %}Document uploaded by {{ object.owner.username }} on {{ object.date|date:"d/m/y H:i" }}<br>
-            This document is classed in {{ object.points.full_category }}{% endblocktrans %}<br><br>
+            <p>{% trans "Document uploaded by" %}{{ object.owner.first_name }} {{ object.owner.last_name }} {% trans "on" %} {{ object.date|date:"d/m/y H:i" }}<br>
+            {% trans "This document is classed in " %}{% trans object.points.full_category %}<br><br>
             <span id="doc_desc">{{ object.description }}</span></p>
 
             <div id="doc_comadd" class="doc_com" onclick="doc_thread();">{% trans "Add comment on the whole document" %}</div>
