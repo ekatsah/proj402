@@ -10,8 +10,7 @@
 
 {% endcomment %}
 <h1>{% trans "Courses list" %}</h1>
-<p>{% trans "List of all courses. The blue ones are the courses you follow.<br>
-   Click on the others to follow new one" %}</p>
+<p>{% trans "List of all courses. The blue ones are the courses you follow.<br> Click on the others to follow new one" %}</p>
 
 {% if object_list %}
 <ul>
