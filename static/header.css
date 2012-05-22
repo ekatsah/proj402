@@ -5,6 +5,8 @@
     padding: 0px;
     background-color: #004090;
     color: white;
+    background-image: url('/static/header_back.png'), url('/static/header_back2.png');
+    background-repeat: no-repeat, repeat-x;
 }
 
 #top h1 {
