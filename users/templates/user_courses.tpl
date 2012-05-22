@@ -85,17 +85,17 @@ function submit_courses() {
 </script>
 
 {% if guess %}
-<p><strong>{% trans "Your fellows in" %} <i>{{ user.profile.section }}</i> {% trans "have chosen" %} : </strong><br>
+<p><strong>{% blocktrans with user.profile.section as section %}Your fellows in <i>{{ section }}</i>have chosen : {% endblocktrans %}</strong><br>
 {{ guess }}</p>
 {% endif %}
 
 <p><a href="{% url course_view_all %}" onclick="return Iload('{% url course_view_all %}');">
    {% trans "View all courses" %}</a></p>
 
-<p><strong>{% trans "You can add a course by mnemonic" %} : </strong>
+<p><strong>{% trans "You can add a course by mnemonic : " %}</strong>
 <input id="mnemo" type="text" size="10" onkeypress="course_search(event);"/></p>
 
 <p id="mn_result" style="margin-top: 4px; margin-bottom: 4px;"></p>
 
-<p style="display: none" id="c_list_box"><strong>{% trans "Selected courses" %} : </strong><br><br>
+<p style="display: none" id="c_list_box"><strong>{% trans "Selected courses : " %}</strong><br><br>
 <span id="c_list"></span><br><br><input type="button" value="{% trans "follow courses" %}" onclick="submit_courses();"/></p>

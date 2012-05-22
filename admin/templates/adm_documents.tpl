@@ -28,7 +28,7 @@ $(document).ready(function() {
 
 </script>
 
-<h1>Documents</h1>
+<h1>{% trans "Documents" %}</h1>
 
 <table id="documents" class="sortable">
   <thead>

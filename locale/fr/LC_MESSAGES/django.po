@@ -11,9 +11,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Proj 402\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-05-22 01:00+0200\n"
-"PO-Revision-Date: 2012-05-21 20:58+0000\n"
-"Last-Translator: C4ptainCrunch <nikita.marchant@gmail.com>\n"
+"POT-Creation-Date: 2012-05-22 01:07+0200\n"
+"PO-Revision-Date: 2012-05-21 22:27+0000\n"
+"Last-Translator: Pierre Penninckx <ibizapeanut@gmail.com>\n"
 "Language-Team: French (http://www.transifex.net/projects/p/proj402/language/"
 "fr/)\n"
 "Language: fr\n"
@@ -22,72 +22,82 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
 
+#: admin/templates/adm_documents.tpl:31
+#, fuzzy
+msgid "Documents"
+msgstr "document"
+
 #: admin/templates/adm_documents.tpl:36 admin/templates/adm_users.tpl:58
 msgid "#id"
-msgstr ""
+msgstr "#id"
 
 #: admin/templates/adm_documents.tpl:37
-#, fuzzy
 msgid "course"
-msgstr "Cours"
+msgstr "cours"
 
 #: admin/templates/adm_documents.tpl:38
 msgid "document"
-msgstr ""
+msgstr "document"
 
 #: admin/templates/adm_documents.tpl:39
 msgid "owner"
-msgstr ""
+msgstr "propriétaire"
 
 #: admin/templates/adm_documents.tpl:40
 msgid "actions"
-msgstr ""
+msgstr "actions"
 
 #: admin/templates/adm_documents.tpl:41
 msgid "status"
-msgstr ""
+msgstr "progression"
 
 #: admin/templates/adm_tree.tpl:221
 msgid "Category Tree"
-msgstr ""
+msgstr "Arbre des catégories"
 
 #: admin/templates/adm_tree.tpl:224
 msgid "All categories"
-msgstr ""
+msgstr "Toutes les catégories"
 
 #: admin/templates/adm_tree.tpl:227
-#, fuzzy
 msgid "All courses"
-msgstr "suivre les cours"
+msgstr "Tous les cours"
 
 #: admin/templates/adm_users.tpl:53
-#, fuzzy
 msgid "Users"
-msgstr "Utilisateur"
+msgstr "Utilisateurs"
 
 #: admin/templates/adm_users.tpl:59
 msgid "username"
-msgstr ""
+msgstr "nom d'utilisateur"
 
 #: admin/templates/adm_users.tpl:60
 msgid "name"
-msgstr ""
+msgstr "nom"
 
 #: admin/templates/adm_users.tpl:61
 msgid "last visit"
-msgstr ""
+msgstr "dernière visite"
 
 #: admin/templates/adm_users.tpl:62
 msgid "moderator"
-msgstr ""
+msgstr "modérateur"
 
 #: admin/templates/adm_users.tpl:75
 msgid "unset"
-msgstr ""
+msgstr "unset"
 
 #: admin/templates/adm_users.tpl:77
 msgid "set"
+msgstr "set"
+
+#: admin/templates/adm_users.tpl:85
+msgid "create user"
 msgstr ""
+
+#: admin/templates/admin.tpl:12 templates/base.tpl:150
+msgid "Admin"
+msgstr "Admin"
 
 #: admin/templates/admin.tpl:15
 #, python-format
@@ -97,6 +107,9 @@ msgid ""
 "        Category Tree</a> Place to define all the category and the relation\n"
 "        between them"
 msgstr ""
+"<a href=\"#%(category_tree)s\" onclick=\"return Iload('{{ category_tree }');"
+"\">\n"
+"        Arbre des catégories</a> Définir les catégories et leurs relations."
 
 #: admin/templates/admin.tpl:20
 #, python-format
@@ -106,6 +119,9 @@ msgid ""
 "heck,\n"
 "        it's the fuck'ng LART!"
 msgstr ""
+"<a href=\"#%(admin_users)s\" onclick=\"return Iload('{{ admin_users }');\">\n"
+"        Gestion des utilisateurs</a> Voir tous les utilisateurs et modifier "
+"leurs propriétés... it's the fuck'ng LART!"
 
 #: admin/templates/admin.tpl:25
 #, python-format
@@ -114,80 +130,81 @@ msgid ""
 "('{{ admin_documents }');\">\n"
 "        Document Manager</a> list of documents"
 msgstr ""
+"<a href=\"#%(admin_documents)s\" onclick=\"return Iload"
+"('{{ admin_documents }');\">\n"
+"        Document Manager</a> list of documents"
 
 #: courses/templates/course_all.tpl:12
-#, fuzzy
 msgid "Courses list"
-msgstr "Cours"
+msgstr "Liste des cours"
 
 #: courses/templates/course_all.tpl:26
 msgid "No courses available yet."
-msgstr ""
+msgstr "Aucun cours n'est encore disponible"
 
 #: courses/templates/course_show.tpl:25
 msgid "Available documents"
-msgstr ""
+msgstr "Documents disponibles"
 
 #: courses/templates/course_show.tpl:31
 msgid "Name"
-msgstr ""
+msgstr "Nom"
 
 #: courses/templates/course_show.tpl:32 courses/templates/course_show.tpl:55
 msgid "Poster"
-msgstr ""
+msgstr "Auteur"
 
 #: courses/templates/course_show.tpl:33
 msgid "Type"
-msgstr ""
+msgstr "Type"
 
 #: courses/templates/course_show.tpl:34
 msgid "Pages"
-msgstr ""
+msgstr "Pages"
 
 #: courses/templates/course_show.tpl:35
 msgid "Score"
-msgstr ""
+msgstr "Score"
 
 #: courses/templates/course_show.tpl:36
 msgid "RealScore"
-msgstr ""
+msgstr "Score Réel"
 
 #: courses/templates/course_show.tpl:37
 msgid "RealSize"
-msgstr ""
+msgstr "Taille réelle"
 
 #: courses/templates/course_show.tpl:46
 msgid "upload file"
-msgstr ""
+msgstr "uploader un fichier"
 
 #: courses/templates/course_show.tpl:49
 msgid "Discussions"
-msgstr ""
+msgstr "Discussions"
 
 #: courses/templates/course_show.tpl:54
 msgid "Subject"
-msgstr ""
+msgstr "Sujet"
 
 #: courses/templates/course_show.tpl:56
 msgid "#post"
-msgstr ""
+msgstr "#post"
 
 #: courses/templates/course_show.tpl:57
-#, fuzzy
 msgid "Last Activity"
-msgstr "Activité"
+msgstr "Dernière activité"
 
 #: courses/templates/course_show.tpl:66 messages/templates/boards.tpl:17
 msgid "new thread"
-msgstr ""
+msgstr "nouveau thread"
 
 #: documents/templates/viewer.tpl:277
 msgid "&lt;&lt; back to course"
-msgstr ""
+msgstr "&lt;&lt; retour au cours"
 
 #: documents/templates/viewer.tpl:278
 msgid "Download"
-msgstr ""
+msgstr "Téléchargement"
 
 #: documents/templates/viewer.tpl:302
 #, python-format
@@ -196,70 +213,75 @@ msgid ""
 "%(object.date|date:\"d/m/y H:i\")s<br>\n"
 "            This document is classed in %(object.points.full_category)s"
 msgstr ""
+"Document uploadé par %(object.owner.username)s le "
+"%(object.date|date:\"d/m/y H:i\")s<br>\n"
+"            Ce document est classé en %(object.points.full_category)s"
 
 #: documents/templates/viewer.tpl:306
 msgid "Add comment on the whole document"
-msgstr ""
+msgstr "Ajouter un commentaire au document en entier"
 
 #: documents/templates/viewer.tpl:310 documents/templates/viewer.tpl.py:336
 msgid "Read the comment"
-msgstr ""
+msgstr "Lire le commentaire"
 
 #: documents/templates/viewer.tpl:312
 #, python-format
 msgid "Read the <span id=\"doc_comCTR\">%(c)s</span> comments"
-msgstr ""
+msgstr "Lire le <span id=\"doc_comCTR\">%(c)s</span> commentaire"
 
 #: documents/templates/viewer.tpl:330
-#, fuzzy
 msgid "Add comment"
-msgstr "Ajouter le cours"
+msgstr "Ajouter un commentaire"
 
 #: documents/templates/viewer.tpl:338
 #, python-format
 msgid "Read the <span id=\"cntr%(p.id)s\">%(c)s</span> comments"
-msgstr ""
+msgstr "Lire les <span id=\"cntr%(p.id)s\">%(c)s</span> commentaires"
 
-#: messages/templates/boards.tpl:16 templates/base.tpl:206
-#, fuzzy
+#: messages/templates/boards.tpl:16 templates/base.tpl:207
 msgid "loading.."
-msgstr "recherche en cours..."
+msgstr "chargement..."
 
 #: messages/templates/thread_view.tpl:20
 msgid "Other stats."
-msgstr ""
+msgstr "Autres statistiques."
 
 #: messages/templates/thread_view.tpl:21
 msgid "reply"
-msgstr ""
+msgstr "répondre"
 
 #: messages/templates/thread_view.tpl:23
 msgid "edit"
-msgstr ""
+msgstr "éditer"
 
 #: messages/templates/thread_view.tpl:24
 msgid "remove"
-msgstr ""
+msgstr "supprimer"
 
 #: messages/templates/thread_view.tpl:52
 msgid "About page"
+msgstr "A propos de la page"
+
+#: notifications/templates/wall.tpl:12
+msgid "All events"
 msgstr ""
 
 #: search/templates/search.tpl:12
 msgid "This feature is not yet functionnal!"
-msgstr ""
+msgstr "Cette fonctionnalité n'est pas encore implémentée"
 
 #: search/templates/search.tpl:20
 msgid "Rejected"
-msgstr ""
+msgstr "Rejeté"
 
 #: search/templates/search.tpl:24
 msgid "Word"
-msgstr ""
+msgstr "Mot"
 
 #: search/templates/search.tpl:24
 msgid "Present in"
-msgstr ""
+msgstr "Apparaît dans"
 
 #: templates/base.tpl:75 templates/base.tpl.py:91
 msgid "Error!"
@@ -267,20 +289,15 @@ msgstr "Erreur!"
 
 #: templates/base.tpl:145
 msgid "Logout"
-msgstr ""
-
-#: templates/base.tpl:150
-msgid "Admin"
-msgstr ""
+msgstr "Déconnexion"
 
 #: templates/base.tpl:155
-#, fuzzy
 msgid "search"
-msgstr "recherche en cours..."
+msgstr "recherche"
 
 #: templates/base.tpl:156
 msgid "go"
-msgstr ""
+msgstr "go!"
 
 #: templates/base.tpl:168
 msgid "searching for"
@@ -298,26 +315,29 @@ msgstr "Cours"
 msgid "General Forums"
 msgstr "Forums généraux"
 
-#: templates/base.tpl:183
-msgid "Walls"
+#: templates/base.tpl:184
+#, fuzzy
+msgid "Wall"
 msgstr "Walls"
 
-#: templates/base.tpl:184 templates/help.tpl:12
+#: templates/base.tpl:185 templates/help.tpl:12
 msgid "Help"
 msgstr "Aide"
 
-#: templates/base.tpl:185
+#: templates/base.tpl:186
 msgid "Developpement"
 msgstr "Développement"
 
-#: templates/base.tpl:193
-msgid "Why not zoidberg?"
-msgstr ""
-
 #: templates/base.tpl:194
+msgid "Why not zoidberg?"
+msgstr "Et pourquoi pas Zoidberg hein ?"
+
+#: templates/base.tpl:195
 msgid ""
 "If nothing happens, it's probably because you didn't activate javascript."
 msgstr ""
+"Si rien ne se passe, c'est probablement parce que vous n'avez pas activé "
+"javascript."
 
 #: templates/error.tpl:15
 msgid "A wild error appears!"
@@ -344,7 +364,6 @@ msgid "Would you be kind and append this text to your email?"
 msgstr "Seriez assez aimable que pour rajouter ce texte à votre email?"
 
 #: templates/help.tpl:14
-#, fuzzy
 msgid ""
 "\n"
 "  Features, so far: <br>\n"
@@ -362,17 +381,17 @@ msgid ""
 "  </ul>\n"
 msgstr ""
 "\n"
-"Pour l'instant, les fonctionnalités sont : <br>\n"
+"  Fonctionnalités implémentées: <br>\n"
 "  <ul style=\"list-style-type: disc; margin-left: 30px;\">\n"
-"    <li>Classement en catégories, sélection par cours</li>\n"
-"    <li>Upload de pdf, parsing, aperçu en ligne et téléchargement</li>\n"
-"    <li>L'utilisateur peut commenter sur une page ou sur un document en "
-"entier</li>\n"
-"    <li>L'utilisateur pour voir tous les messages et y répondre</li>\n"
-"    <li>Admin: gestion des utilisateurs, des documents et des catégories</"
-"li>\n"
-"    <li>Chaque utilisateur à un profil et peut suivre des cours</li>\n"
-"    <li>Cette aide \\o/</li>\n"
+"    <li>Catégories, sélection de cours</li>\n"
+"    <li>Upload, analyse, visualisation &amp; téléchargement de pdf</li>\n"
+"    <li>La mini-vue des documents permet de cliquer et zoomer</li>\n"
+"    <li>Dans le mode d'affichage par document, l'utilisateur peut ajouter un "
+"sujet pour une page ou un document</li>\n"
+"    <li>L'utilisateur peut voir les différents threads</li>\n"
+"    <li>Admins : utilisateurs, documents &amp; catégories</li>\n"
+"    <li>Profil et cours suivis</li>\n"
+"    <li>Ce que vous êtes en train de lire \\o/</li>\n"
 "  </ul>\n"
 
 #: templates/help.tpl:30
@@ -420,11 +439,11 @@ msgstr ""
 #: templates/help.tpl:49
 #, python-format
 msgid "Version : %(VERSION)s"
-msgstr ""
+msgstr "Version : %(VERSION)s"
 
 #: templates/layout.tpl:24
 msgid "Bring back real collaboration between students!"
-msgstr ""
+msgstr "Retrouvons la vraie collaboration entre étudiants!"
 
 #: templates/layout.tpl:31
 msgid ""
@@ -459,23 +478,22 @@ msgid "error"
 msgstr "erreur"
 
 #: users/templates/user_courses.tpl:88
-msgid "Your fellows in"
-msgstr "Vos amis en"
-
-#: users/templates/user_courses.tpl:88
-msgid "have chosen"
-msgstr "ont choisis"
+#, python-format
+msgid "Your fellows in <i>%(section)s</i>have chosen : "
+msgstr ""
 
 #: users/templates/user_courses.tpl:93
 msgid "View all courses"
 msgstr "Voir tous les cours"
 
 #: users/templates/user_courses.tpl:95
-msgid "You can add a course by mnemonic"
+#, fuzzy
+msgid "You can add a course by mnemonic : "
 msgstr "Vous pouvez ajouter un cours par son mnémonique"
 
 #: users/templates/user_courses.tpl:100
-msgid "Selected courses"
+#, fuzzy
+msgid "Selected courses : "
 msgstr "Cours choisis"
 
 #: users/templates/user_courses.tpl:101
@@ -511,7 +529,7 @@ msgstr ""
 
 #: users/templates/user_login.tpl:40
 msgid "login"
-msgstr ""
+msgstr "connexion"
 
 #: users/templates/user_show.tpl:23
 msgid "Add course"
@@ -541,12 +559,12 @@ msgid ""
 "<i>home</i> button (the head of the menu).<br><br>\n"
 msgstr ""
 "\n"
-"<h2>C'est la première fois que vous venez ici non ? </h2>\n"
+"<h2>C'est la première fois que vous venez ici, non ? </h2>\n"
 "<p>Bienvenue sur p402, la plate-forme estudiantine de nouvelle génération !</"
 "p>\n"
 "<p> Quelques règles basiques : \n"
 "<ol><li>Ne paniquez pas.</li>\n"
-"    <li>Ce projet est toujours en beta</li></ol>\n"
+"    <li>Ce projet est toujours en beta.</li></ol>\n"
 "Ce site web doit permettre aux étudiants d'échanger des documents et des "
 "messages.\n"
 "Vous pouvez regarder le contenu d'un cours grâce au menu en haut à gauche. "
@@ -642,3 +660,9 @@ msgstr "Vous êtes dans"
 #: users/templates/user_show.tpl:95
 msgid "w/ reg"
 msgstr "code cours"
+
+#~ msgid "Your fellows in"
+#~ msgstr "Vos amis en"
+
+#~ msgid "have chosen"
+#~ msgstr "ont choisis"
