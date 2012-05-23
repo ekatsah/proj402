@@ -13,6 +13,7 @@ from documents.models import UploadFileForm, UploadHttpForm, EditForm
 from documents.models import Document, Page, PendingDocument
 from courses.models import Course
 from utils.json import json_sublist_send, json_object_send
+from urllib import unquote
 from re import match
 
 def upload_file(request, slug):
@@ -39,6 +40,8 @@ def upload_http(request, slug):
         course = get_object_or_404(Course, slug=slug)
         url = escape(form.cleaned_data['url'])
         name = match(r'.*/([^/]+)$', url).group(1)
+        if "%" in name:
+            name = unquote(name)
         if len(name) < 4:
             return HttpResponse('name invalid', 'text/html')
         doc = Document.new(request.user, course, name,
