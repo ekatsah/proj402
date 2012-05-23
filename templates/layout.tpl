@@ -40,7 +40,7 @@
 		this website might be unusable.<br>
 		Please choose an decent/real web browser like :
 		{% endblocktrans %}
-		<a href="">FireFox</a>, <a href="">Google Chrome</a>, <a href="">Opera</a>.
+		<a href="https://www.mozilla.org/fr/firefox/new/">FireFox</a>, <a href="https://www.google.com/chrome?hl=fr">Google Chrome</a>, <a href="http://www.opera.com/">Opera</a>.
 		{% trans "Thanks" %} !
 		</p><![endif]-->
         {% endblock %}
