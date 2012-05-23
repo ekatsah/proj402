@@ -11,6 +11,7 @@ from django.contrib.auth.models import User
 from settings import UPLOAD_DIR
 from upvotes.models import VoteDocument, CAT_DOCUMENTS
 from re import sub
+from os.path import getsize
 
 class UploadFileForm(forms.Form):
     category = forms.ChoiceField(choices=CAT_DOCUMENTS)
@@ -102,6 +103,9 @@ class Document(models.Model):
 
     def all_pages(self):
         return self.pages.all().order_by('id')
+        
+    def weight(self):
+        return getsize("%s/%s/%04d.pdf" % (UPLOAD_DIR, self.refer.slug, self.id))
 
 class PendingDocument(models.Model):
     doc = models.ForeignKey(Document)
