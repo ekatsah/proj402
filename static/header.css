@@ -7,6 +7,7 @@
     color: white;
     background-image: url('/static/header_back1.png'), url('/static/header_back2.png');
     background-repeat: no-repeat, repeat-x;
+    margin-bottom: 5px;
 }
 
 #top h1 {
