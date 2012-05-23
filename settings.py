@@ -92,6 +92,7 @@ TEMPLATE_DIRS = (
 TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.request',
     'django.contrib.auth.context_processors.auth',
+    'django.core.context_processors.i18n',
 # from an old django settings :
 #    'django.core.context_processors.auth',
 )

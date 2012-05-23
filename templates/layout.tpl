@@ -24,6 +24,17 @@
             <h1 id="big_title">P402 <small>alpha</small><p id="slogan">{% trans "Bring back real collaboration between students!" %}</p></h1>
             {% block links %}
             {% endblock %}
+            <form action="/i18n/setlang/" method="post">
+            {% csrf_token %}
+            <input name="next" type="hidden" value="{{ redirect_to }}" />
+            <select name="language">
+            {% get_language_info_list for LANGUAGES as languages %}
+            {% for language in languages %}
+            <option value="{{ language.code }}">{{ language.name_local }} ({{ language.code }})</option>
+            {% endfor %}
+            </select>
+            <input type="submit" value="Go" />
+            </form>
         </div>
 
         <div id="content">

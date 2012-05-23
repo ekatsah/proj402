@@ -21,6 +21,7 @@ urlpatterns = patterns('',
     url(r'^admin/', include('admin.urls'), name='admin'),
     url(r'^vote/', include('upvotes.urls'), name='votes'),
     url(r'^search/', include('search.urls'), name='search'),
+    url(r'^i18n/', include('django.conf.urls.i18n')),
 
     url(r'^$', home, name='index'),
 
