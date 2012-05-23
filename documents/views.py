@@ -44,7 +44,7 @@ def upload_http(request, slug):
             name = unquote(name)
         if len(name) < 4:
             return HttpResponse('name invalid', 'text/html')
-        doc = Document.new(request.user, course, name,
+        doc = Document.new(request.user, course, name.replace("_", " "),
                            escape(form.cleaned_data['category']))
         course.add_document(doc)
         PendingDocument.objects.create(doc=doc, state="queued", url=url)

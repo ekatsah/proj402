@@ -44,6 +44,16 @@
             for the (applied) sciences faculty.<br>
             You should <a href="https://www.ulb.ac.be/intranet/p402">login</a></p>
         {% endblocktrans %}
+        <!--[if IE]>
+        <p style="background-color: #FFC285; padding: 10px; padding-left:15px; border: 2px solid red;">
+        {% blocktrans %}
+		Warning ! We know that there are some problems with Internet Explorer,
+		this website might be unusable.<br>
+		Please choose an decent/real web browser like :
+		{% endblocktrans %}
+		<a href="https://www.mozilla.org/fr/firefox/new/">FireFox</a>, <a href="https://www.google.com/chrome?hl=fr">Google Chrome</a>, <a href="http://www.opera.com/">Opera</a>.
+		{% trans "Thanks" %} !
+		</p><![endif]-->
         {% endblock %}
         </div>
 
