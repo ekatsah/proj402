@@ -16,28 +16,68 @@
         <link href="/static/header.css" rel="stylesheet" type="text/css">
         <link href="/static/overlay.css" rel="stylesheet" type="text/css">
         <link href="/static/proj402.css" rel="stylesheet" type="text/css">
-        {% block header %}{% endblock %}
+        {% block header %}
+        <style type="text/css">
+        	#infos {
+        		width: 781px;
+        		margin-right: auto;
+        		margin-left: auto;
+        		margin-top: 50px;
+        	}
+        	
+        	#left {
+	        	float: left;
+	        	margin: 0px;
+	        	width: 340px;
+	        	text-align: right;
+	        	font-size: 14px;
+	        	padding-top: 30px;
+	        }
+	        
+	        #right {
+		        float: left;
+		        margin-left: 40px;
+		        width: 300px;
+		        padding: 0px;
+		 	}
+		</style>
+        {% endblock %}
     </head>
 
     <body>
         <div id="top">
             <h1 id="big_title">
             	P402 <small>alpha</small>
-            	<p id="slogan">
-            		{% trans "Bring back real collaboration between students!" %}
-            	</p>
             </h1>
+            <p id="slogan">
+                {% trans "Bring back real collaboration between students!" %}
+            </p>
             {% block links %}
             {% endblock %}
         </div>
 
         <div id="content">
         {% block content %}
-        {% blocktrans %}
-            <p>Project-402 is an attempt to make the next-gen student application
-            for the (applied) sciences faculty.<br>
-            You should <a href="https://www.ulb.ac.be/intranet/p402">login</a></p>
-        {% endblocktrans %}
+        <div id="infos">
+	        <div id="left">
+    	    {% blocktrans %}
+				<p>Project-402 is a proposed application to <br>help students <strong>share
+				   informations</strong> with their fellows. It's stricly for students only.
+				   It's under heavy developement and managed by students.</p>
+				   
+				<p>Why not give it a try? You should <strong>
+			   	   <a href="https://www.ulb.ac.be/intranet/p402">login</a></strong>.</p>
+			   
+				<p>Project-402 is currently open for <strong>sciences</strong> and 
+				   <strong>polytech</strong> students. Interested in making this 
+				   available for another faculty? Write us<br>an email at 
+				   <a href="p402@cerkinfo.be">p402@cerkinfo.be</a>.</p>
+	        {% endblocktrans %}
+    	    </div>
+        	<div id="right">
+        		<img src="/static/p402.png"/>
+        	</div>
+	    </div>
         {% endblock %}
         </div>
 

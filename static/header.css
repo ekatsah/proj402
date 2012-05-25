@@ -17,13 +17,17 @@
     padding-right: 15px;
     margin: 0px;
     font-size: 26px;
+    width: 160px;
+    float: left;
 }
 
 #top #slogan {
-    font-size: 0.5em;
-    padding-left: 20px;
+    font-size: 12.5px;
     float: right;
-    display: inline;
+    font-weight: bold;
+    margin: 12px 15px 0px 0px;
+    padding: 0px;
+    height: 18px;
 }
 
 #links {
