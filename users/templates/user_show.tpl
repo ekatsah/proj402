@@ -35,6 +35,14 @@ function mask_welcome() {
 	return false;
 }
 
+$(document).ready(function() {
+	$('#courses').dataTable({
+		"bPaginate": false,
+		"bFilter": false,
+		"bAutoWidth" : false,
+	});
+});
+
 </script>
 
 <h1>{% trans "Hello" %}, {{ user.first_name }} {{ user.last_name }}</h1>
@@ -71,18 +79,29 @@ eventually find something interesting. You can come back on this page with the
 {% with courses=user.profile.courses.all %}
 {% if courses %}
 
-<table style="border-collapse: collapse;">
-<tr><th style="padding: 5px;">{% trans "Course" %}</th><th style="padding: 5px;">{% trans "Activity" %}</th></tr>
+<table class="sortable" id="courses">
+	<thead><tr>
+		<th>{% trans "Course" %}</th>
+		<th>{% trans "Activity" %}</th>
+		<th>{% trans "Documents" %}</th>
+		<th>{% trans "Comments" %}</th>
+	</tr></thead>
 
+	<tbody>
 {% for follow in courses %}
-<tr><td style="padding: 5px; text-align: center; border-top: 1px solid black; border-right: 1px solid black">
-    <a href="{% url course_show follow.course.slug %}" 
-    	onclick="return Iload('{% url course_show follow.course.slug %}');">
-    	{{ follow.course.slug }} - {{ follow.course.name }}</a></td>
-    <td style="border-top: 1px solid black; padding: 8px">
-    	<center>{{ follow.course.get_last_event.date|date:"d/m/y" }}</center>
-    </td></tr>
+	<tr>
+		<td><center>
+    		<a href="{% url course_show follow.course.slug %}" 
+    		   onclick="return Iload('{% url course_show follow.course.slug %}');">
+    			{{ follow.course.slug }} - {{ follow.course.name }}
+    		</a>
+    	</center></td>
+		<td><center>{{ follow.course.get_last_event.date|date:"d/m/y" }}</center></td>
+		<td><center>{{ follow.course.count_documents }}</center></td>
+		<td><center>{{ follow.course.count_threads }}</center></td>
+    </tr>
 {% endfor %}
+	</tbody>
 </table>
  
 <p>{% trans "Want to follow some new courses?" %} <input type="button" onclick="add_course_box();" value="{% trans "click here" %}"/></p>

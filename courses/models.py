@@ -31,6 +31,12 @@ class Course(models.Model):
     def get_docs(self):
         return sorted(self.documents.all(), key=lambda x: x.points.score, reverse=True)
 
+    def count_threads(self):
+        return len(self.threads.all())
+
+    def count_documents(self):
+        return len(self.documents.all())
+
 # DEPRECATED - soon to be removed when serv migrate
 class Category(models.Model):
     name = models.CharField(max_length=100)
