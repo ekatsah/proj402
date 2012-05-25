@@ -12,7 +12,7 @@ from documents.models import Document
 class NewCourseForm(forms.Form):
     slug = forms.SlugField()
     name = forms.CharField()
-    description = forms.CharField(widget=forms.Textarea)
+    description = forms.CharField(widget=forms.Textarea, required=False)
 
 class Course(models.Model):
     slug = models.SlugField(unique=True)

@@ -8,24 +8,24 @@
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import get_object_or_404
 from django.core.urlresolvers import reverse
-from django.db import transaction
 from django.utils.html import escape
 from documents.models import UploadFileForm, UploadHttpForm, EditForm
 from documents.models import Document, Page, PendingDocument
 from courses.models import Course
 from utils.json import json_sublist_send, json_object_send
+from urllib import unquote
 from re import match
 
 def upload_file(request, slug):
     form = UploadFileForm(request.POST, request.FILES)
 
-    if form.is_valid() and match(r'.*\.[pP][dD][fF]$', 
+    if form.is_valid() and match(r'.*\.[pP][dD][fF]$',
                                  request.FILES['file'].name):
         course = get_object_or_404(Course, slug=slug)
-        doc = Document.new(request.user, course, escape(request.FILES['file'].name), 
+        doc = Document.new(request.user, course, escape(request.FILES['file'].name),
                            escape(form.cleaned_data['category']))
         course.add_document(doc)
-        
+
         url = '/tmp/TMP402_%d.pdf' % doc.id
         tmp_doc = open(url, 'w')
         tmp_doc.write(request.FILES['file'].read())
@@ -40,9 +40,11 @@ def upload_http(request, slug):
         course = get_object_or_404(Course, slug=slug)
         url = escape(form.cleaned_data['url'])
         name = match(r'.*/([^/]+)$', url).group(1)
+        if "%" in name:
+            name = unquote(name)
         if len(name) < 4:
             return HttpResponse('name invalid', 'text/html')
-        doc = Document.new(request.user, course, name, 
+        doc = Document.new(request.user, course, name.replace("_", " "),
                            escape(form.cleaned_data['category']))
         course.add_document(doc)
         PendingDocument.objects.create(doc=doc, state="queued", url=url)
@@ -85,9 +87,9 @@ def description(request, id):
 
 def doc_by_course(request, slug):
     course = get_object_or_404(Course, slug=slug)
-    return json_sublist_send(request, course.documents.all, 
+    return json_sublist_send(request, course.documents.all,
                         ['id', 'name', 'description', 'size', 'done', 'points.category',
-                         'refer.name', 'refer.id', 'date', 'points.score', 
+                         'refer.name', 'refer.id', 'date', 'points.score',
                          'owner.get_profile.real_name', 'points.full_category'])
 
 def doc_pending(request, slug):

@@ -40,6 +40,15 @@
 		        width: 300px;
 		        padding: 0px;
 		 	}
+		 	
+		 	#warning {
+		 		background-color: #FFC285;
+		 		padding: 10px;
+		 		border: 2px solid #ff5656;
+		 		border-radius: 10px;
+		 		text-align: center;
+		 	}
+		 	
 		</style>
         {% endblock %}
     </head>
@@ -54,6 +63,20 @@
             </p>
             {% block links %}
             {% endblock %}
+            <div style="display: none">
+            	<!-- do something about the style before production! -->
+            	<form action="/i18n/setlang/" method="post">
+            		{% csrf_token %}
+            		<input name="next" type="hidden" value="{{ redirect_to }}" />
+            		<select name="language">
+            			{% get_language_info_list for LANGUAGES as languages %}
+            			{% for language in languages %}
+            				<option value="{{ language.code }}">{{ language.name_local }} ({{ language.code }})</option>
+            			{% endfor %}
+            		</select>
+            		<input type="submit" value="Go" />
+            	</form>
+            </div>
         </div>
 
         <div id="content">
@@ -72,6 +95,13 @@
 				   <strong>polytech</strong> students. Interested in making this 
 				   available for another faculty? Write us<br>an email at 
 				   <a href="p402@cerkinfo.be">p402@cerkinfo.be</a>.</p>
+
+				<!--[if IE]>
+        		<p id="warning">
+					Warning ! We know that there are some problems with Internet Explorer,
+					this website might be unusable.<br> We are currently working at fixing that.
+				</p>
+				<![endif]-->
 	        {% endblocktrans %}
     	    </div>
         	<div id="right">

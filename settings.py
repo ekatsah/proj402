@@ -40,9 +40,11 @@ SITE_ID = 1
 USE_I18N = True
 CONVERT_PDF = True
 
+ugettext = lambda s: s
+
 LANGUAGES = (
-  ('fr', 'French'),
-  ('en', 'English'),
+  ('fr', ugettext('French')),
+  ('en', ugettext('English')),
 )
 
 # If you set this to False, Django will not format dates, numbers and
@@ -90,6 +92,7 @@ TEMPLATE_DIRS = (
 TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.request',
     'django.contrib.auth.context_processors.auth',
+    'django.core.context_processors.i18n',
 # from an old django settings :
 #    'django.core.context_processors.auth',
 )
