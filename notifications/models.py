@@ -69,18 +69,18 @@ class BaseEvent(object):
 
 class UploadEvent(BaseEvent):
     __metaclass__ = MetaEvent
-    context = models.ForeignKey('courses.Course', null=True, default=0)
-    user = models.ForeignKey(User, null=True, default=0)
-    document = models.ForeignKey('documents.Document', null=True, default=0)
+    context = models.ForeignKey('courses.Course', null=True)
+    user = models.ForeignKey(User, null=True)
+    document = models.ForeignKey('documents.Document', null=True)
 
     def __str__(self):
         return "%s uploaded a new document %s" % (self.user.username, 
                                                   self.document.name)
 class ThreadEvent(BaseEvent):
     __metaclass__ = MetaEvent
-    context = models.ForeignKey('courses.Course', null=True, default=0)
-    user = models.ForeignKey(User, null=True, default=0)
-    thread = models.ForeignKey('messages.Thread', null=True, default=0)
+    context = models.ForeignKey('courses.Course', null=True)
+    user = models.ForeignKey(User, null=True)
+    thread = models.ForeignKey('messages.Thread', null=True)
 
     def __str__(self):
         return "%s opened a new thread about %s" % (self.user.username,
@@ -88,9 +88,9 @@ class ThreadEvent(BaseEvent):
 
 class ReplyEvent(BaseEvent):
     __metaclass__ = MetaEvent
-    context = models.ForeignKey('courses.Course', null=True, default=0)
-    user = models.ForeignKey(User, null=True, default=0)
-    thread = models.ForeignKey('messages.Thread', null=True, default=0)
+    context = models.ForeignKey('courses.Course', null=True)
+    user = models.ForeignKey(User, null=True)
+    thread = models.ForeignKey('messages.Thread', null=True)
 
     def __str__(self):
         return "%s replied to the thread about %s" % (self.user.username,
