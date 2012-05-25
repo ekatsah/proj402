@@ -96,5 +96,14 @@ class ReplyEvent(BaseEvent):
         return "%s replied to the thread about %s" % (self.user.username,
                                                       self.thread.subject)
 
+class Announcement(BaseEvent):
+    __metaclass__ = MetaEvent
+    user = models.ForeignKey(User, null=True)
+    content = models.TextField(null=True)
+
+    def __str__(self):
+        return "%s %s : %s" % (self.user.first_name, self.user.last_name, 
+                               self.content)
+
 # don't touch that
 Event = create_event()
