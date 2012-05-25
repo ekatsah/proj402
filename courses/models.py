@@ -26,7 +26,7 @@ class Course(models.Model):
         self.documents.add(document)
 
     def get_last_event(self):
-        return Event.objects.filter(context=self).order_by('date')[0]
+        return Event.objects.filter(context=self).order_by('-date')[0]
 
     def get_docs(self):
         return sorted(self.documents.all(), key=lambda x: x.points.score, reverse=True)
