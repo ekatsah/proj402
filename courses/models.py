@@ -8,6 +8,7 @@
 from django.db import models
 from django import forms
 from documents.models import Document
+from notifications.models import Event
 
 class NewCourseForm(forms.Form):
     slug = forms.SlugField()
@@ -23,6 +24,9 @@ class Course(models.Model):
 
     def add_document(self, document):
         self.documents.add(document)
+
+    def get_last_event(self):
+        return Event.objects.filter(context=self).order_by('date')[0]
 
     def get_docs(self):
         return sorted(self.documents.all(), key=lambda x: x.points.score, reverse=True)

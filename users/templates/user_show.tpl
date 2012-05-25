@@ -79,7 +79,9 @@ eventually find something interesting. You can come back on this page with the
     <a href="{% url course_show follow.course.slug %}" 
     	onclick="return Iload('{% url course_show follow.course.slug %}');">
     	{{ follow.course.slug }} - {{ follow.course.name }}</a></td>
-    <td style="border-top: 1px solid black; padding: 8px"><center>-</center></td></tr>
+    <td style="border-top: 1px solid black; padding: 8px">
+    	<center>{{ follow.course.get_last_event.date|date:"d/m/y" }}</center>
+    </td></tr>
 {% endfor %}
 </table>
  
