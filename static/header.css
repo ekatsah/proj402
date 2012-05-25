@@ -32,11 +32,8 @@
 
 #links {
 	clear: both;
-	padding: 0px;
-	margin-top: 0px;
-	margin-bottom: 0px;
-	margin-left: 20px;
-	margin-right: 20px;
+	padding: 4px 0px 0px 0px;
+	margin: 0px 20px 0px 20px;
 }
 
 .dright:hover {
