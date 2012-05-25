@@ -7,6 +7,7 @@
 
 from django.db import models
 from django.contrib.auth.models import User
+from django.core.urlresolvers import reverse
 from datetime import datetime
 
 ### Magic begins here
@@ -14,7 +15,7 @@ from datetime import datetime
 # We use metaclass and dynamic models creation to avoid the use of polymorphic
 # models (inheritance in orm sux, see vietnam of computer sciences)
 
-action_fields, output_method = dict(), dict()
+action_fields, output_method, urls_method = dict(), dict(), dict()
 
 def check_field(name, value):
     if name in action_fields:
@@ -23,7 +24,7 @@ def check_field(name, value):
                 raise Exception("Action model error, ForeignKey %s incoherent" % name)
         elif action_fields[name] != value:
             raise Exception("Action model error, value %s incoherent" % name)
-        elif name == "type" or name == "date":
+        elif name == "type" or name == "date" or name == "url":
             raise Exception("Action model error, name %s forbidden" % name)
     else:
         return True
@@ -35,25 +36,31 @@ def create_event():
     def to_string(self):
         return self._output[self.type](self)
 
+    def to_url(self):
+        return self._urls[self.type](self)
+
     action_fields['Meta'] = Meta
     action_fields['type'] = models.CharField(max_length=100)
     action_fields['date'] = models.DateTimeField(default=datetime.now)
     action_fields['_output'] = output_method
+    action_fields['_urls'] = urls_method
     action_fields['__module__'] = 'notifications'
     action_fields['__str__'] = to_string
     action_fields['__unicode__'] = to_string
+    action_fields['url'] = to_url
     
     return type('Event', (models.Model,), action_fields)
 
 class MetaEvent(type):
     def __init__(cls, name, bases, dict):
         for attr, value in dict.iteritems():
-            if attr.startswith('__'):
+            if attr.startswith('_'):
                 continue
             if check_field(attr, value):
                 action_fields[attr] = value
         
         output_method[cls.__name__] = dict['__str__']
+        urls_method[cls.__name__] = dict['_url']
 
 class BaseEvent(object):
     @classmethod
@@ -76,6 +83,10 @@ class UploadEvent(BaseEvent):
     def __str__(self):
         return "%s uploaded a new document %s" % (self.user.username, 
                                                   self.document.name)
+    
+    def _url(self):
+        return reverse('view_file', args=[self.document.id])
+
 class ThreadEvent(BaseEvent):
     __metaclass__ = MetaEvent
     context = models.ForeignKey('courses.Course', null=True)
@@ -85,6 +96,9 @@ class ThreadEvent(BaseEvent):
     def __str__(self):
         return "%s opened a new thread about %s" % (self.user.username,
                                                     self.thread.subject)
+    
+    def _url(self):
+        return reverse('thread_view', args=[self.thread.id])
 
 class ReplyEvent(BaseEvent):
     __metaclass__ = MetaEvent
@@ -96,6 +110,9 @@ class ReplyEvent(BaseEvent):
         return "%s replied to the thread about %s" % (self.user.username,
                                                       self.thread.subject)
 
+    def _url(self):
+        return reverse('thread_view', args=[self.thread.id])
+
 class Announcement(BaseEvent):
     __metaclass__ = MetaEvent
     user = models.ForeignKey(User, null=True)
@@ -104,6 +121,9 @@ class Announcement(BaseEvent):
     def __str__(self):
         return "%s %s : %s" % (self.user.first_name, self.user.last_name, 
                                self.content)
+
+    def _url(self):
+        return '#'
 
 # don't touch that
 Event = create_event()

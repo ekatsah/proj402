@@ -14,9 +14,9 @@
 <h1>{% trans "Last 20 events" %}</h1>
 
 {% for event in object_list %}
-	<div style="margin: 20px 10px 10px 10px;">
-		<span style="border: 1px #bbb solid; padding: 10px; border-radius: 10px; background-color: #eee">
-			{{ event }}
+	<div style="padding: 10px; margin: 10px">
+		<span style="border: 1px #aaa solid; padding: 10px; border-radius: 10px; background-color: #eee">
+			<a href="{{ event.url }}" onclick="return Iload('{{ event.url }}');">{{ event }}</a>
 		</span>
 	</div>
 {% endfor %}
