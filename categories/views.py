@@ -34,11 +34,13 @@ def edit_category(request):
 
 def sub_categories(request, catid):
     cat = get_object_or_404(Category, pk=int(catid))
-    return json_sublist_send(request, cat.holds.all, ['id', 'name', 'description'])
+    return json_sublist_send(request, cat.holds.order_by('name'), 
+                             ['id', 'name', 'description'])
 
 def sub_courses(request, catid):
     cat = get_object_or_404(Category, pk=int(catid))
-    return json_sublist_send(request, cat.contains.all, ['id', 'name', 'slug'])
+    return json_sublist_send(request, cat.contains.order_by('slug'), 
+                             ['id', 'name', 'slug'])
 
 def attach_category(request, category, subcategory):
     cat = get_object_or_404(Category, pk=category)

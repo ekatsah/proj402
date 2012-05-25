@@ -50,7 +50,7 @@ urlpatterns = patterns('categories.views',
         login_required(sub_courses), name='courses_by_cat'),
 
     url(r'^all$', login_required(json_sublist_send), 
-        {'queryset': Category.objects.all, 
+        {'queryset': Category.objects.order_by("id"), 
          'fields': ['id', 'name', 'description', 'contains', 'holds']},
         name='categories_all'),
 )
