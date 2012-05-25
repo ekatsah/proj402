@@ -55,6 +55,7 @@ def download_file(request, id):
     document = get_object_or_404(Document, pk=id)
     response = HttpResponse(document.get_content(), mimetype="application/pdf")
     response['Content-Disposition'] = 'attachment; filename=' + document.pretty_name()
+    response['Content-Length'] = document.weight()
     return response
 
 def download_page(request, pid=None):
