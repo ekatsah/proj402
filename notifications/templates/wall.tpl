@@ -11,7 +11,7 @@
 
 {% load i18n %}
 
-<h1>{% trans "All events" %}</h1>
+<h1>{% trans "Last 20 events" %}</h1>
 
 {% for event in object_list %}
 	<div style="margin: 20px 10px 10px 10px;">

@@ -14,7 +14,7 @@ from utils.decorators import AR
 urlpatterns = patterns('notifications.views',
     url(r'^wall',
         AR(login_required(object_list)),
-        {'queryset': Event.objects.all(),
+        {'queryset': Event.objects.order_by("-date")[:20],
          'template_name': 'wall.tpl'},
         name="wall"),
 )
