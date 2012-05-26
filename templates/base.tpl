@@ -118,7 +118,7 @@ jQuery(document).ajaxSend(function(event, xhr, settings) {
 
 	$(window).ready(function() {
 		$(window).resize(function() {
-			$('#content').height($(window).height() - 117);
+			$('#content').height($(window).height() - 120);
 		});
 		$(window).resize();
 
