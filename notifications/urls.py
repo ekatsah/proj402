@@ -8,6 +8,7 @@
 from django.conf.urls.defaults import patterns, url
 from django.contrib.auth.decorators import login_required
 from django.views.generic.list_detail import object_list
+from notifications.views import export_json
 from notifications.models import Event
 from utils.decorators import AR
 
@@ -17,4 +18,8 @@ urlpatterns = patterns('notifications.views',
         {'queryset': Event.objects.order_by("-date")[:20],
          'template_name': 'wall.tpl'},
         name="wall"),
+    
+    url(r'get',
+        login_required(export_json),
+        name="notifications_json"),
 )
