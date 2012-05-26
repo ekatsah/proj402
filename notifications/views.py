@@ -1,3 +1,4 @@
+from django.shortcuts import render_to_response
 from notifications.models import Event
 from utils.json import json_sublist_send
 from django.db.models import Q
@@ -37,4 +38,8 @@ def prep_queryset(request):
 
 def export_json(request):
     return json_sublist_send(request, prep_queryset(request), 
-                             ['id', 'url', '__str__'])
+                             ['id', 'url', '__str__', 'date'])
+
+def export_rss(request):
+    query = prep_queryset(request)
+    return render_to_response('feeds.tpl', {'events': query})

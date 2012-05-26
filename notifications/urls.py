@@ -8,7 +8,7 @@
 from django.conf.urls.defaults import patterns, url
 from django.contrib.auth.decorators import login_required
 from django.views.generic.list_detail import object_list
-from notifications.views import export_json
+from notifications.views import export_json, export_rss
 from notifications.models import Event
 from utils.decorators import AR
 
@@ -22,4 +22,6 @@ urlpatterns = patterns('notifications.views',
     url(r'get',
         login_required(export_json),
         name="notifications_json"),
+    
+    url(r'rss\.xml', export_rss, name="notifications_rss"),
 )
