@@ -54,18 +54,21 @@ def unfollow(request):
     cf.delete()
     return HttpResponse('ok', 'text/html')
 
-def modo(uid, flag):
-    u = get_object_or_404(User, pk=uid)
-    up = u.get_profile()
-    up.moderate = flag
-    up.save()
+def add_perm(request):
+    user = get_object_or_404(User, pk=request.POST['user_id'])
+    try:
+        user.profile.add_perm(request.POST['permission'])
+    except:
+        return HttpResponse('no adding', 'text/html')
     return HttpResponse('ok', 'text/html')
 
-def set_modo(request, uid):
-    return modo(uid, True)
-
-def unset_modo(request, uid):
-    return modo(uid, False)
+def rm_perm(request):
+#    try:
+        user = get_object_or_404(User, pk=request.POST['user_id'])
+        user.profile.del_perm(request.POST['permission'])
+        return HttpResponse('ok', 'text/html')
+#    except Exception as e:
+#        print str(e)
 
 def new_user(request):
     form = CreateUserForm(request.POST)

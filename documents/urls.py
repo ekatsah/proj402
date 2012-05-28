@@ -12,13 +12,13 @@ from documents.models import EditForm, Document
 from documents.views import upload_file, upload_http, download_file, description
 from documents.views import download_page, download_mpage, edit_post, remove 
 from documents.views import doc_by_course, doc_pending
-from utils.decorators import AR, moderate, enforce_post
+from utils.decorators import AR, chk_perm, enforce_post
 from utils.json import json_sublist_send
 from messages.models import NewThreadForm
 
 urlpatterns = patterns('documents.views',
-    url(r'^remove/(?P<id>[^/]+)$',
-        moderate(login_required(remove)),
+    url(r'^remove/(?P<object_id>[^/]+)$',
+        chk_perm(login_required(remove), 'document_manage'),
         name="document_remove"),
 
     url(r'^all$',
@@ -41,8 +41,8 @@ urlpatterns = patterns('documents.views',
         login_required(description),
         name="document_desc"),
 
-    url(r'^edit/(?P<id>[^/]+)$',
-        moderate(enforce_post(login_required(edit_post))),
+    url(r'^edit/(?P<object_id>[^/]+)$',
+        chk_perm(enforce_post(login_required(edit_post)), 'document_edit'),
         name="document_edit"),
 
     url(r'^put/(?P<slug>[^/]+)$', 

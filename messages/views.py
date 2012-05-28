@@ -12,6 +12,7 @@ from messages.models import NewThreadForm, NewPostForm, EditPostForm
 from notifications.models import ThreadEvent, ReplyEvent
 from messages.models import Thread, Message
 from documents.models import Page, Document
+from users.models import Permission
 from courses.models import Course
 from utils.json import json_string
 import traceback
@@ -43,6 +44,8 @@ def post_thread(request):
         thread.referc = course
         thread.save()
         ThreadEvent.throw(user=request.user, thread=thread, context=course)
+        Permission.objects.create(name="message_edit", user=request.user,
+                                  object_id=msg.id)
         return HttpResponse("ok")
     return HttpResponse("Error: Invalid form")
 
@@ -86,16 +89,17 @@ def post_msg(request):
                                      reference=reference)
         thread.msgs.add(msg)
         ReplyEvent.throw(user=request.user, context=thread.referc, thread=thread)
+        Permission.objects.create(name="message_edit", user=request.user,
+                                  object_id=msg.id)
         return HttpResponse("ok " + str(msg.id))
     return HttpResponse("Error: Invalid form")
 
 def edit_msg(request):
     form = EditPostForm(request.POST)
     if form.is_valid():
-        message = get_object_or_404(Message, pk=form.cleaned_data['source'])
+        message = get_object_or_404(Message, pk=form.cleaned_data['object_id'])
         message.text = escape(form.cleaned_data['message'])
         message.save()
-        print message
         return HttpResponse("ok")
     return HttpResponse("Error: Invalid form")
 

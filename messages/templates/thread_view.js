@@ -1,4 +1,5 @@
 {% load markup %}
+{% load cperms %}
 {% comment %}
 
 # Copyright 2011, hast. All rights reserved.
@@ -16,7 +17,9 @@ messages = {
 "{{ m.id }}": {"user": "{{ m.owner.first_name }} {{ m.owner.last_name }}",
                "date": "{{ m.date|date:"d/m/y H:i" }}",
                "content": "{{ m.text|escapejs }}",
-               "rendered": "{{ m.text|markdown:'nl2br,smart_strong,headerid(level=3),'|escapejs }}"},
+               "rendered": "{{ m.text|markdown:'nl2br,smart_strong,headerid(level=3),'|escapejs }}",
+               "perm_edit": {% if user|attach:m.id|has_perm:"message_edit" %}1{% else %}0{% endif %},
+               "perm_rm": {% if user|attach:m.id|has_perm:"message_remove" %}1{% else %}0{% endif %} },
 {% endfor %}
 };
 
@@ -41,7 +44,8 @@ function reply(id) {
 					"user": "{{ user.first_name }} {{ user.last_name }}",
 					"date": "now",
 					"content": content,
-					"rendered": html
+					"rendered": html,
+					"perm_edit": 1
 				};
 				$('#replies').append('<div id="message_' + nid + '"></div>');
 				render(nid);
@@ -55,12 +59,15 @@ function render(id) {
 	if (id == first_msg_id)
 		return render_first();
 
-	{% if user.get_profile.moderate %}
-    var links = '[ <span class="action_link" onclick="edit('+id+');">edit</span>, ' +
-				'<span class="action_link" onclick="remove('+id+');">remove</span> ] ';
-	{% else %}
-	var links = '';
-    {% endif %}
+	var links = '[ ';
+	if (messages[id].perm_edit)
+	    links += '<span class="action_link" onclick="edit('+id+');">edit</span> ';
+	if (messages[id].perm_rm)
+		links += '<span class="action_link" onclick="remove('+id+');">remove</span> ';
+	if (links == '[ ')
+		links = '';
+	else
+		links += ' ] ';
 
 	$('#message_' + id).addClass('forums_reply');
 	$('#message_' + id).html('<p class="forums_reply_header">' + links + 'On ' + 
@@ -72,8 +79,6 @@ function render_first() {
 	$('#inner_post').html(messages[first_msg_id].rendered);
 }
 
-{% if user.get_profile.moderate %}
-
 function edit(id) {
 	overlay_reset();
 	overlay_title("Edit");
@@ -81,7 +86,7 @@ function edit(id) {
 				  "content": '{{ eform.as_table|escapejs }}', "submit": "edit"});
 	$('#reply_form_app').append('<p><strong>Edit of the message from '+messages[id].user+'</strong><br>'+messages[id].rendered+'</p>');
 	$('#id_message').val(messages[id].content);
-	$('#id_source').val(id);
+	$('#id_object_id').val(id);
 	overlay_show();
 	overlay_refresh();
 	$('#edit_form').submit(function() {
@@ -110,8 +115,6 @@ function remove(id) {
 			alert('remove error : ' + data);
 	});
 }
-
-{% endif %}
 
 $(document).ready(function() {
 

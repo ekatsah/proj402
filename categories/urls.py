@@ -11,36 +11,36 @@ from categories.views import sub_categories, attach_category, detach_category
 from categories.views import del_category, new_category, attach_course
 from categories.views import detach_course, sub_courses, edit_category
 from categories.models import Category
-from utils.decorators import enforce_post, moderate
+from utils.decorators import enforce_post, chk_perm
 from utils.json import json_sublist_send
 
 urlpatterns = patterns('categories.views',
     url(r'^new',
-        moderate(enforce_post(login_required(new_category))),
+        enforce_post(chk_perm(login_required(new_category), 'structure_manage')),
         name="category_new"),
 
     url(r'^edit$',
-        enforce_post(moderate(login_required(edit_category))),
+        enforce_post(chk_perm(login_required(edit_category), 'structure_manage')),
         name="category_edit"),
 
     url(r'^attach/(?P<category>[^/]+)/(?P<subcategory>[^/]+)$', 
-        moderate(login_required(attach_category)),
+        chk_perm(login_required(attach_category), 'structure_manage'),
         name="category_attach"),
 
     url(r'^detach/(?P<category>[^/]+)/(?P<parent>[^/]+)$',
-        moderate(login_required(detach_category)),
+        chk_perm(login_required(detach_category), 'structure_manage'),
         name="category_detach"),
 
     url(r'^add_course/(?P<category>[^/]+)/(?P<slug>[^/]+)$',
-        moderate(login_required(attach_course)),
+        chk_perm(login_required(attach_course), 'structure_manage'),
         name="cat_course_add"),
 
     url(r'^del_course/(?P<category>[^/]+)/(?P<slug>[^/]+)$',
-        moderate(login_required(detach_course)),
+        chk_perm(login_required(detach_course), 'structure_manage'),
         name="cat_course_del"),
 
     url(r'^del/(?P<category>[^/]+)$',
-        moderate(login_required(del_category)),
+        chk_perm(login_required(del_category), 'structure_manage'),
         name='category_del'),
 
     url(r'^sub/(?P<catid>[^/]+)$', 

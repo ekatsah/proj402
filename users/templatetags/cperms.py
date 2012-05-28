@@ -6,15 +6,19 @@
 # your option) any later version.
 
 from django import template
-from upvotes.models import VoteHistory
-
-def can_vote(user, doc, res):
-    objs = VoteHistory.objects.filter(voter=user)
-    objs = objs.filter(ressource=res).filter(resid=doc.id)
-    return len(objs) == 0
 
 register = template.Library()
 
 @register.filter()
-def can_voteD(user, doc):
-    return can_vote(user, doc, 'D')
+def has_perm(args, perm):
+    if isinstance(args, list):
+        return args[0].profile.has_perm(perm, args[1])
+    else:
+        return args.profile.has_perm(perm)
+
+@register.filter()
+def attach(first, obj):
+    if isinstance(first, list):
+        return first + [obj]
+    else:
+        return [first , obj]

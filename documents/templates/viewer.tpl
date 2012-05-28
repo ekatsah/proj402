@@ -1,4 +1,5 @@
 {% load i18n %}
+{% load cperms %}
 {% comment %}
 
 # Copyright 2011, hast. All rights reserved.
@@ -238,7 +239,6 @@ $(document).ready(function() {
 
   $('#pright').scroll(refresh_mpage);
 
-{% if user.get_profile.moderate %}
   $('#edit_but').click(function(event) {
           overlay_reset();
           overlay_title("Edit Document");
@@ -258,7 +258,6 @@ $(document).ready(function() {
               return false;
               });
   });
-{% endif %}
 
 function load_min(i) {
     $('#mimg'+i).attr('src', mini_urlz['mimg'+i]);
@@ -294,7 +293,7 @@ setTimeout(function () { load_min(1); }, 10);
     <div id="pmiddle"></div>
     <div id="pright"><center>
         <div id="pseudopage">
-        {% if user.get_profile.moderate %}
+        {% if user|attach:object.id|has_perm:"document_edit" %}
             <img style="margin-top: -1px; float: left; cursor: pointer"
                 src="/static/edit.png" id="edit_but"/>
         {% endif %}

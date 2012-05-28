@@ -25,11 +25,24 @@ def enforce_post(function):
             return HttpResponse("Error: Not a POST request")
     return check_post
 
-# enforce moderator rights
-def moderate(function):
-    def check_modo(request, *args, **kwargs):
-        if request.user.get_profile().moderate:
+# enforce acl rights
+def chk_perm(function, perm):
+    def check(request, *args, **kwargs):
+        # check if user has global permission
+        if request.user.get_profile().has_perm(perm):
             return function(request, *args, **kwargs)
         else:
-            return HttpResponseForbidden("You don't have permissions to access this part of the website.")
-    return check_modo
+            # try to find a object_id
+            id = 0
+            if 'object_id' in kwargs:
+                id = kwargs['object_id']
+            elif 'object_id' in request.REQUEST:
+                id = request.REQUEST['object_id']
+
+            # check if user has row permission
+            if id and request.user.get_profile().has_perm(perm, id):
+                return function(request, *args, **kwargs)
+            else:
+                return HttpResponseForbidden("You don't have permissions to " + 
+                                             "access this part of the website.")
+    return check

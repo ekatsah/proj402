@@ -24,7 +24,7 @@ class NewPostForm(forms.Form):
 
 class EditPostForm(forms.Form):
     message = forms.CharField(widget=forms.Textarea)
-    source = forms.DecimalField(widget=forms.HiddenInput)
+    object_id = forms.DecimalField(widget=forms.HiddenInput)
 
 class Thread(models.Model):
     subject = models.TextField();

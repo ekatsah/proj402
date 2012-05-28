@@ -11,6 +11,7 @@ from django.core.urlresolvers import reverse
 from django.utils.html import escape
 from documents.models import UploadFileForm, UploadHttpForm, EditForm
 from documents.models import Document, Page, PendingDocument
+from users.models import Permission
 from courses.models import Course
 from utils.json import json_sublist_send, json_object_send
 from urllib import unquote
@@ -30,6 +31,8 @@ def upload_file(request, slug):
         tmp_doc = open(url, 'w')
         tmp_doc.write(request.FILES['file'].read())
         tmp_doc.close()
+        Permission.objects.create(name='document_edit', user=request.user,
+                                  object_id=doc.id)
         PendingDocument.objects.create(doc=doc, state="queued", url='file://' + url)
         return HttpResponseRedirect(reverse('course_show', args=[slug]))
     return HttpResponse('form invalid', 'text/html')
@@ -47,6 +50,9 @@ def upload_http(request, slug):
         doc = Document.new(request.user, course, name.replace("_", " "),
                            escape(form.cleaned_data['category']))
         course.add_document(doc)
+        request.user.add_row_perm(doc, '')
+        Permission.objects.create(name='document_edit', user=request.user,
+                                  object_id=doc.id)
         PendingDocument.objects.create(doc=doc, state="queued", url=url)
         return HttpResponse('ok', 'text/html')
     return HttpResponse('form invalid', 'text/html')
@@ -66,8 +72,8 @@ def download_mpage(request, pid=None):
     page = get_object_or_404(Page, pk=pid)
     return HttpResponse(page.get_mini(), mimetype="image/jpeg")
 
-def edit_post(request, id):
-    doc = get_object_or_404(Document, pk=id)
+def edit_post(request, object_id):
+    doc = get_object_or_404(Document, pk=object_id)
     form = EditForm(request.POST)
     if form.is_valid():
         doc.name = escape(form.cleaned_data['name'])
@@ -77,8 +83,8 @@ def edit_post(request, id):
     else:
         return HttpResponse('form invalid', 'text/html')
 
-def remove(request, id):
-    doc = get_object_or_404(Document, pk=id)
+def remove(request, object_id):
+    doc = get_object_or_404(Document, pk=object_id)
     doc.delete()
     return HttpResponse('ok', 'text/html')
 

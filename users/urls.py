@@ -10,8 +10,8 @@ from django.views.generic.simple import direct_to_template
 from django.contrib.auth.views import login, logout
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
-from utils.decorators import AR, moderate, enforce_post
-from users.views import mask_welcome, get_courses, follow, unset_modo, set_modo
+from utils.decorators import AR, chk_perm, enforce_post
+from users.views import mask_welcome, get_courses, follow, add_perm, rm_perm
 from users.views import new_user, unfollow
 
 urlpatterns = patterns('users.views',
@@ -39,15 +39,15 @@ urlpatterns = patterns('users.views',
     url(r'^login/$', login, {'template_name': 'user_login.tpl'}, name="user_login"),
     url(r'^logout/$', logout, {'next_page': '/'}, name="user_logout"),
 
-    url(r'^set_modo/(?P<uid>[^/]+)$',
-        moderate(login_required(set_modo)),
-        name="user_set_modo"),
-
-    url(r'^unset_modo/(?P<uid>[^/]+)$',
-        moderate(login_required(unset_modo)),
-        name="user_unset_modo"),
-
     url(r'^new$',
-        enforce_post(moderate(login_required(new_user))),
+        enforce_post(chk_perm(login_required(new_user), 'user_manage')),
         name='user_new'),
+
+    url(r'^add_perm$',
+        enforce_post(chk_perm(login_required(add_perm), 'user_manage')),
+        name='user_add_perm'),
+
+    url(r'^remove_perm$',
+        enforce_post(chk_perm(login_required(rm_perm), 'user_manage')),
+        name='user_remove_perm'),
 )

@@ -54,6 +54,5 @@ Create a 'fake' user to use without NetID
 Turn a user (fake or not) into an admin
 ---------------------------------------
     >>> u = User.objects.get(pk=id)
-    >>> up = u.profile
-    >>> up.moderate = 1
-    >>> up.save()
+    >>> from users.models import PERM_LIST, Permission
+    >>> for p in PERM_LIST: Permission.objects.create(name=p, user=u)

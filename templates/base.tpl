@@ -1,5 +1,6 @@
 {% extends "layout.tpl" %}
 {% load i18n %}
+{% load cperms %}
 {% comment %}
 
 # Copyright 2011, hast. All rights reserved.
@@ -145,7 +146,7 @@ jQuery(document).ajaxSend(function(event, xhr, settings) {
       <a href="{% url user_logout %}">{% trans "Logout" %}</a>
     </div>
 
-{% if user.get_profile.moderate %}
+{% if user|has_perm:"structure_manage" or user|has_perm:"user_manage" or user|has_perm:"document_manage" %}
     <div class="dright">
       <a href="{% url admin_index %}" onclick="return Iload('{% url admin_index %}');">{% trans "Admin" %}</a>
     </div>

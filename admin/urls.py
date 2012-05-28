@@ -10,31 +10,35 @@ from django.views.generic.simple import direct_to_template
 from django.views.generic.list_detail import object_list
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from utils.decorators import AR, moderate
+from utils.decorators import AR, chk_perm
 from courses.models import NewCourseForm
 from categories.models import NewCategoryForm, EditCategoryForm
 from documents.models import Document
-from users.models import CreateUserForm
+from users.models import CreateUserForm, PERM_LIST
 
 urlpatterns = patterns('admin.views',
-    url(r'^tree$', moderate(AR(login_required(direct_to_template))), 
+    url(r'^tree$',
+        AR(chk_perm(login_required(direct_to_template), 'structure_manage')), 
         {'template': 'adm_tree.tpl',
          'extra_context': {'nform': NewCourseForm(),
                            'cform': NewCategoryForm(),
                            'ceform': EditCategoryForm()}}, 
         name="category_tree"),
 
-    url(r'^users$', moderate(AR(login_required(object_list))), 
+    url(r'^users$',
+        AR(chk_perm(login_required(object_list), 'user_manage')), 
         {'template_name': 'adm_users.tpl',
          'queryset': User.objects.all(),
-         'extra_context': {'uform': CreateUserForm()}}, 
+         'extra_context': {'uform': CreateUserForm(),
+                           'perms': PERM_LIST}}, 
         name="admin_users"),
 
-    url(r'^documents$', moderate(AR(login_required(object_list))), 
+    url(r'^documents$',
+        AR(chk_perm(login_required(object_list), 'document_manage')), 
         {'template_name': 'adm_documents.tpl',
          'queryset': Document.objects.all()}, 
         name="admin_documents"),
 
-    url(r'', moderate(AR(login_required(direct_to_template))), 
+    url(r'', AR(login_required(direct_to_template)), 
         {'template': 'admin.tpl'}, name="admin_index"),
 )

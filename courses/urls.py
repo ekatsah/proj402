@@ -14,11 +14,11 @@ from messages.models import NewThreadForm
 from upvotes.models import CAT_DOCUMENTS
 from utils.json import json_sublist_send, json_select_send
 from courses.views import new_course
-from utils.decorators import AR, enforce_post, moderate
+from utils.decorators import AR, enforce_post, chk_perm
 
 urlpatterns = patterns('courses.views',
     url(r'^new',
-        moderate(enforce_post(login_required(new_course))),
+        enforce_post(chk_perm(login_required(new_course), 'structure_manage')),
         name="course_new"),
 
     url(r'^all$', login_required(json_sublist_send), 

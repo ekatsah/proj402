@@ -11,15 +11,20 @@
 {% endcomment %}
 <script type="text/javascript">
 
-function unset_modo(uid) {
-	Gload('{% url user_unset_modo "'+uid" %}, function() {
-		$("#pu"+uid).html('<span class="action_link" onclick="set_modo('+uid+');">set</span>');
+function add_perm(uid) {
+	var perm = $('#sel' + uid).val()
+	$.post('{% url user_add_perm %}', {"user_id": uid, "permission": perm}, function(data) {
+		 if (data == "ok")
+		 	$('#sel' + uid).before('<div id="p' + uid + '_' + perm + '">' + perm + 
+		 			' <span class="action_link" onclick="rm_perm(' + uid + ',\'' +
+		 			perm + '\');">rm</span></div>');
 	});
 }
 
-function set_modo(uid) {
-	Gload('{% url user_set_modo "'+uid" %}, function() {
-		$("#pu"+uid).html('MODO <span class="action_link" onclick="unset_modo('+uid+');">unset</span>');
+function rm_perm(uid, perm) {
+	$.post('{% url user_remove_perm %}', {"user_id": uid, "permission": perm}, function(data) {
+		if (data == "ok")
+			$('#p' + uid + '_' + perm).remove();
 	});
 }
 
@@ -59,7 +64,7 @@ $(document).ready(function() {
       <th>{% trans "username" %}</th>
       <th>{% trans "name" %}</th>
       <th>{% trans "last visit" %}</th>
-      <th>{% trans "moderator" %}</th>
+      <th>{% trans "permissions" %}</th>
     </tr>
   </thead>
  
@@ -70,12 +75,14 @@ $(document).ready(function() {
         <td>{{ u.username }}</td>
         <td>{{ u.first_name }} {{ u.last_name }}</td>
         <td>{{ u.last_login }}</td>
-        <td><center id="pu{{u.id}}">
-          {% if u.get_profile.moderate %}
-            MODO <span class="action_link" onclick="unset_modo({{u.id}});">{% trans "unset" %}</span>
-          {% else %}
-            <span class="action_link" onclick="set_modo({{u.id}});">{% trans "set" %}</span>
-          {% endif %}</center>
+        <td>
+        {% for p in u.profile.global_perm %}
+        	<div id="p{{u.id}}_{{p.name}}">
+        		{{ p.name }} <span class="action_link" onclick="rm_perm({{u.id}}, '{{p.name}}');">rm</span>
+        	</div>
+        {% endfor %}
+        <select id="sel{{u.id}}">{% for p in perms %}<option>{{ p }}</option>{% endfor %}</select>
+        <input type="button" value="add" onclick="add_perm({{u.id}});"/>
       </td>
     </tr>
 {% endfor %}

@@ -8,10 +8,12 @@
 from random import choice
 from string import printable
 from django.db import models
-from django.db.models import signals
+from django.db.models import signals, Q
 from django.contrib.auth import models as authmod
 from django.contrib.auth.models import User
 from django.contrib.auth.management import create_superuser
+from django.contrib.contenttypes.models import ContentType
+from django.contrib.contenttypes import generic
 from courses.models import Course
 from django import forms
 
@@ -26,6 +28,17 @@ class CreateUserForm(forms.Form):
     registration = forms.CharField()
     comment = forms.CharField(widget=forms.Textarea)
 
+PERM_LIST = ['document_edit', 'document_manage', 'structure_manage', 
+             'user_manage', 'message_edit', 'message_remove']
+
+class Permission(models.Model):
+    name = models.CharField(max_length=80)
+    user = models.ForeignKey(User, related_name="back_user")
+    object_id = models.PositiveIntegerField()
+
+    class Meta:
+        unique_together = ('name', 'user', 'object_id')
+
 class CourseFollow(models.Model):
     course = models.ForeignKey(Course)
     last_visit = models.DateTimeField(auto_now_add=True, null=False)
@@ -38,8 +51,22 @@ class UserProfile(models.Model):
     section = models.CharField(max_length=80, null=True)
     courses = models.ManyToManyField(CourseFollow)
     welcome = models.BooleanField(default=True)
-    moderate = models.BooleanField(default=False)
     comment = models.TextField(null=True)
+
+    def add_perm(self, name, id=0):
+        if name in PERM_LIST:
+            Permission.objects.create(name=name, user=self.user, object_id=id)
+                
+    def del_perm(self, name, id=0):
+        perm = Permission.objects.filter(name=name, user=self.user)
+        perm.filter(object_id=id).delete()
+
+    def has_perm(self, name, id=0):
+        perm = Permission.objects.filter(name=name, user=self.user)
+        return perm.filter(Q(object_id=id) | Q(object_id=0)).count() > 0
+
+    def global_perm(self):
+        return Permission.objects.filter(user=self.user, object_id=0)
 
     def real_name(self):
         return self.user.first_name + " " + self.user.last_name

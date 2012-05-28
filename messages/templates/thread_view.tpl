@@ -1,4 +1,5 @@
 {% load i18n %}
+{% load cperms %}
 {% comment %}
 
 # Copyright 2011, hast. All rights reserved.
@@ -19,8 +20,9 @@
     <strong>{{ first.owner.first_name }} {{ first.owner.last_name }}</strong><br>
     {% trans "Other stats." %}<br><br>
     <input type="button" value="{% trans "reply" %}" onclick="reply({{ first.id }});"/>
-    {% if user.get_profile.moderate %}<br>
+    {% if user|attach:first.id|has_perm:"message_edit" %}<br>
     <input type="button" value="{% trans "edit" %}" onclick="edit({{ first.id }});"/><br>
+    {% endif %}{% if user|attach:first.id|has_perm:"message_remove" %}
     <input type="button" value="{% trans "remove" %}" onclick="remove({{ first.id }});"/>
     {% endif %}
   </div>
