@@ -24,10 +24,59 @@ def get_text(nodelist):
     return ''.join(rc)
 
 def get_value(dom, name):
-    node = dom.getElementsByTagName(name)
-    if len(node) != 1:
-        raise Exception("xml document not conform - please contact the admin")
-    return escape(get_text(node[0].childNodes))
+    nodes = dom.getElementsByTagName(name)
+    real_node, found = None, 0
+    if len(nodes) != 1:
+        for n in nodes:
+            if found:
+                break
+            for child in n.parentNode.childNodes:
+                if child.nodeName == name:
+                    real_node = child
+                if (child.nodeName == 'status' and 
+                    get_text(child.childNodes) == 'registered'):
+                    found = 1
+        if found == 0:
+            raise Exception("xml document not conform - please contact the admin")
+    else:
+        real_node = node[0]
+    return escape(get_text(real_node.childNodes))
+
+def parse_user(raw):
+    dom = parseString(infos)
+    return {
+        'ip': get_value(dom, "ipAddress"),
+        'username': get_value(dom, "username"),
+        'first_name': get_value(dom, "prenom").capitalize(),
+        'last_name': get_value(dom, "nom").capitalize(),
+        'email': get_value(dom, "email"),
+        'registration': get_value(dom, "matricule"),
+        'anet': get_value(dom, "anet"),
+        'facid': get_value(dom, "facid"),
+    }
+
+def create_user(values):
+    try:
+        user = User.objects.get(username=values['username'])
+    except:
+        rpwd = ''.join(choice(printable) for x in xrange(100))
+        user = User.objects.create_user(values=['username'], values['email'], 
+                                        rpwd)
+        user.last_name = values['last_name']
+        user.first_name = ['first_name']
+        user.save()
+
+    user_profile = user.profile
+    user_profile.registration = values['registration']
+    user_profile.section = values['facid'] + ':' + values['anet']
+    user_profile.save()
+    return user
+
+def throw_b64error(raw):
+    msg = b64encode(infos)
+    msg = [ msg[y * 78:(y+1)*78] for y in xrange((len(msg)/78) +1) ]
+    return render_to_response('error.tpl', {'msg': "\n".join(msg)},
+                              context_instance=RequestContext(request))
 
 def intra_auth(request):
     sid, uid = request.GET.get("_sid", False), request.GET.get("_uid", False)
@@ -40,32 +89,11 @@ def intra_auth(request):
                                       {'msg': "ULB ERR#1: " + str(e)},
                                       context_instance=RequestContext(request))
 
-        dom = parseString(infos)
         try:
-            ip, username = get_value(dom, "ipAddress"), get_value(dom, "username")
-            first_name = get_value(dom, "prenom").capitalize()
-            last_name = get_value(dom, "nom").capitalize()
-            email, regist = get_value(dom, "email"), get_value(dom, "matricule")
-            anet, facid = get_value(dom, "anet"), get_value(dom, "facid")
+            values = parse_user(infos)
+            user = create_user(values)
         except:
-            msg = b64encode(infos)
-            msg = [ msg[y * 78:(y+1)*78] for y in xrange((len(msg)/78) +1) ]
-            return render_to_response('error.tpl', {'msg': "\n".join(msg)},
-                                      context_instance=RequestContext(request))
-        try:
-            user = User.objects.get(username=username)
-        except Exception:
-            rpwd = ''.join(choice(printable) for x in xrange(100))
-            user = User.objects.create_user(username, email, rpwd)
-            user.last_name = last_name
-            user.first_name = first_name
-            user.save()
-
-        user_profile = user.profile
-        user_profile.registration = regist
-        user_profile.section = facid + ':' + anet
-        user_profile.save()
-        user.save()
+            throw_b64error(infos)
 
         user.backend = 'django.contrib.auth.backends.ModelBackend' 
         login(request, user)
