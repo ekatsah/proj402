@@ -60,7 +60,7 @@ def create_user(values):
         user = User.objects.get(username=values['username'])
     except:
         rpwd = ''.join(choice(printable) for x in xrange(100))
-        user = User.objects.create_user(values=['username'], values['email'], 
+        user = User.objects.create_user(values['username'], values['email'], 
                                         rpwd)
         user.last_name = values['last_name']
         user.first_name = ['first_name']
