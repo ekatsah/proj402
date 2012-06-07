@@ -84,7 +84,7 @@
            	<div id="topwarning">
     		{% blocktrans %}
     		Warning ! You are using an outdated version of Internet Explorer !<br>
-    		This website will <b>NOT</b> work with your version !
+    		This website will <strong>NOT</strong> work with your version !
     		Please update to <a href="http://www.microsoft.com/france/windows/internet-explorer/telecharger-ie9.aspx#/top"> Internet Explorer 9</a> or to <a href="http://www.mozilla.org/fr/firefox/new/">Firefox</a>
     		or <a href="https://www.google.com/chrome?hl=fr">Chrome</a>
     		{% endblocktrans %}
@@ -98,15 +98,35 @@
 				<p>Project-402 is a proposed application to <br>help students <strong>share
 				   informations</strong> with their fellows. It's stricly for students only.
 				   It's under heavy developement and managed by students.</p>
-				   
+			{% endblocktrans %}	  
+			<!--[if !IE]><!--> 
+			{% blocktrans %} 
 				<p>Why not give it a try? You should <strong>
 			   	   <a href="https://www.ulb.ac.be/intranet/p402">login</a></strong>.</p>
-			   
+			{% endblocktrans %}
+			<!--<![endif]-->
+			
+			<!--[if gte IE 9]>
+			{% blocktrans %} 
+				<p>Why not give it a try? First you should <strong>upgrade</strong> you browser and then, <strong>
+			   	   <a href="https://www.ulb.ac.be/intranet/p402" onClick="alert('The website will not work with you browser ! \n You will not see any content in the courses... \n Please upgrade your browser :) ')">login</a></strong>.</p>
+			{% endblocktrans %}
+			<![endif]-->
+			
+			<!--[if lt IE 9]>
+			{% blocktrans %} 
+				<p>Why not give it a try? You should <strong>
+			   	   <a href="https://www.ulb.ac.be/intranet/p402">login</a></strong>.</p>
+			{% endblocktrans %}
+			<![endif]-->
+			
+			{% blocktrans %}
 				<p>Project-402 is currently open for <strong>sciences</strong> and 
 				   <strong>polytech</strong> students. Interested in making this 
 				   available for another faculty? Write us<br>an email at 
 				   <a href="p402@cerkinfo.be">p402@cerkinfo.be</a>.</p>
 	        {% endblocktrans %}
+	        
     	    </div>
         	<div id="right">
         		<img src="/static/p402.png"/>
