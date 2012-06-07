@@ -96,7 +96,7 @@ class Document(models.Model):
                                  'description': self.description})
 
     def pretty_name(self):
-        name = sub(r'[^-_a-z]', '', self.name.lower().replace(' ', '_'))
+        name = sub(r'[^-_a-z0-9]', '', self.name.lower().replace(' ', '_'))
         if not name.endswith('.pdf'):
             name += '.pdf'
         return name
