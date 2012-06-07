@@ -41,13 +41,14 @@
 		        width: 300px;
 		        padding: 0px;
 		 	}
-		 	
-		 	#warning {
+
+		 	#topwarning {
 		 		background-color: #FFC285;
-		 		padding: 10px;
+		 		padding: 15px;
+		 		margin: 10px;
 		 		border: 2px solid #ff5656;
-		 		border-radius: 10px;
 		 		text-align: center;
+		 		font-size : 1.1em;
 		 	}
 		 	
 		</style>
@@ -79,7 +80,16 @@
             	</form>
             </div>
         </div>
-
+        <!--[if lt IE 9]>
+           	<div id="topwarning">
+    		{% blocktrans %}
+    		Warning ! You are using an outdated version of Internet Explorer !<br>
+    		This website will <b>NOT</b> work with your version !
+    		Please update to <a href="http://www.microsoft.com/france/windows/internet-explorer/telecharger-ie9.aspx#/top"> Internet Explorer 9</a> or to <a href="http://www.mozilla.org/fr/firefox/new/">Firefox</a>
+    		or <a href="https://www.google.com/chrome?hl=fr">Chrome</a>
+    		{% endblocktrans %}
+    		</div>
+    	<![endif]-->
         <div id="content">
         {% block content %}
         <div id="infos">
@@ -96,13 +106,6 @@
 				   <strong>polytech</strong> students. Interested in making this 
 				   available for another faculty? Write us<br>an email at 
 				   <a href="p402@cerkinfo.be">p402@cerkinfo.be</a>.</p>
-
-				<!--[if IE]>
-        		<p id="warning">
-					Warning ! We know that there are some problems with Internet Explorer,
-					this website might be unusable.<br> We are currently working at fixing that.
-				</p>
-				<![endif]-->
 	        {% endblocktrans %}
     	    </div>
         	<div id="right">
