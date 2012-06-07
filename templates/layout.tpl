@@ -106,14 +106,14 @@
 			{% endblocktrans %}
 			<!--<![endif]-->
 			
-			<!--[if gte IE 9]>
+			<!--[if lt IE 9]>
 			{% blocktrans %} 
 				<p>Why not give it a try? First you should <strong>upgrade</strong> you browser and then, <strong>
 			   	   <a href="https://www.ulb.ac.be/intranet/p402" onClick="alert('The website will not work with you browser ! \n You will not see any content in the courses... \n Please upgrade your browser :) ')">login</a></strong>.</p>
 			{% endblocktrans %}
 			<![endif]-->
 			
-			<!--[if lt IE 9]>
+			<!--[if gte IE 9]>
 			{% blocktrans %} 
 				<p>Why not give it a try? You should <strong>
 			   	   <a href="https://www.ulb.ac.be/intranet/p402">login</a></strong>.</p>
